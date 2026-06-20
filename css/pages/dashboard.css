@@ -1,0 +1,28 @@
+.dashboard-logo {
+    background-color: rgba(45,106,79,0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+}
+
+.dashboard-logo-vec {
+    stroke: #2d6a4f;
+    width: 24px;
+    height: 24px;
+}
+
+.recent-activities-logo-vec {
+    stroke: #2d6a4f;
+    width: 20px;
+    height: 20px;
+}
+
+.recent-activities-item {
+    padding: 0px 0px 12px 0px;
+}
+
+.grey-grid-item {
+    background-color: rgba(229, 229, 229, 0.3);
+    padding: 16px;
+    border-radius: 0.5rem;
+}
