@@ -26,7 +26,7 @@
 
 .bigger-text {
     font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .big-text {
@@ -82,6 +82,10 @@
 
 .big-bottom-margin {
     margin: 0px 0px 24px 0px;
+}
+
+.bigger-bottom-margin {
+    margin: 0px 0px 32px 0px;
 }
 
 .green-text {
