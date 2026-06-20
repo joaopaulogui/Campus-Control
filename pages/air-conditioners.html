@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pages/air-conditioners.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="flex-row">
+        <aside id="sidebar"></aside>
+        <div id="content">
+            <!--Page Content Here-->
+            <div style="margin: 0px 0px 24px 0px;">
+                <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Controle de Ar-Condicionado</h2>
+                <p class="light text no-margin">Gerencie os sistemas de climatização do campus</p>
+            </div>
+            <div class="flex-row big-bottom-margin" style="gap: 12px;">
+                <button class="floor-button bold text active">Todos os Andares</button>
+                <button class="floor-button bold text">Térreo</button>
+                <button class="floor-button bold text">1º andar</button>
+            </div>
+            <div class="grid cards">
+                <div class="card" style="padding: 24px;">
+                    <h3 class="bold big-text medium-bottom-margin">Térreo</h3>
+                    <div class="flex-row gray-border-bottom" style="padding: 0px 0px 24px 0px;">
+                        <div class="flex-column" style="flex: 1;">
+                            <p class="light small-text smaller-bottom-margin">Total de Salas</p>
+                            <p class="bold large-text no-margin">10</p>
+                        </div>
+                        <div class="flex-column" style="flex: 1;">
+                            <p class="light small-text smaller-bottom-margin">ACs Ligados</p>
+                            <p class="bold large-text no-margin">6/10</p>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <svg></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/components/sidebar.js"></script>
+    <script>
+        renderSidebar('air-conditioners')
+    </script>
+</body>
+</html>
