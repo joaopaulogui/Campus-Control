@@ -1,0 +1,44 @@
+#new-loan-button {
+    background-color: #2d6a4f;
+    color: #ffffff;
+    padding: 8px 16px;
+    height: fit-content;
+}
+
+.active-loans, .today-returns {
+    stroke: #2d6a4f;
+}
+
+.late-returns {
+    stroke: #dc2626;
+    color: #dc2626;
+}
+
+.loan-logo {
+    background-color: rgba(45,106,79,0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+}
+
+.loan-logo-vec {
+    width: 24px;
+    height: 24px;
+}
+
+.user-logo {
+    background-color: rgba(45,106,79,0.1);
+    width: fit-content;
+    height: fit-content;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    box-shadow: none;
+}
+
+.user-logo-vec {
+    stroke: #2d6a4f;
+    width: 16px;
+    height: 16px;
+}

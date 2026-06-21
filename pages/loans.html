@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pages/loans.css">
     <title>Document</title>
 </head>
 <body>
@@ -13,14 +14,21 @@
         <aside id="sidebar"></aside>
         <div id="content">
             <!--Page Content Here-->
-            <div style="margin: 0px 0px 24px 0px;">
-                <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Controle de Empréstimos</h2>
-                <p class="light text no-margin">Gerencie os equipamentos emprestados</p>
+            <div class="flex-row big-bottom-margin" style="justify-content: space-between;">
+                <div class="big-bottom-margin">
+                    <h2 class="large-text small-bottom-margin" style="font-weight: 600;">Controle de Empréstimos</h2>
+                    <p class="light text no-margin">Gerencie os equipamentos emprestados</p>
+                </div>
+                <button id="new-loan-button" class="base-button bold text">+ Novo Empréstimo</button>
             </div>
+            <div id="loans-resume"></div>
+            <div id="loans-table"></div>
         </div>
     </div>
 
     <script src="../js/components/sidebar.js"></script>
+    <script src="../js/services/loans-storage.js"></script>
+    <script src="../js/loans.js"></script>
     <script>
         renderSidebar('loans')
     </script>
