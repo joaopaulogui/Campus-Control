@@ -5,7 +5,7 @@ function renderFloorResume(floor) {
     var openRooms = 0;
 
     floor.rooms.forEach(room => {
-        if (status == "unlocked") {openRooms++;}
+        if (room.status == "unlocked") {openRooms++;}
     });
 
     const lockedRooms = totalRooms - openRooms;
@@ -89,9 +89,28 @@ function renderTableRow(floorName, room) {
                     <span class="bold smaller-text">${room.status == "unlocked" ? "Destrancada" : "Trancada"}</span>
                 </div
             </td>
-            <td class="rooms-table-td"><button class="base-button">${room.status == "unlocked" ? "Trancar" : "Destrancar"}</button></td>
+            <td class="rooms-table-td">
+                <button class="base-button bold small-text ${room.status == "unlocked" ? "lock" : "unlock"}-button" data-toggle-door="${room.name}">${room.status == "unlocked" ? "Trancar" : "Destrancar"}</button>
+            </td>
         </tr>
     `;
+}
+
+function toggleDoor(roomName) {
+    for (const floor of floors) {
+        const room = floor.rooms.find(item => item.name === roomName)
+        if (room) {
+            if (room.status == "locked") {
+                room.status = "unlocked";
+            } else if (room.status == "unlocked") {
+                room.status = "locked";
+            }
+        }
+    }
+
+    saveFloors(floors)
+    renderFloorsResume()
+    renderRoomsTable()
 }
 
 function renderFloorsResume() {
@@ -133,6 +152,13 @@ function renderRoomsTable() {
 
     document.getElementById('rooms-table').innerHTML = html;
 }
+
+document.getElementById('rooms-table').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-toggle-door]');
+    if (button) {
+        toggleDoor(button.dataset.toggleDoor);
+    }
+});
 
 renderRoomsTable()
 renderFloorsResume()

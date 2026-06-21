@@ -48,6 +48,7 @@
     padding: 4px 12px;
     gap: 4px;
     color: #2d6a4f;
+    width: fit-content;
 }
 
 .locked-status-label {
@@ -57,4 +58,25 @@
     padding: 4px 12px;
     gap: 4px;
     color: #6b7280;
+    width: fit-content;
+}
+
+.lock-button {
+    padding: 8px 16px;
+    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.1);
+}
+
+.lock-button:hover {
+    background-color: rgba(220, 38, 38, 0.2);
+}
+
+.unlock-button {
+    padding: 8px 16px;
+    color: #2d6a4f;
+    background-color: rgba(34, 106, 79, 0.1);
+}
+
+.unlock-button:hover {
+    background-color: rgba(34, 106, 79, 0.2);
 }
