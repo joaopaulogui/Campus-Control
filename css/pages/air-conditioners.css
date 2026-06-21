@@ -1,18 +1,3 @@
-.floor-button {
-    padding: 8px 16px;
-    border-radius: 0.5rem;
-    border-width: 1px;
-    border-color: #d1d5db;
-    background-color: #ffffff;
-    border-style: solid;
-    color: #1a1a1a;
-}
-
-.active {
-    color: #ffffff;
-    background-color: #2d6a4f;
-}
-
 .ac-icons-vec {
     width: 16px;
     height: 16px;
