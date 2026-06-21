@@ -41,7 +41,7 @@ const menuItems = [
 
 function renderSidebar(activePage) {
     const itemsHtml = menuItems.map(item => `
-        <a href="${item.href}" class="nav-item text ${item.id === activePage ? 'active' : ''}">
+        <a href="${item.href}" class="nav-item text ${item.id === activePage ? 'sidebar-active' : ''}">
             <span class="nav-icon"><svg class="logo-vec nav-logo" viewBox="0 0 24 24">${item.icon}</svg></span>
             <span class="nav-label">${item.label}</span>
         </a>

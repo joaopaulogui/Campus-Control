@@ -81,7 +81,7 @@ body {
     height: 20px;
 }
 
-.active {
+.sidebar-active {
     background-color: #2d6a4f;
     opacity: 100%;
 }
