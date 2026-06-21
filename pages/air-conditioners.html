@@ -23,30 +23,16 @@
                 <button class="floor-button bold text">Térreo</button>
                 <button class="floor-button bold text">1º andar</button>
             </div>
-            <div class="grid cards">
-                <div class="card" style="padding: 24px;">
-                    <h3 class="bold big-text medium-bottom-margin">Térreo</h3>
-                    <div class="flex-row gray-border-bottom" style="padding: 0px 0px 24px 0px;">
-                        <div class="flex-column" style="flex: 1;">
-                            <p class="light small-text smaller-bottom-margin">Total de Salas</p>
-                            <p class="bold large-text no-margin">10</p>
-                        </div>
-                        <div class="flex-column" style="flex: 1;">
-                            <p class="light small-text smaller-bottom-margin">ACs Ligados</p>
-                            <p class="bold large-text no-margin">6/10</p>
-                        </div>
-                    </div>
-                    <div class="flex-row">
-                        <svg></svg>
-                    </div>
-                </div>
-            </div>
+            <div id="acs-resume"></div>
+            <div id="ac-cards"></div>
         </div>
     </div>
 
     <script src="../js/components/sidebar.js"></script>
+    <script src="../js/services/floors-storage.js"></script>
+    <script src="../js/air-conditioners.js"></script>
     <script>
-        renderSidebar('air-conditioners')
+        renderSidebar('air-conditioners');
     </script>
 </body>
 </html>
