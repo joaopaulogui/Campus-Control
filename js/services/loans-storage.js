@@ -16,7 +16,7 @@ function getLoans() {
     return defaultLoans
 }
 
-function saveFloors(loans) {
+function saveLoans(loans) {
     localStorage.setItem(LOANS_KEY, JSON.stringify(loans))
 }
 
