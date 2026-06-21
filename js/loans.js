@@ -53,9 +53,20 @@ function renderLoanCard(title, value, iconClass) {
     `
 }
 
+function getLoanStatus(status) {
+    switch (status) {
+        case "in-use":
+            return "Em uso";
+        case "late":
+            return "Atrasado";
+        case "returned":
+            return "Devolvido";
+    }
+}
+
 function renderLoansTableRow(loan) {
     return `
-        <tr>
+        <tr style="height: 89px;">
             <td class="table-td bold small-text">${loan.id}</td>
             <td class="table-td small-text">
                 <div class="flex-row" style="gap: 8px; align-items: center;">
@@ -72,13 +83,13 @@ function renderLoansTableRow(loan) {
             <td class="table-td small-text">${loan.item}</td>
             <td class="table-td small-text">${loan.loanDate}</td>
             <td class="table-td small-text">${loan.returnDate}</td>
-            <td class="table-td"><button class="base-button small-text ${loan.status}">${loan.status}</button></td>
+            <td class="table-td">
+                <button class="base-button bold smaller-text ${loan.status}" style="padding: 4px 12px; white-space: nowrap;" data-toggle-status="${loan.id}">${getLoanStatus(loan.status)}</button>
+            </td>
             <td class="table-td small-text">
-                ${
-                    loan.status == "in-use" ? "" : `
-                        <button class="base-button bold small-text green-text">Registrar Devolução</button>
-                    `
-                }
+                ${loan.status == "in-use" ? "-" : `
+                    <button class="base-button bold small-text green-text register-return" style="padding: 4px 12px;" data-register-return="${loan.id}">Registrar<br>Devolução</button>
+                `}
             </td>
         </tr>
     `
@@ -132,6 +143,53 @@ function renderLoansTable() {
     
     document.getElementById('loans-table').innerHTML = html;
 }
+
+function toggleStatus(loanId) {
+    const loan = loans.find(item => item.id === loanId)
+
+    if (loan) {
+        switch (loan.status) {
+            case "in-use":
+                loan.status = "late";
+                break;
+            case "late":
+                loan.status = "returned";
+                break;
+            case "returned":
+                loan.status = "in-use"
+                break;
+        }
+    }
+
+
+    saveLoans(loans);
+    renderLoansResume()
+    renderLoansTable()
+}
+
+function registerReturn(loanId) {
+    const loan = loans.find(item => item.id === loanId)
+
+    if (loan && loan.status !== "in-use") { loan.status = "in-use"; }
+
+    saveLoans(loans);
+    renderLoansResume()
+    renderLoansTable()
+}
+
+document.getElementById('loans-table').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-toggle-status]');
+    if (button) {
+        toggleStatus(button.dataset.toggleStatus);
+    }
+});
+
+document.getElementById('loans-table').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-register-return]');
+    if (button) {
+        registerReturn(button.dataset.registerReturn);
+    }
+});
 
 renderLoansResume()
 renderLoansTable()

@@ -5,6 +5,10 @@
     height: fit-content;
 }
 
+#new-loan-button:hover {
+    background-color: rgba(34, 106, 79, 0.8);
+}
+
 .active-loans, .today-returns {
     stroke: #2d6a4f;
 }
@@ -41,4 +45,26 @@
     stroke: #2d6a4f;
     width: 16px;
     height: 16px;
+}
+
+.in-use, .register-return {
+    color: #2d6a4f;
+    background-color: rgba(34, 106, 79, 0.1);
+    opacity: 100%;
+}
+
+.late {
+    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.1);
+    opacity: 100%;
+}
+
+.returned {
+    color: #6b7280;
+    background-color: #e5e5e5;
+    opacity: 100%;
+}
+
+.in-use:hover, .late:hover, .returned:hover, .register-return:hover {
+    opacity: 80%;
 }
