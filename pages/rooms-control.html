@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pages/rooms-control.css">
     <title>Document</title>
 </head>
 <body>
@@ -17,10 +18,19 @@
                 <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Controle de salas</h2>
                 <p class="light text no-margin">Gerencie o acesso às salas do campus</p>
             </div>
+            <div class="flex-row big-bottom-margin" style="gap: 12px;">
+                <button class="floor-button bold text active-floor">Todos os Andares</button>
+                <button class="floor-button bold text">Térreo</button>
+                <button class="floor-button bold text">1º andar</button>
+            </div>
+            <div id="floors-resume"></div>
+            <div id="rooms-table"></div>
         </div>
     </div>
 
     <script src="../js/components/sidebar.js"></script>
+    <script src="../js/services/floors-storage.js"></script>
+    <script src="../js/rooms-control.js"></script>
     <script>
         renderSidebar('rooms-control')
     </script>
