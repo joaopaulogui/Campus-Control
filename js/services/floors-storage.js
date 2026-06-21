@@ -2,21 +2,21 @@ const FLOORS_KEY = "floors";
 
 const defaultFloors = [
     { name: "Térreo", rooms: [
-        { name: "Sala 1", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 21, isOn: true }},
-        { name: "Sala 2", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 24, isOn: false }},
-        { name: "Sala 3", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "warning", temperature: 23, isOn: true }},
-        { name: "Sala 4", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 23, isOn: true }},
-        { name: "Sala 5", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 22, isOn: false }},
-        { name: "Sala 6", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "broken", temperature: 25, isOn: false }},
-        { name: "Sala 7", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 22, isOn: true }},
-        { name: "Sala 8", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "warning", temperature: 23, isOn: true }},
-        { name: "Sala 9", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 26, isOn: false }},
-        { name: "Sala 10", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 24, isOn: true }},
+        { name: "Sala 1", type: "Laboratório", capacity: 40, status: "unlocked", ac: { class: "working", temperature: 21, isOn: true }},
+        { name: "Sala 2", type: "Sala de Aula", capacity: 30, status: "locked", ac: { class: "working", temperature: 24, isOn: false }},
+        { name: "Sala 3", type: "Sala de Aula", capacity: 35, status: "unlocked", ac: { class: "warning", temperature: 23, isOn: true }},
+        { name: "Sala 4", type: "Sala de Reunião", capacity: 25, status: "locked", ac: { class: "working", temperature: 23, isOn: true }},
+        { name: "Sala 5", type: "Auditório", capacity: 50, status: "unlocked", ac: { class: "working", temperature: 22, isOn: false }},
+        { name: "Sala 6", type: "Laboratório", capacity: 40, status: "unlocked", ac: { class: "broken", temperature: 25, isOn: false }},
+        { name: "Sala 7", type: "Sala de Aula", capacity: 30, status: "locked", ac: { class: "working", temperature: 22, isOn: true }},
+        { name: "Sala 8", type: "Sala de Aula", capacity: 35, status: "unlocked", ac: { class: "warning", temperature: 23, isOn: true }},
+        { name: "Sala 9", type: "Sala de Aula", capacity: 30, status: "locked", ac: { class: "working", temperature: 26, isOn: false }},
+        { name: "Sala 10", type: "Sala de Reunião", capacity: 28, status: "unlocked", ac: { class: "working", temperature: 24, isOn: true }},
     ]},
 
     { name: "1º Andar", rooms: [
-        { name: "Sala 11", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 22, isOn: true }},
-        { name: "Sala 12", type: "Sala de Aula", capacity: 40, status: "locked", ac: { class: "working", temperature: 21, isOn: true }},
+        { name: "Sala 11", type: "Laboratório", capacity: 45, status: "unlocked", ac: { class: "working", temperature: 22, isOn: true }},
+        { name: "Sala 12", type: "Sala de Aula", capacity: 35, status: "locked", ac: { class: "working", temperature: 21, isOn: true }},
     ]}
 ]
 
