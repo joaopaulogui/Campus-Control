@@ -53,7 +53,7 @@ function renderResume(floorName, rooms) {
     let defectiveAcs = 0;
     let brokenAcs = 0;
 
-    rooms.map(room => {
+    rooms.forEach(room => {
         if (room.ac.isOn) { activeAcs++; }
         switch(room.ac.class) {
             case "working":
