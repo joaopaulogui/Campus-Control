@@ -78,16 +78,16 @@ function renderTableRow(floorName, room) {
                 <div class="flex-row" style="gap: 12px;">
                     ${getDoorIcon(room.status)}
                     <span class="bold small-text">${room.name}</span>
-                    </div>
-                    </td>
-                    <td class="small-text table-td">${floorName}</td>
-                    <td class="small-text table-td">${room.type}</td>
-                    <td class="small-text table-td">${room.capacity}</td>
-                    <td class="small-text table-td">
-                    <div class="flex-row ${room.status}-status-label">
+                </div>
+            </td>
+            <td class="small-text table-td">${floorName}</td>
+            <td class="small-text table-td">${room.type}</td>
+            <td class="small-text table-td">${room.capacity}</td>
+            <td class="small-text table-td">
+                <div class="flex-row ${room.status}-status-label">
                     ${getLockIcon(room.status)}
                     <span class="bold smaller-text">${room.status == "unlocked" ? "Destrancada" : "Trancada"}</span>
-                </div
+                </div>
             </td>
             <td class="table-td">
                 <button class="base-button bold small-text ${room.status == "unlocked" ? "lock" : "unlock"}-button" data-toggle-door="${room.name}">${room.status == "unlocked" ? "Trancar" : "Destrancar"}</button>
