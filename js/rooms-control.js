@@ -1,4 +1,10 @@
-const floors = getFloors()
+const allFloors = getFloors();
+let floors = allFloors;
+
+initFloorFilter(allFloors, () => {
+    renderRoomsTable()
+    renderFloorsResume()
+});
 
 function renderFloorResume(floor) {
     const totalRooms = floor.rooms.length
@@ -114,7 +120,7 @@ function toggleDoor(roomName) {
 }
 
 function renderFloorsResume() {
-    const floorsResumeHtml = floors.map(floor => renderFloorResume(floor)).join('');
+    const floorsResumeHtml = allFloors.map(floor => renderFloorResume(floor)).join('');
 
     const html = `
         <div class="grid cards big-bottom-margin">

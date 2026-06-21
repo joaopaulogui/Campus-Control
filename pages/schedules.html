@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pages/schedules.css">
     <title>Document</title>
 </head>
 <body>
@@ -14,13 +15,20 @@
         <div id="content">
             <!--Page Content Here-->
             <div style="margin: 0px 0px 24px 0px;">
-                <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Horários de Uso as Salas</h2>
+                <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Horários de Uso das Salas</h2>
                 <p class="light text no-margin">Visualize e gerencie a ocupação das salas</p>
+            </div>
+            <div class="flex-row" style="justify-content: space-between;">
+                <div id="floor-filter"></div>
+                <button id="new-reservation-button" class="base-button bold text">+ Novo Empréstimo</button>
             </div>
         </div>
     </div>
 
     <script src="../js/components/sidebar.js"></script>
+    <script src="../js/components/floor-filter.js"></script>
+    <script src="../js/services/floors-storage.js"></script>
+    <script src="../js/schedules.js"></script>
     <script>
         renderSidebar('schedules')
     </script>

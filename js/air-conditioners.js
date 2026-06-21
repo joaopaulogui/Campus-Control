@@ -1,4 +1,10 @@
-const floors = getFloors()
+const allFloors = getFloors()
+let floors = allFloors;
+
+initFloorFilter(allFloors, () => {
+    renderAcsResume();
+    renderAcCards();
+})
 
 function chooseIcon(acClass) {
     switch(acClass) {
@@ -204,7 +210,7 @@ function increaseTemp(roomRame) {
 }
 
 function renderAcsResume() {
-    const html = floors.map(floor => renderResume(floor.name, floor.rooms)).join('');
+    const html = allFloors.map(floor => renderResume(floor.name, floor.rooms)).join('');
 
     const finalHtml = `
         <div class="grid cards big-bottom-margin">${html}</div>
