@@ -74,22 +74,22 @@ function getLockIcon(status) {
 function renderTableRow(floorName, room) {
     return `
         <tr class="gray-border-bottom">
-            <td class="rooms-table-td">
+            <td class="table-td">
                 <div class="flex-row" style="gap: 12px;">
                     ${getDoorIcon(room.status)}
                     <span class="bold small-text">${room.name}</span>
                     </div>
                     </td>
-                    <td class="small-text rooms-table-td">${floorName}</td>
-                    <td class="small-text rooms-table-td">${room.type}</td>
-                    <td class="small-text rooms-table-td">${room.capacity}</td>
-                    <td class="small-text rooms-table-td">
+                    <td class="small-text table-td">${floorName}</td>
+                    <td class="small-text table-td">${room.type}</td>
+                    <td class="small-text table-td">${room.capacity}</td>
+                    <td class="small-text table-td">
                     <div class="flex-row ${room.status}-status-label">
                     ${getLockIcon(room.status)}
                     <span class="bold smaller-text">${room.status == "unlocked" ? "Destrancada" : "Trancada"}</span>
                 </div
             </td>
-            <td class="rooms-table-td">
+            <td class="table-td">
                 <button class="base-button bold small-text ${room.status == "unlocked" ? "lock" : "unlock"}-button" data-toggle-door="${room.name}">${room.status == "unlocked" ? "Trancar" : "Destrancar"}</button>
             </td>
         </tr>
@@ -132,15 +132,15 @@ function renderRoomsTable() {
 
     const html = `
         <div class="card">
-            <table id="rooms-table">
-                <thead class="rooms-table-thead">
+            <table class="table">
+                <thead class="table-thead">
                     <tr>
-                        <th class="rooms-table-th light bold smaller-text">Sala</th>
-                        <th class="rooms-table-th light bold smaller-text">Andar</th>
-                        <th class="rooms-table-th light bold smaller-text">Tipo</th>
-                        <th class="rooms-table-th light bold smaller-text">Capacidade</th>
-                        <th class="rooms-table-th light bold smaller-text">Status</th>
-                        <th class="rooms-table-th light bold smaller-text">Ações</th>
+                        <th class="table-th light bold smaller-text">Sala</th>
+                        <th class="table-th light bold smaller-text">Andar</th>
+                        <th class="table-th light bold smaller-text">Tipo</th>
+                        <th class="table-th light bold smaller-text">Capacidade</th>
+                        <th class="table-th light bold smaller-text">Status</th>
+                        <th class="table-th light bold smaller-text">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
