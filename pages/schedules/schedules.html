@@ -12,20 +12,25 @@
 <body>
     <div class="flex-row">
         <aside id="sidebar"></aside>
-        <div id="content">
-            <!--Page Content Here-->
-            <div style="margin: 0px 0px 24px 0px;">
-                <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Horários de Uso das Salas</h2>
-                <p class="light text no-margin">Visualize e gerencie a ocupação das salas</p>
-            </div>
-            <div class="flex-row" style="justify-content: space-between;">
-                <div id="floor-filter"></div>
-                <button id="new-reservation-button" class="base-button bold text">+ Novo Empréstimo</button>
-            </div>
-            <div id="schedules"></div>
+        <div>
+            <div id="header"></div>
+            <div id="content">
+                <!--Page Content Here-->
+                <div style="margin: 0px 0px 24px 0px;">
+                    <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Horários de Uso das Salas</h2>
+                    <p class="light text no-margin">Visualize e gerencie a ocupação das salas</p>
+                </div>
+                <div class="flex-row" style="justify-content: space-between;">
+                    <div id="floor-filter"></div>
+                    <button id="new-reservation-button" class="base-button bold text">+ Novo Empréstimo</button>
+                </div>
+                <div id="schedules"></div>
+        </div>
         </div>
     </div>
 
+    <script src="../../components/icons.js"></script>
+    <script src="../../components/header.js"></script>
     <script src="../../components/sidebar.js"></script>
     <script src="../../components/floor-filter.js"></script>
 

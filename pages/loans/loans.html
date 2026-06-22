@@ -12,21 +12,25 @@
 <body>
     <div class="flex-row">
         <aside id="sidebar"></aside>
-        <div id="content">
-            <!--Page Content Here-->
-            <div class="flex-row big-bottom-margin" style="justify-content: space-between; align-items: center;">
-                <div class="big-bottom-margin">
-                    <h2 class="large-text small-bottom-margin" style="font-weight: 600;">Controle de Empréstimos</h2>
-                    <p class="light text no-margin">Gerencie os equipamentos emprestados</p>
+        <div>
+            <div id="header"></div>
+            <div id="content">
+                <!--Page Content Here-->
+                <div class="flex-row big-bottom-margin" style="justify-content: space-between; align-items: center;">
+                    <div class="big-bottom-margin">
+                        <h2 class="large-text small-bottom-margin" style="font-weight: 600;">Controle de Empréstimos</h2>
+                        <p class="light text no-margin">Gerencie os equipamentos emprestados</p>
+                    </div>
+                    <button id="new-loan-button" class="base-button bold text">+ Novo Empréstimo</button>
                 </div>
-                <button id="new-loan-button" class="base-button bold text">+ Novo Empréstimo</button>
+                <div id="loans-resume"></div>
+                <div id="loans-table"></div>
             </div>
-            <div id="loans-resume"></div>
-            <div id="loans-table"></div>
         </div>
     </div>
 
     <script src="../../components/icons.js"></script>
+    <script src="../../components/header.js"></script>
     <script src="../../components/sidebar.js"></script>
 
     <script src="../../services/loans-storage.js"></script>

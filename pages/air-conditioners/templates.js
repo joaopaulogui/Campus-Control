@@ -98,7 +98,7 @@ function renderButtons(item) {
 }
 
 function renderCard(floorName, rooms) {
-    const cardsHtml = rooms.map(item => `
+    const cardsHtml = rooms.map(item => item.name.toLowerCase().includes(search.toLowerCase()) ? `
         <div class="card ac-card ${item.ac.class}" style="padding: 24px;">
             <div class="flex-row medium-bottom-margin" style="justify-content: space-between;">
                 <div>
@@ -126,7 +126,7 @@ function renderCard(floorName, rooms) {
             </div>
             ${renderButtons(item)}
         </div>
-    `).join('');
+    ` : '').join('');
 
     return `
         <h3 class="bold big-text medium-bottom-margin gray-border-bottom" style="padding: 0px 0px 8px 0px;">${floorName}</h3>

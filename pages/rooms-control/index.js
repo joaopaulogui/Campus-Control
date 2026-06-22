@@ -1,6 +1,8 @@
 const allFloors = getFloors();
 let floors = allFloors;
 
+let search = "";
+
 initFloorFilter(allFloors, () => {
     renderRoomsTable()
     renderFloorsResume()
@@ -22,7 +24,9 @@ function renderRoomsTable() {
     const headers = [ "Sala", "Andar", "Tipo", "Capacidade", "Status", "Ações" ];
 
     const thRowsHtml = headers.map(header => `<th class="table-th light bold smaller-text">${header}</th>`).join('');
-    const tableRowsHtml = floors.map(floor => floor.rooms.map(room => renderTableRow(floor.name, room)).join('')).join('');
+    const tableRowsHtml = floors.map(floor => 
+        floor.rooms.map(room => room.name.toLowerCase().includes(search.toLowerCase()) ? renderTableRow(floor.name, room) : '').join('')
+    ).join('');
 
     const html = `
         <div class="card">
@@ -47,6 +51,11 @@ document.getElementById('rooms-table').addEventListener('click', (event) => {
     if (button) {
         toggleDoor(button.dataset.toggleDoor);
     }
+});
+
+document.getElementById('search-header').addEventListener('input', (event) => {
+    search = event.target.value;
+    renderRoomsTable();
 });
 
 renderRoomsTable();

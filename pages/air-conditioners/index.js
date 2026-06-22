@@ -1,6 +1,8 @@
 const allFloors = getFloors();
 let floors = allFloors;
 
+let search = "";
+
 initFloorFilter(allFloors, () => {
     renderAcsResume();
     renderAcCards();
@@ -45,6 +47,11 @@ document.getElementById('ac-cards').addEventListener('click', (event) => {
     if (button) {
         toggleAc(button.dataset.toggleAc);
     }
+});
+
+document.getElementById('search-header').addEventListener('input', (event) => {
+    search = event.target.value;
+    renderAcCards();
 });
 
 renderAcsResume();

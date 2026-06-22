@@ -87,3 +87,21 @@
 .table-td {
     padding: 16px 24px;
 }
+
+.search-icon {
+    stroke: #6b7280;
+    width: 20px;
+    height: 20px;
+}
+
+.header {
+    background-color: #ffffff;
+    margin-left: 256px;
+    padding: 0px 24px;
+}
+
+.search-field {
+    background-color: #f9fafb;
+    padding: 8px 16px;
+    border-radius: 0.5rem;
+}

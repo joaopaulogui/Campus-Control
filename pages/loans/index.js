@@ -1,4 +1,5 @@
 const loans = getLoans();
+let search = "";
 
 function getLoansStats(loans) {
     var activeLoans = 0;
@@ -39,7 +40,7 @@ function renderLoansTable() {
     const headers = [ "Id", "Responsável", "Matrícula", "Item", "Data Empréstimo", "Data Devolução", "Status", "Actions" ];
     
     const loansThRowsHtml = headers.map(header => `<th class="table-th light bold smaller-text">${header}</th>`).join('');
-    const loansTableRowsHtml = loans.map(loan => renderLoansTableRow(loan)).join('');
+    const loansTableRowsHtml = loans.map(loan => loan.item.toLowerCase().includes(search.toLowerCase()) || loan.responsible.toLowerCase().includes(search.toLowerCase()) ? renderLoansTableRow(loan) : '').join('');
 
     const html = `
         <div class="card">
@@ -74,6 +75,11 @@ document.getElementById('loans-table').addEventListener('click', (event) => {
     if (button) {
         registerReturn(button.dataset.registerReturn);
     }
+});
+
+document.getElementById('search-header').addEventListener('input', (event) => {
+    search = event.target.value;
+    renderLoansTable();
 });
 
 renderLoansResume();
