@@ -37,7 +37,7 @@ function getLoanStatus(status) {
 
 function renderLoansTableRow(loan) {
     return `
-        <tr style="height: 89px;">
+        <tr class="gray-border-bottom" style="height: 89px;">
             <td class="table-td bold small-text">${loan.id}</td>
             <td class="table-td small-text">
                 <div class="flex-row" style="gap: 8px; align-items: center;">
