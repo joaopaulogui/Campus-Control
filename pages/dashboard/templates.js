@@ -1,30 +1,13 @@
 function getStatsIcon(label) {
     switch (label) {
         case "Salas Abertas":
-            return `
-                <path d="M13 4h3a2 2 0 0 1 2 2v14"></path>
-                <path d="M2 20h3"></path>
-                <path d="M13 20h9"></path>
-                <path d="M10 12v.01"></path>
-                <path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"></path>
-            `; 
+            return getIcon("openDoor"); 
         case "ACs Ligados":
-            return `
-                <path d="M12.8 19.6A2 2 0 1 0 14 16H2"></path>
-                <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"></path>
-                <path d="M9.8 4.4A2 2 0 1 1 11 8H2"></path>
-            `; 
+            return getIcon("air"); 
         case "Itens Emprestados":
-            return `
-                <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path>
-                <path d="M12 22V12"></path>
-                <polyline points="3.29 7 12 12 20.71 7"></polyline>
-                <path d="m7.5 4.27 9 5.15"></path>'
-            `; 
+            return getIcon("box"); 
         case "Utilização":
-            return `
-                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-            `; 
+            return getIcon("pulse");  
     }
 }
 

@@ -36,24 +36,19 @@ function renderResume(floorName, rooms) {
             <div class="flex-row" style="gap: 16px;">
                 <div class="flex-row" style="gap: 8px; align-items: center;">
                     <svg class="logo-vec working ac-icons-vec" viewBox="0 0 24 24">
-                        <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
-                        <path d="m9 11 3 3L22 4"></path>
+                        ${getIcon("checkMark")}
                     </svg>
                     <span class="light small-text">${workingAcs}</span>
                 </div>
                 <div class="flex-row" style="gap: 8px; align-items: center;">
                     <svg class="logo-vec warning ac-icons-vec" viewBox="0 0 24 24">
-                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
-                        <path d="M12 9v4"></path>
-                        <path d="M12 17h.01"></path>
+                        ${getIcon("warning")}
                     </svg>
                     <span class="light small-text">${defectiveAcs}</span>
                 </div>
                 <div class="flex-row" style="gap: 8px; align-items: center;">
                     <svg class="logo-vec broken ac-icons-vec" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="m15 9-6 6"></path>
-                        <path d="m9 9 6 6"></path>
+                        ${getIcon("x")}
                     </svg>
                     <span class="light small-text">${brokenAcs}</span>
                 </div>
@@ -65,11 +60,11 @@ function renderResume(floorName, rooms) {
 function chooseIcon(acClass) {
     switch(acClass) {
         case "working":
-            return `<svg class="logo-vec working ac-icons-vec" viewBox="0 0 24 24"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>`
+            return `<svg class="logo-vec working ac-icons-vec" viewBox="0 0 24 24">${getIcon("checkMark")}</svg>`;
         case "warning":
-            return `<svg class="logo-vec warning ac-icons-vec" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>`
+            return `<svg class="logo-vec warning ac-icons-vec" viewBox="0 0 24 24">${getIcon("warning")}</svg>`;
         case "broken":
-            return `<svg class="logo-vec broken ac-icons-vec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>`
+            return `<svg class="logo-vec broken ac-icons-vec" viewBox="0 0 24 24">${getIcon("x")}</svg>`;
     }
 }
 
@@ -87,10 +82,7 @@ function chooseLabel(acClass) {
 function renderButtons(item) {
     if(item.ac.isOn) {
         return `<button class="bold text base-button on-off-button on flex-row small-bottom-margin" data-toggle-ac="${item.name}">
-            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">
-                <path d="M12 2v10"></path>
-                <path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path>
-            </svg>
+            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">${getIcon("power")}</svg>
             Desligar
         </button>
         <div class="flex-row" style="justify-content: space-between; gap: 8px;">
@@ -99,10 +91,7 @@ function renderButtons(item) {
         </div>`
     } else {
         return `<button class="bold text base-button on-off-button off flex-row"  data-toggle-ac="${item.name}">
-            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">
-                <path d="M12 2v10"></path>
-                <path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path>
-            </svg>
+            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">${getIcon("power")}</svg>
             Ligar
         </button>`
     }
@@ -117,11 +106,7 @@ function renderCard(floorName, rooms) {
                     <p class="light small-text no-margin">${floorName}</p>
                 </div>
                 <div class="logo ac-logo">
-                    <svg class="logo-vec ac-logo-vec" viewBox="0 0 24 24">
-                        <path d="M12.8 19.6A2 2 0 1 0 14 16H2"></path>
-                        <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"></path>
-                        <path d="M9.8 4.4A2 2 0 1 1 11 8H2"></path>
-                    </svg>
+                    <svg class="logo-vec ac-logo-vec" viewBox="0 0 24 24">${getIcon("air")}</svg>
                 </div>
             </div>
             <div class="label flex-row ac-status ${item.ac.class}-label medium-bottom-margin" style="padding: 12px; justify-content: space-between;">
@@ -129,20 +114,10 @@ function renderCard(floorName, rooms) {
                     ${chooseIcon(item.ac.class)}
                     <span class="bold small-text ${item.ac.class}">${chooseLabel(item.ac.class)}</span>
                 </div>
-                <svg class="logo-vec ac-config-vec" viewBox="0 0 24 24">
-                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
+                <svg class="logo-vec ac-config-vec" viewBox="0 0 24 24">${getIcon("cog")}</svg>
             </div>
             <div class="flex-row small-bottom-margin" style="gap: 8px; align-items: center;">
-                <svg class="logo-vec ac-config-vec" viewBox="0 0 24 24">
-                    <path d="M12 9a4 4 0 0 0-2 7.5"></path>
-                    <path d="M12 3v2"></path>
-                    <path d="m6.6 18.4-1.4 1.4"></path>
-                    <path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"></path>
-                    <path d="M4 13H2"></path>
-                    <path d="M6.34 7.34 4.93 5.93"></path>
-                </svg>
+                <svg class="logo-vec ac-config-vec" viewBox="0 0 24 24">${getIcon("temperature")}</svg>
                 <span class="light small-text">Temperatura</span>
             </div>
             <div class="flex-row small-bottom-margin" style="gap: 4px; align-items: baseline;">

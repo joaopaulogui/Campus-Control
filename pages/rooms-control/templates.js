@@ -33,20 +33,14 @@ function getDoorIcon(status) {
     if (status == "unlocked") {
         return `
             <svg class="logo-vec door-icon unlocked" viewBox="0 0 24 24">
-                <path d="M13 4h3a2 2 0 0 1 2 2v14"></path>
-                <path d="M2 20h3"></path>
-                <path d="M13 20h9"></path>
-                <path d="M10 12v.01"></path>
-                <path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z"></path>'
+                ${getIcon("openDoor")}
             </svg>
         `;
     }
 
     return `
         <svg class="logo-vec door-icon locked" viewBox="0 0 24 24">
-            <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path>
-            <path d="M2 20h20"></path>
-            <path d<path d="M14 12v.01"></path>="M13 20h9"></path>
+            ${getIcon("closedDoor")}
         </svg>
     `;
 }
@@ -55,16 +49,14 @@ function getLockIcon(status) {
     if (status == "unlocked") {
         return `
             <svg class="logo-vec lock-icon unlocked" viewBox="0 0 24 24">
-                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                ${getIcon("openPadlock")} 
             </svg>
         `;
     }
 
     return `
         <svg class="logo-vec lock-icon locked" viewBox="0 0 24 24">
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            ${getIcon("closedPadlock")} 
         </svg>
     `;
 }

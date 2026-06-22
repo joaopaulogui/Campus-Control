@@ -1,20 +1,10 @@
 function getCardIconPaths(iconClass) {
     switch (iconClass) {
         case "active-loans":
-            return `
-                <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path>
-                <path d="M12 22V12"></path>
-                <polyline points="3.29 7 12 12 20.71 7"></polyline>
-                <path d="m7.5 4.27 9 5.15"></path>
-            `;
+            return getIcon("box"); 
         case "late-returns":
         case "today-returns":
-            return`
-            <path d="M8 2v4"></path>
-            <path d="M16 2v4"></path>
-            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-            <path d="M3 10h18"></path>
-        `;
+            return getIcon("calendar"); 
     }
 }
 
@@ -53,8 +43,7 @@ function renderLoansTableRow(loan) {
                 <div class="flex-row" style="gap: 8px; align-items: center;">
                     <div class="logo user-logo">
                         <svg class="logo-vec user-logo-vec" viewBox="0 0 24 24">
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
+                            ${getIcon("user")}
                         </svg>
                     </div>
                     <span class="small-text">${loan.responsible}</span>
