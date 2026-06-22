@@ -1,8 +1,8 @@
-const allFloors = getFloors()
+const allFloors = getFloors();
 let floors = allFloors;
 
 initFloorFilter(allFloors, () => {
-    renderSchedules()
+    renderSchedules();
 });
 
 function renderSchedules() {
@@ -18,4 +18,4 @@ function renderSchedules() {
     document.getElementById('schedules').innerHTML = html;
 }
 
-renderSchedules()
+renderSchedules();

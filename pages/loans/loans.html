@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/base.css">
-    <link rel="stylesheet" href="../css/components.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <link rel="stylesheet" href="../css/pages/loans.css">
+    <link rel="stylesheet" href="../../core/base.css">
+    <link rel="stylesheet" href="../../components/components.css">
+    <link rel="stylesheet" href="../../core/layout.css">
+    <link rel="stylesheet" href="loans.css">
     <title>Document</title>
 </head>
 <body>
@@ -26,9 +26,13 @@
         </div>
     </div>
 
-    <script src="../js/components/sidebar.js"></script>
-    <script src="../js/services/loans-storage.js"></script>
-    <script src="../js/loans.js"></script>
+    <script src="../../components/sidebar.js"></script>
+
+    <script src="../../services/loans-storage.js"></script>
+    
+    <script src="templates.js"></script>
+    <script src="actions.js"></script>
+    <script src="index.js"></script>
     <script>
         renderSidebar('loans')
     </script>

@@ -1,57 +1,3 @@
-const allFloors = getFloors()
-let floors = allFloors;
-
-initFloorFilter(allFloors, () => {
-    renderAcsResume();
-    renderAcCards();
-})
-
-function chooseIcon(acClass) {
-    switch(acClass) {
-        case "working":
-            return `<svg class="logo-vec working ac-icons-vec" viewBox="0 0 24 24"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>`
-        case "warning":
-            return `<svg class="logo-vec warning ac-icons-vec" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>`
-        case "broken":
-            return `<svg class="logo-vec broken ac-icons-vec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>`
-    }
-}
-
-function chooseLabel(acClass) {
-    switch(acClass) {
-        case "working":
-            return "Funcionando"
-        case "warning":
-            return "Com Defeito"
-        case "broken":
-            return "Quebrado"
-    }
-}
-
-function renderButtons(item) {
-    if(item.ac.isOn) {
-        return `<button class="bold text base-button on-off-button on flex-row small-bottom-margin" data-toggle-ac="${item.name}">
-            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">
-                <path d="M12 2v10"></path>
-                <path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path>
-            </svg>
-            Desligar
-        </button>
-        <div class="flex-row" style="justify-content: space-between; gap: 8px;">
-            <button class="base-button bold small-text temp-control-button" data-decrease-temp="${item.name}">- 1°C</button>
-            <button class="base-button bold small-text temp-control-button" data-increase-temp="${item.name}">+ 1°C</button>
-        </div>`
-    } else {
-        return `<button class="bold text base-button on-off-button off flex-row"  data-toggle-ac="${item.name}">
-            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">
-                <path d="M12 2v10"></path>
-                <path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path>
-            </svg>
-            Ligar
-        </button>`
-    }
-}
-
 function renderResume(floorName, rooms) {
     const totalRooms = rooms.length;
     let activeAcs = 0;
@@ -116,6 +62,52 @@ function renderResume(floorName, rooms) {
     `;
 }
 
+function chooseIcon(acClass) {
+    switch(acClass) {
+        case "working":
+            return `<svg class="logo-vec working ac-icons-vec" viewBox="0 0 24 24"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>`
+        case "warning":
+            return `<svg class="logo-vec warning ac-icons-vec" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>`
+        case "broken":
+            return `<svg class="logo-vec broken ac-icons-vec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>`
+    }
+}
+
+function chooseLabel(acClass) {
+    switch(acClass) {
+        case "working":
+            return "Funcionando"
+        case "warning":
+            return "Com Defeito"
+        case "broken":
+            return "Quebrado"
+    }
+}
+
+function renderButtons(item) {
+    if(item.ac.isOn) {
+        return `<button class="bold text base-button on-off-button on flex-row small-bottom-margin" data-toggle-ac="${item.name}">
+            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">
+                <path d="M12 2v10"></path>
+                <path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path>
+            </svg>
+            Desligar
+        </button>
+        <div class="flex-row" style="justify-content: space-between; gap: 8px;">
+            <button class="base-button bold small-text temp-control-button" data-decrease-temp="${item.name}">- 1°C</button>
+            <button class="base-button bold small-text temp-control-button" data-increase-temp="${item.name}">+ 1°C</button>
+        </div>`
+    } else {
+        return `<button class="bold text base-button on-off-button off flex-row"  data-toggle-ac="${item.name}">
+            <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">
+                <path d="M12 2v10"></path>
+                <path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path>
+            </svg>
+            Ligar
+        </button>`
+    }
+}
+
 function renderCard(floorName, rooms) {
     const cardsHtml = rooms.map(item => `
         <div class="card ac-card ${item.ac.class}" style="padding: 24px;">
@@ -166,89 +158,3 @@ function renderCard(floorName, rooms) {
         <div class="grid cards bigger-bottom-margin" style="grid-template-columns: repeat(3, minmax(212px, 1fr));">${cardsHtml}</div>
     `
 }
-
-function toggleAc(roomRame) {
-    for (const floor of floors) {
-        const room = floor.rooms.find(item => item.name === roomRame);
-        if (room) {
-            room.ac.isOn = !room.ac.isOn;
-            break;
-        }
-    }
-
-    saveFloors(floors);
-    renderAcsResume();
-    renderAcCards();
-}
-
-function decreaseTemp(roomRame) {
-    for (const floor of floors) {
-        const room = floor.rooms.find(item => item.name === roomRame);
-        if (room) {
-            room.ac.temperature--;
-            break;
-        }
-    }
-
-    saveFloors(floors);
-    renderAcsResume();
-    renderAcCards();
-}
-
-function increaseTemp(roomRame) {
-    for (const floor of floors) {
-        const room = floor.rooms.find(item => item.name === roomRame);
-        if (room) {
-            room.ac.temperature++;
-            break;
-        }
-    }
-
-    saveFloors(floors);
-    renderAcsResume();
-    renderAcCards();
-}
-
-function renderAcsResume() {
-    const html = allFloors.map(floor => renderResume(floor.name, floor.rooms)).join('');
-
-    const finalHtml = `
-        <div class="grid cards big-bottom-margin">${html}</div>
-    `
-
-    document.getElementById('acs-resume').innerHTML = finalHtml;
-}
-
-function renderAcCards() {
-    const html = floors.map(floor => renderCard(floor.name, floor.rooms)).join('');
-
-    const finalHtml = `
-        <div class="flex-column">${html}</div>
-    `
-
-    document.getElementById('ac-cards').innerHTML = finalHtml;
-}
-
-document.getElementById('ac-cards').addEventListener('click', (event) => {
-    const button = event.target.closest('[data-decrease-temp]');
-    if (button) {
-        decreaseTemp(button.dataset.decreaseTemp);
-    }
-});
-
-document.getElementById('ac-cards').addEventListener('click', (event) => {
-    const button = event.target.closest('[data-increase-temp]');
-    if (button) {
-        increaseTemp(button.dataset.increaseTemp);
-    }
-});
-
-document.getElementById('ac-cards').addEventListener('click', (event) => {
-    const button = event.target.closest('[data-toggle-ac]');
-    if (button) {
-        toggleAc(button.dataset.toggleAc);
-    }
-});
-
-renderAcsResume();
-renderAcCards();
