@@ -7,7 +7,7 @@ function toggleAc(roomRame) {
         }
     }
 
-    saveFloors(floors);
+    saveFloors(allFloors);
     renderAcsResume();
     renderAcCards();
 }
@@ -21,7 +21,7 @@ function decreaseTemp(roomRame) {
         }
     }
 
-    saveFloors(floors);
+    saveFloors(allFloors);
     renderAcsResume();
     renderAcCards();
 }
@@ -35,7 +35,7 @@ function increaseTemp(roomRame) {
         }
     }
 
-    saveFloors(floors);
+    saveFloors(allFloors);
     renderAcsResume();
     renderAcCards();
 }

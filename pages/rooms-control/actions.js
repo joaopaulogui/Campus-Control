@@ -10,7 +10,7 @@ function toggleDoor(roomName) {
         }
     }
 
-    saveFloors(floors);
+    saveFloors(allFloors);
     renderFloorsResume();
     renderRoomsTable();
 }
