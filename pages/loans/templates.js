@@ -57,7 +57,7 @@ function renderLoansTableRow(loan) {
                 <button class="base-button bold smaller-text ${loan.status}" style="padding: 4px 12px; white-space: nowrap;" data-toggle-status="${loan.id}">${getLoanStatus(loan.status)}</button>
             </td>
             <td class="table-td small-text">
-                ${loan.status == "in-use" ? "-" : `
+                ${loan.status == "returned" ? "-" : `
                     <button class="base-button bold small-text green-text register-return" style="padding: 4px 12px;" data-register-return="${loan.id}">Registrar<br>Devolução</button>
                 `}
             </td>
