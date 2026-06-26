@@ -1,30 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../core/base.css">
-    <link rel="stylesheet" href="../../components/components.css">
-    <link rel="stylesheet" href="../../core/layout.css">
-    <link rel="stylesheet" href="rooms-control.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../core/base.css" />
+    <link rel="stylesheet" href="../../components/components.css" />
+    <link rel="stylesheet" href="../../core/layout.css" />
+    <link rel="stylesheet" href="rooms-control.css" />
     <title>Document</title>
-</head>
-<body>
-    <div class="flex-row">
-        <aside id="sidebar"></aside>
-        <div>
-            <header id="header"></header>
-            <div id="content">
-                <!--Page Content Here-->
-                <div style="margin: 0px 0px 24px 0px;">
-                    <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Controle de salas</h2>
-                    <p class="light text no-margin">Gerencie o acesso às salas do campus</p>
-                </div>
-                <div id="floor-filter"></div>
-                <div id="floors-resume"></div>
-                <div id="rooms-table"></div>
-            </div>
+  </head>
+  <body>
+    <div class="page-container">
+      <aside id="sidebar"></aside>
+      <div>
+        <header id="header"></header>
+        <div id="content">
+          <!--Page Content Here-->
+          <div style="margin: 0px 0px 24px 0px">
+            <h2
+              class="large-text"
+              style="font-weight: 600; margin: 0px 0px 8px 0px"
+            >
+              Controle de salas
+            </h2>
+            <p class="light text no-margin">
+              Gerencie o acesso às salas do campus
+            </p>
+          </div>
+          <div id="floor-filter"></div>
+          <div id="floors-resume"></div>
+          <div id="rooms-table"></div>
         </div>
+      </div>
     </div>
 
     <script src="../../components/icons.js"></script>
@@ -33,12 +40,12 @@
     <script src="../../components/floor-filter.js"></script>
 
     <script src="../../services/floors-storage.js"></script>
-    
+
     <script src="templates.js"></script>
     <script src="actions.js"></script>
     <script src="index.js"></script>
     <script>
-        renderSidebar('rooms-control')
+      renderSidebar("rooms-control");
     </script>
-</body>
+  </body>
 </html>

@@ -1,57 +1,72 @@
 .door-icon {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .lock-icon {
-    width: 12px;
-    height: 12px;
+  width: 12px;
+  height: 12px;
 }
 
 .unlocked {
-    stroke: #2d6a4f;
+  stroke: #2d6a4f;
 }
 
 .locked {
-    stroke: #6b7280;
+  stroke: #6b7280;
 }
 
 .unlocked-status-label {
-    align-items: center;
-    background-color: rgba(34, 106, 79, 0.1);
-    border-radius: 1rem;
-    padding: 4px 12px;
-    gap: 4px;
-    color: #2d6a4f;
-    width: fit-content;
+  align-items: center;
+  background-color: rgba(34, 106, 79, 0.1);
+  border-radius: 1rem;
+  padding: 4px 12px;
+  gap: 4px;
+  color: #2d6a4f;
+  width: fit-content;
 }
 
 .locked-status-label {
-    align-items: center;
-    background-color: #e5e5e5e5;
-    border-radius: 1rem;
-    padding: 4px 12px;
-    gap: 4px;
-    color: #6b7280;
-    width: fit-content;
+  align-items: center;
+  background-color: #e5e5e5e5;
+  border-radius: 1rem;
+  padding: 4px 12px;
+  gap: 4px;
+  color: #6b7280;
+  width: fit-content;
 }
 
 .lock-button {
-    padding: 8px 16px;
-    color: #dc2626;
-    background-color: rgba(220, 38, 38, 0.1);
+  padding: 8px 16px;
+  color: #dc2626;
+  background-color: rgba(220, 38, 38, 0.1);
 }
 
 .lock-button:hover {
-    background-color: rgba(220, 38, 38, 0.2);
+  background-color: rgba(220, 38, 38, 0.2);
 }
 
 .unlock-button {
-    padding: 8px 16px;
-    color: #2d6a4f;
-    background-color: rgba(34, 106, 79, 0.1);
+  padding: 8px 16px;
+  color: #2d6a4f;
+  background-color: rgba(34, 106, 79, 0.1);
 }
 
 .unlock-button:hover {
-    background-color: rgba(34, 106, 79, 0.2);
+  background-color: rgba(34, 106, 79, 0.2);
+}
+
+.card {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-td,
+.table-th {
+  word-break: break-word;
 }
