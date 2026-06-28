@@ -19,8 +19,7 @@
   cursor: pointer;
 }
 .room-selector {
-  overflow-x: auto;
-  padding-bottom: 4px;
+  flex-wrap: wrap;
 }
 .room-selector-button {
   white-space: nowrap;
