@@ -96,12 +96,141 @@
 
 .header {
   background-color: #ffffff;
+  height: 72px;
+  border-bottom: 1px solid #d1d5db;
   margin-left: 256px;
-  padding: 0px 24px;
+  padding: 0 24px;
+  position: relative;
 }
 
-.search-field {
-  background-color: #f9fafb;
-  padding: 8px 16px;
+.header-content {
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  background: #dc2626;
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}
+
+.header-divider {
+  width: 1px;
+  height: 40px;
+  background: #d1d5db;
+}
+
+.header-profile {
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.header-profile-info {
+  text-align: right;
+}
+
+.header-profile-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.header-profile-role {
+  margin: 4px 0 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2d6a4f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-dropdown {
+  position: absolute;
+  top: 72px;
+  right: 24px;
+  width: 320px;
+  background: white;
+  border: 1px solid #d1d5db;
   border-radius: 0.5rem;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}
+
+.dropdown-title {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+}
+
+.notification-item {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notification-title {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+}
+
+.notification-time {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.profile-dropdown-header {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-dropdown-item {
+  padding: 16px;
+  cursor: pointer;
+}
+
+.profile-dropdown-item:hover {
+  background: #f9fafb;
+}
+
+.empty-dropdown {
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
 }

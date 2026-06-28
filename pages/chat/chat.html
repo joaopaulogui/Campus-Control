@@ -15,50 +15,54 @@
 <body>
     <div class="flex-row">
         <aside id="sidebar"></aside>
-        <div id="content">
-            <div style="margin: 0px 0px 24px 0px;">
-                <h2 class="large-text" style="
+        <div>
+            <header id="header"></header>
+
+            <div id="content">
+                <div style="margin: 0px 0px 24px 0px;">
+                    <h2 class="large-text" style="
                         font-weight: 600;
                         margin: 0px 0px 8px 0px;
                     ">
-                    Chat Interno
-                </h2>
+                        Chat Interno
+                    </h2>
 
-                <p class="light text big-bottom-margin">
-                    Comunicação entre funcionários do campus
-                </p>
+                    <p class="light text big-bottom-margin">
+                        Comunicação entre funcionários do campus
+                    </p>
 
-                <div class="card chat-container">
-                    <!-- Lista de conversas -->
-                    <aside class="chat-sidebar">
-                        <div class="chat-search">
-                            <div id="contact-search-field"></div>
-                        </div>
+                    <div class="card chat-container">
+                        <!-- Lista de conversas -->
+                        <aside class="chat-sidebar">
+                            <div class="chat-search">
+                                <div id="contact-search-field"></div>
+                            </div>
 
-                        <div id="chat-contacts" class="chat-contacts">
-                            <!-- Renderizado pelo JS -->
-                        </div>
-                    </aside>
-
-                    <!-- Área do chat -->
-                    <section class="chat-content">
-                        <!-- Cabeçalho -->
-                        <header id="chat-header" class="chat-header">
-                            <!-- Renderizado pelo JS -->
-                        </header>
-
-                        <!-- Mensagens -->
-                        <main id="chat-messages" class="chat-messages">
-                            <!-- Renderizado pelo JS -->
-                        </main>
-
-                        <!-- Campo de envio -->
-                        <footer class="chat-footer">
-                            <div id="message-input-container" class="chat-input-container">
+                            <div id="chat-contacts" class="chat-contacts">
                                 <!-- Renderizado pelo JS -->
                             </div>
-                        </footer>
-                    </section>
+                        </aside>
+
+                        <!-- Área do chat -->
+                        <section class="chat-content">
+                            <!-- Cabeçalho -->
+                            <header id="chat-header" class="chat-header">
+                                <!-- Renderizado pelo JS -->
+                            </header>
+
+                            <!-- Mensagens -->
+                            <main id="chat-messages" class="chat-messages">
+                                <!-- Renderizado pelo JS -->
+                            </main>
+
+                            <!-- Campo de envio -->
+                            <footer class="chat-footer">
+                                <div id="message-input-container" class="chat-input-container">
+                                    <!-- Renderizado pelo JS -->
+                                </div>
+                            </footer>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,13 +70,15 @@
 
     <script src="../../components/icons.js"></script>
     <script src="../../components/sidebar.js"></script>
+    <script src="../../components/header.js"></script>
 
     <script src="../../services/chat-storage.js"></script>
 
     <script src="templates.js"></script>
     <script src="index.js"></script>
     <script>
-        renderSidebar('chat')
+        renderSidebar('chat');
+        renderHeader();
     </script>
 </body>
 
