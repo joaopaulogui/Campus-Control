@@ -18,6 +18,13 @@
   color: #1a1a1a;
   cursor: pointer;
 }
+.room-selector {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.room-selector-button {
+  white-space: nowrap;
+}
 .schedule-table {
   margin-top: 16px;
 }
