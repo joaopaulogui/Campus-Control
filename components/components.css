@@ -60,8 +60,8 @@
 }
 
 .active-floor {
-  color: #ffffff;
-  background-color: #2d6a4f;
+  color: #ffffff !important;
+  background-color: #2d6a4f !important;
 }
 
 .table {
