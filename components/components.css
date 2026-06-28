@@ -177,8 +177,9 @@
 
 .header-dropdown {
   position: absolute;
+  text-align: left;
   top: 72px;
-  right: 24px;
+  right: 2px;
   width: 320px;
   background: white;
   border: 1px solid #d1d5db;
@@ -187,6 +188,11 @@
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -4px rgba(0, 0, 0, 0.1);
   z-index: 100;
+}
+
+#notifications-dropdown {
+  top: 48px;
+  right: -20px;
 }
 
 .hidden {
@@ -216,6 +222,7 @@
 }
 
 .profile-dropdown-header {
+  right: 0;
   padding: 16px;
   border-bottom: 1px solid #e5e7eb;
 }

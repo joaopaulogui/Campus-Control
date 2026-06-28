@@ -53,6 +53,11 @@ function renderHeader() {
                             ? `<span class="notification-dot"></span>`
                             : ""
                     }
+
+                    <div
+                        id="notifications-dropdown"
+                        class="header-dropdown hidden"
+                    ></div>
                 </button>
 
                 <div class="header-divider"></div>
@@ -76,18 +81,13 @@ function renderHeader() {
                             ${getIcon("user")}
                         </svg>
                     </div>
+
+                    <div
+                        id="profile-dropdown"
+                        class="header-dropdown hidden"
+                    ></div>
                 </button>
             </div>
-
-            <div
-                id="notifications-dropdown"
-                class="header-dropdown hidden"
-            ></div>
-
-            <div
-                id="profile-dropdown"
-                class="header-dropdown hidden"
-            ></div>
         </div>
     `;
 
