@@ -60,9 +60,13 @@ document.getElementById("ac-cards").addEventListener("change", (event) => {
   }
 });
 
-document.getElementById("search-header").addEventListener("input", (event) => {
-  search = event.target.value;
-  renderAcCards();
+document.getElementById("search-container").innerHTML = renderSearchField("ac-search", "Buscar sala...");
+
+document.getElementById("search-container").addEventListener("input", (event) => {
+  if (event.target.id === "ac-search") {
+    search = event.target.value;
+    renderAcCards();
+  }
 });
 
 renderAcsResume();

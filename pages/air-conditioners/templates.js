@@ -25,7 +25,8 @@ function renderResume(floorName, rooms) {
   return `
         <div class="card" style="padding: 24px;">
             <h3 class="bold big-text medium-bottom-margin">${floorName}</h3>
-            <div class="flex-row gray-border-bottom small-bottom-margin" style="padding: 0px 0px 24px 0px;">
+        <div class="flex-row gray-border-bottom small-bottom-margin" style="padding: 0px 0px 24px
+         0px;">
                 <div class="flex-column" style="flex: 1;">
                     <p class="light small-text smaller-bottom-margin">Total de Salas</p>
                     <p class="bold large-text no-margin">${totalRooms}</p>
@@ -111,8 +112,11 @@ function renderCard(floorName, rooms) {
                     <p class="light small-text no-margin">${floorName}</p>
                 </div>
                 <div class="logo ac-logo">
-                    <svg class="logo-vec ac-logo-vec" viewBox="0 0 24 24">${getIcon("air")}</svg>
-                </div>
+                 
+                
+                <svg class="logo-vec ac-logo-vec" viewBox="0 0 24 24">${getIcon("air")}</svg>
+            </div>
+            
             </div>
             <div class="status-container medium-bottom-margin">
                 <div class="label flex-row ac-status ${item.ac.class}-label" style="padding: 12px; justify-content: space-between;">
