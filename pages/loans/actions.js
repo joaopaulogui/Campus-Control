@@ -24,7 +24,7 @@ function toggleStatus(loanId) {
 function registerReturn(loanId) {
     const loan = loans.find(item => item.id === loanId)
 
-    if (loan && loan.status !== "in-use") { loan.status = "in-use"; }
+    if (loan && loan.status !== "returned") { loan.status = "returned"; }
 
     saveLoans(loans);
     renderLoansResume();

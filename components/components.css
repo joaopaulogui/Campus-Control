@@ -1,107 +1,107 @@
 .icon-vec {
-    fill: none;
-    stroke: #6b7280;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    width: 20px;
-    height: 20px;
+  fill: none;
+  stroke: #6b7280;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 20px;
+  height: 20px;
 }
 
 .green-background {
-    background-color: #2d6a4f;
+  background-color: #2d6a4f;
 }
 
 .logo {
-    justify-content: center;
-    align-items: center;
-    display: inline-flex;
-    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .logo-vec {
-    fill: none;
-    stroke: #ffffff;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    display: block;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
 }
 
 .card {
-    background-color: #ffffff;
-    border-color: #d1d5db;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
+  background-color: #ffffff;
+  border-color: #d1d5db;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .cards {
-    gap: 24px;
-    width: 100%;
+  gap: 24px;
+  width: 100%;
 }
 
 .base-button {
-    border-width: 0;
-    border-radius: 0.5rem;
+  border-width: 0;
+  border-radius: 0.5rem;
 }
 
 .floor-button {
-    padding: 8px 16px;
-    border-radius: 0.5rem;
-    border-width: 1px;
-    border-color: #d1d5db;
-    background-color: #ffffff;
-    border-style: solid;
-    color: #1a1a1a;
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-color: #d1d5db;
+  background-color: #ffffff;
+  border-style: solid;
+  color: #1a1a1a;
+  cursor: pointer;
 }
 
 .active-floor {
-    color: #ffffff;
-    background-color: #2d6a4f;
+  color: #ffffff;
+  background-color: #2d6a4f;
 }
 
 .table {
-    width: 100%;
-    background-color: #ffffff;
-    border-width: 0px;
-    border-radius: 0.5rem;
-    border-collapse: collapse;
+  width: 100%;
+  background-color: #ffffff;
+  border-width: 0px;
+  border-radius: 0.5rem;
+  border-collapse: collapse;
 }
 
 .table-thead {
-    background-color: rgba(229,229,229,0.5);
-    border-radius: 0.5rem;
+  background-color: rgba(229, 229, 229, 0.5);
+  border-radius: 0.5rem;
 }
 
 .table-th {
-    text-transform: uppercase;
-    text-align: left;
-    align-items: left;
-    padding: 12px 24px;
-    background-color: transparent;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 24px;
+  background-color: transparent;
 }
 
 .table-td {
-    padding: 16px 24px;
+  padding: 16px 24px;
 }
 
 .search-icon {
-    stroke: #6b7280;
-    width: 20px;
-    height: 20px;
+  stroke: #6b7280;
+  width: 20px;
+  height: 20px;
 }
 
 .header {
-    background-color: #ffffff;
-    margin-left: 256px;
-    padding: 0px 24px;
+  background-color: #ffffff;
+  margin-left: 256px;
+  padding: 0px 24px;
 }
 
 .search-field {
-    background-color: #f9fafb;
-    padding: 8px 16px;
-    border-radius: 0.5rem;
+  background-color: #f9fafb;
+  padding: 8px 16px;
+  border-radius: 0.5rem;
 }

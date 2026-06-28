@@ -1,32 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../core/base.css">
-    <link rel="stylesheet" href="../../components/components.css">
-    <link rel="stylesheet" href="../../core/layout.css">
-    <link rel="stylesheet" href="loans.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../core/base.css" />
+    <link rel="stylesheet" href="../../components/components.css" />
+    <link rel="stylesheet" href="../../core/layout.css" />
+    <link rel="stylesheet" href="loans.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="flex-row">
-        <aside id="sidebar"></aside>
-        <div>
-            <div id="header"></div>
-            <div id="content">
-                <!--Page Content Here-->
-                <div class="flex-row big-bottom-margin" style="justify-content: space-between; align-items: center;">
-                    <div class="big-bottom-margin">
-                        <h2 class="large-text small-bottom-margin" style="font-weight: 600;">Controle de Empréstimos</h2>
-                        <p class="light text no-margin">Gerencie os equipamentos emprestados</p>
-                    </div>
-                    <button id="new-loan-button" class="base-button bold text">+ Novo Empréstimo</button>
-                </div>
-                <div id="loans-resume"></div>
-                <div id="loans-table"></div>
+      <aside id="sidebar"></aside>
+      <div>
+        <div id="header"></div>
+        <div id="content">
+          <!--Page Content Here-->
+          <div
+            class="flex-row big-bottom-margin"
+            style="justify-content: space-between; align-items: center"
+          >
+            <div class="big-bottom-margin">
+              <h2
+                class="large-text small-bottom-margin"
+                style="font-weight: 600"
+              >
+                Controle de Empréstimos
+              </h2>
+              <p class="light text no-margin">
+                Gerencie os equipamentos emprestados
+              </p>
             </div>
+            <button id="new-loan-button" class="base-button bold text">
+              + Novo Empréstimo
+            </button>
+          </div>
+          <div id="loans-resume"></div>
+          <div id="loans-table"></div>
         </div>
+      </div>
+    </div>
+
+    <div id="loan-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3 class="bold big-text">Novo Empréstimo</h3>
+
+        <input
+          id="loan-responsible"
+          placeholder="Responsável"
+          class="modal-input"
+        />
+        <input
+          id="loan-registration"
+          placeholder="Matrícula"
+          class="modal-input"
+        />
+        <input id="loan-item" placeholder="Item" class="modal-input" />
+
+        <input id="loan-loanDate" type="date" class="modal-input" />
+        <input id="loan-returnDate" type="date" class="modal-input" />
+
+        <div class="modal-actions">
+          <button id="close-modal" class="base-button">Cancelar</button>
+          <button id="save-loan" class="base-button bold">Salvar</button>
+        </div>
+      </div>
     </div>
 
     <script src="../../components/icons.js"></script>
@@ -34,12 +72,13 @@
     <script src="../../components/sidebar.js"></script>
 
     <script src="../../services/loans-storage.js"></script>
-    
+
     <script src="templates.js"></script>
     <script src="actions.js"></script>
     <script src="index.js"></script>
+    <script src="modal.js"></script>
     <script>
-        renderSidebar('loans')
+      renderSidebar("loans");
     </script>
-</body>
+  </body>
 </html>
