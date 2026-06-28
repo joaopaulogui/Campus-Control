@@ -53,9 +53,13 @@ document.getElementById('rooms-table').addEventListener('click', (event) => {
     }
 });
 
-document.getElementById('search-header').addEventListener('input', (event) => {
+document.getElementById("search-container").innerHTML = renderSearchField("rooms-search", "Buscar empréstimos por item...");
+
+document.getElementById("search-container").addEventListener("input", (event) => {
+  if (event.target.id === "rooms-search") {
     search = event.target.value;
     renderRoomsTable();
+  }
 });
 
 renderRoomsTable();

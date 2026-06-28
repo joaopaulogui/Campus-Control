@@ -102,9 +102,13 @@ document.getElementById("loans-table").addEventListener("click", (event) => {
   }
 });
 
-document.getElementById("search-header").addEventListener("input", (event) => {
-  search = event.target.value;
-  renderLoansTable();
+document.getElementById("search-container").innerHTML = renderSearchField("loans-search", "Buscar empréstimos por item...");
+
+document.getElementById("search-container").addEventListener("input", (event) => {
+  if (event.target.id === "loans-search") {
+    search = event.target.value;
+    renderLoansTable();
+  }
 });
 
 document.getElementById("save-loan").addEventListener("click", () => {
