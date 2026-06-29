@@ -1,107 +1,74 @@
 .shadow {
-    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
-
 .no-margin {
-    margin: 0px;
+  margin: 0px;
 }
-
 .centralized-text {
-    text-align: center;
+  text-align: center;
 }
-
-.distant-bottom {
-    margin: 0px 0px 32px 0px;
-}
-
 .larger-text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 30px;
+  font-size: 30px;
 }
-
 .large-text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 24px;
+  font-size: 24px;
 }
-
 .bigger-text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 20px;
+  font-size: 20px;
 }
-
 .big-text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 18px;
+  font-size: 18px;
 }
-
 .text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 16px;
+  font-size: 16px;
 }
-
 .small-text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 14px;
+  font-size: 14px;
 }
-
 .smaller-text {
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 12px;
+  font-size: 12px;
 }
-
 .light {
-    color: #6b7280;
+  color: #6b7280;
 }
-
 .flex-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
-
 .flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
 }
-
 .smaller-bottom-margin {
-    margin: 0px 0px 4px 0px;
+  margin: 0px 0px 4px 0px;
 }
-
 .small-bottom-margin {
-    margin: 0px 0px 8px 0px;
+  margin: 0px 0px 8px 0px;
 }
-
 .medium-bottom-margin {
-    margin: 0px 0px 16px 0px;
+  margin: 0px 0px 16px 0px;
 }
-
 .big-bottom-margin {
-    margin: 0px 0px 24px 0px;
+  margin: 0px 0px 24px 0px;
 }
-
 .bigger-bottom-margin {
-    margin: 0px 0px 32px 0px;
+  margin: 0px 0px 32px 0px;
 }
-
 .green-text {
-    color: #2d6a4f;
+  color: #2d6a4f;
 }
-
 .bold {
-    font-weight: 600;
+  font-weight: 600;
 }
-
 .gray-border-bottom {
-    border-bottom: 1px solid #d1d5db;
+  border-bottom: 1px solid #d1d5db;
 }
-
 .no-border {
-    border: none;
-    border-color: transparent;
-    outline: none;
+  border: none;
+  border-color: transparent;
+  outline: none;
 }

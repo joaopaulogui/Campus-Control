@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
 }
-
 html,
 body {
   margin: 0;
@@ -9,8 +8,10 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+  font-family:
+    ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 }
-
 #content {
   padding: 16px 24px;
   margin-left: 256px;
@@ -19,7 +20,6 @@ body {
   background-color: #f5f7f5;
   overflow-x: auto;
 }
-
 #sidebar {
   flex-shrink: 0;
   display: flex;
@@ -30,7 +30,6 @@ body {
   width: 256px;
   position: fixed;
 }
-
 .sidebar-header {
   padding: 24px;
   display: flex;
@@ -39,7 +38,6 @@ body {
   align-items: center;
   border-bottom: 1px solid #2d6a4f;
 }
-
 .sidebar-nav {
   padding: 16px;
   display: flex;
@@ -47,28 +45,23 @@ body {
   gap: 10px;
   border-bottom: 1px solid #2d6a4f;
 }
-
 #sidebar-logo {
   width: 40px;
   height: 40px;
   border-radius: 0.5rem;
 }
-
 #sidebar-logo-vec {
   width: 24px;
   height: 24px;
 }
-
 #sidebar-title {
   color: #ffffff;
   font-weight: 600;
 }
-
 #sidebar-subtitle {
   color: #ffffff;
   opacity: 70%;
 }
-
 .nav-item {
   text-decoration: none;
   color: #ffffff;
@@ -80,37 +73,30 @@ body {
   background-color: transparent;
   opacity: 80%;
 }
-
 .nav-item:hover {
   background-color: rgba(45, 106, 79, 0.5);
   opacity: 100%;
 }
-
 .nav-logo {
   width: 20px;
   height: 20px;
 }
-
 .sidebar-active {
   background-color: #2d6a4f;
   opacity: 100%;
 }
-
 #sidebar-footer {
   padding: 16px;
 }
-
 #sidebar-support {
   background-color: rgba(45, 106, 79, 0.3);
   border-radius: 0.5rem;
   padding: 16px;
 }
-
 #sidebar-support-text {
   color: rgba(255, 255, 255, 0.8);
   margin: 0px 0px 8px 0px;
 }
-
 #sidebar-support-button {
   padding: 8px 12px 8px 12px;
   width: 100%;
@@ -120,23 +106,19 @@ body {
   border-width: 0;
   border-radius: 0.3rem;
 }
-
 #sidebar-support-button:hover {
   opacity: 100%;
   background-color: #2d6a4f;
 }
-
 .page-container {
   display: flex;
   min-height: 100vh;
   width: 100%;
 }
-
 @media (max-width: 768px) {
   #sidebar {
     width: 80px;
   }
-
   #content {
     margin-left: 80px;
     width: calc(100vw - 80px);
