@@ -46,6 +46,7 @@
 .base-button {
   border-width: 0;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .floor-button {
@@ -253,8 +254,8 @@
   border: 1px solid #d1d5db;
   border-radius: 0.75rem;
   transition:
-    border-color .2s,
-    box-shadow .2s;
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .search-field-component:focus-within {

@@ -65,9 +65,9 @@ function renderWeekToggleSection() {
 }
 
 function openModal(presetRoom) {
-  const overlay = document.getElementById("reservation-modal-overlay");
-  overlay.classList.remove("hidden");
-  document.getElementById("reservation-error").classList.add("hidden");
+  document
+    .getElementById("reservation-modal-overlay")
+    .classList.remove("hidden");
   document.getElementById("reservation-form").reset();
   if (presetRoom)
     document.getElementById("reservation-room").value = presetRoom;
@@ -140,21 +140,17 @@ document
     const startHour = parseFloat(
       document.getElementById("reservation-start").value,
     );
-
     const endHour = parseFloat(
       document.getElementById("reservation-end").value,
     );
     const title = document.getElementById("reservation-title").value.trim();
-    const errorEl = document.getElementById("reservation-error");
 
     if (endHour <= startHour) {
-      errorEl.textContent = "O horário de término deve ser depois do início.";
-      errorEl.classList.remove("hidden");
+      alert("O horário de término deve ser depois do início.");
       return;
     }
     if (hasConflict(schedules[currentWeek], room, day, startHour, endHour)) {
-      errorEl.textContent = "Essa sala já está reservada nesse horário.";
-      errorEl.classList.remove("hidden");
+      alert("Essa sala já está reservada nesse horário.");
       return;
     }
 

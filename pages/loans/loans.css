@@ -4,34 +4,28 @@
   padding: 8px 16px;
   height: fit-content;
 }
-
 #new-loan-button:hover {
   background-color: rgba(34, 106, 79, 0.8);
   cursor: pointer;
 }
-
 .active-loans,
 .today-returns {
   stroke: #2d6a4f;
 }
-
 .late-returns {
   stroke: #dc2626;
   color: #dc2626;
 }
-
 .loan-logo {
   background-color: rgba(45, 106, 79, 0.1);
   width: 48px;
   height: 48px;
   border-radius: 0.5rem;
 }
-
 .loan-logo-vec {
   width: 24px;
   height: 24px;
 }
-
 .user-logo {
   background-color: rgba(45, 106, 79, 0.1);
   width: fit-content;
@@ -42,112 +36,53 @@
   padding: 8px;
   box-shadow: none;
 }
-
 .user-logo-vec {
   stroke: #2d6a4f;
   width: 16px;
   height: 16px;
 }
-
 .in-use,
 .register-return {
   color: #2d6a4f;
   background-color: rgba(34, 106, 79, 0.1);
   opacity: 100%;
 }
-
 .late {
   color: #dc2626;
   background-color: rgba(220, 38, 38, 0.1);
   opacity: 100%;
 }
-
 .returned {
   color: #6b7280;
   background-color: #e5e5e5;
   opacity: 100%;
 }
-
-.in-use:hover,
-.late:hover,
-.returned:hover,
-.register-return:hover {
-  opacity: 80%;
-}
-
-.modal {
+.modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 999;
+  justify-content: center;
+  z-index: 100;
 }
-
-.modal.hidden {
+.modal-overlay.hidden {
   display: none;
 }
-
-.modal-content {
-  width: 420px;
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 12px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+.modal-box {
+  width: 400px;
+  max-width: 90vw;
 }
-
 .modal-input {
   width: 100%;
-  padding: 10px 12px;
-
+  padding: 8px 12px;
+  border-radius: 0.5rem;
   border: 1px solid #d1d5db;
-  border-radius: 8px;
-
-  font-size: 14px;
-  outline: none;
 }
-
-.modal-input:focus {
-  border-color: #2d6a4f;
-  box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.2);
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-#close-modal {
-  background-color: #dc2626;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
+select.modal-input,
+input[type="date"].modal-input {
   cursor: pointer;
 }
-
-#close-modal:hover {
-  background-color: #dc2626cc;
-}
-
-#save-loan {
-  background-color: #2d6a4f;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-#save-loan:hover {
-  background-color: rgba(34, 106, 79, 0.8);
-  cursor: pointer;
+.hidden {
+  display: none;
 }

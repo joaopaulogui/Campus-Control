@@ -22,15 +22,14 @@ function buildGrid(scheduleList, room) {
     .forEach((item) => {
       for (let hour = item.startHour; hour < item.endHour; hour += 0.5) {
         if (!grid[hour]) continue;
-        if (hour === item.startHour) {
-          grid[hour][item.day] = {
-            type: "start",
-            schedule: item,
-            span: (item.endHour - item.startHour) * 2,
-          };
-        } else {
-          grid[hour][item.day] = { type: "skip" };
-        }
+        grid[hour][item.day] =
+          hour === item.startHour
+            ? {
+                type: "start",
+                schedule: item,
+                span: (item.endHour - item.startHour) * 2,
+              }
+            : { type: "skip" };
       }
     });
 
@@ -60,8 +59,8 @@ function renderGrid(scheduleList, room) {
   const rowsHtml = HOURS.map((hour) => {
     const cellsHtml = DAYS.map((day) => {
       const cell = grid[hour][day];
-      if (cell && cell.type === "skip") return "";
-      if (cell && cell.type === "start") {
+      if (cell?.type === "skip") return "";
+      if (cell?.type === "start") {
         return `<td class="schedule-cell" rowspan="${cell.span}">${renderScheduleCard(cell.schedule)}</td>`;
       }
       return `<td class="schedule-cell"></td>`;
@@ -174,24 +173,27 @@ function renderUpcomingActivities(thisWeekSchedules, currentDay, currentHour) {
 
 function calculateOccupancy(allFloors, scheduleList) {
   const totalSlotsPerRoom = HOURS.length * DAYS.length;
+  let totalSlots = 0;
+  let totalOccupied = 0;
+
   const results = allFloors.map((floor) => {
-    const totalSlots = floor.rooms.length * totalSlotsPerRoom;
+    const floorTotalSlots = floor.rooms.length * totalSlotsPerRoom;
     const occupiedSlots = scheduleList
       .filter((item) => item.floor === floor.name)
       .reduce((sum, item) => sum + (item.endHour - item.startHour), 0);
-    const percentage =
-      totalSlots === 0 ? 0 : Math.round((occupiedSlots / totalSlots) * 100);
-    return { name: floor.name, percentage };
+
+    totalSlots += floorTotalSlots;
+    totalOccupied += occupiedSlots;
+
+    return {
+      name: floor.name,
+      percentage:
+        floorTotalSlots === 0
+          ? 0
+          : Math.round((occupiedSlots / floorTotalSlots) * 100),
+    };
   });
 
-  const totalSlots = allFloors.reduce(
-    (sum, floor) => sum + floor.rooms.length * totalSlotsPerRoom,
-    0,
-  );
-  const totalOccupied = scheduleList.reduce(
-    (sum, item) => sum + (item.endHour - item.startHour),
-    0,
-  );
   const overallPercentage =
     totalSlots === 0 ? 0 : Math.round((totalOccupied / totalSlots) * 100);
 
@@ -204,30 +206,20 @@ function renderOccupancy(allFloors, scheduleList) {
     scheduleList,
   );
 
-  const floorsHtml = results
-    .map(
-      (floor) => `
+  const renderBar = (label, percentage) => `
         <div class="small-bottom-margin">
             <div class="flex-row" style="justify-content: space-between;">
-                <span class="small-text">${floor.name}</span>
-                <span class="bold small-text">${floor.percentage}%</span>
+                <span class="small-text">${label}</span>
+                <span class="bold small-text">${percentage}%</span>
             </div>
-            <div class="occupancy-bar-bg"><div class="occupancy-bar-fill" style="width: ${floor.percentage}%;"></div></div>
-        </div>
-    `,
-    )
-    .join("");
-
-  return `
-        ${floorsHtml}
-        <div>
-            <div class="flex-row" style="justify-content: space-between;">
-                <span class="small-text">Média Geral</span>
-                <span class="bold small-text">${overallPercentage}%</span>
-            </div>
-            <div class="occupancy-bar-bg"><div class="occupancy-bar-fill" style="width: ${overallPercentage}%;"></div></div>
+            <div class="occupancy-bar-bg"><div class="occupancy-bar-fill" style="width: ${percentage}%;"></div></div>
         </div>
     `;
+
+  const floorsHtml = results
+    .map((floor) => renderBar(floor.name, floor.percentage))
+    .join("");
+  return floorsHtml + renderBar("Média Geral", overallPercentage);
 }
 
 function renderResumePanels(
@@ -315,7 +307,6 @@ function renderReservationModal(allFloors) {
                         <label class="bold small-text small-bottom-margin" style="display: block;">Título</label>
                         <input type="text" id="reservation-title" class="modal-input" placeholder="Ex: Reunião de Equipe" required>
                     </div>
-                    <p id="reservation-error" class="small-text hidden" style="color: #dc2626;"></p>
                     <button type="submit" class="base-button bold text" style="background-color: #2d6a4f; color: #ffffff; width: 100%; padding: 10px;">Confirmar Reserva</button>
                 </form>
             </div>

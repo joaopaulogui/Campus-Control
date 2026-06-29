@@ -15,7 +15,6 @@
       <div>
         <div id="header"></div>
         <div id="content">
-          <!--Page Content Here-->
           <div
             class="flex-row big-bottom-margin"
             style="justify-content: space-between; align-items: center"
@@ -41,47 +40,112 @@
         </div>
       </div>
     </div>
-
-    <div id="loan-modal" class="modal hidden">
-      <div class="modal-content">
-        <h3 class="bold big-text">Novo Empréstimo</h3>
-
-        <input
-          id="loan-responsible"
-          placeholder="Responsável"
-          class="modal-input"
-        />
-        <input
-          id="loan-registration"
-          placeholder="Matrícula"
-          class="modal-input"
-        />
-        <input id="loan-item" placeholder="Item" class="modal-input" />
-
-        <input id="loan-loanDate" type="date" class="modal-input" />
-        <input id="loan-returnDate" type="date" class="modal-input" />
-
-        <div class="modal-actions">
-          <button id="close-modal" class="base-button">Cancelar</button>
-          <button id="save-loan" class="base-button bold">Salvar</button>
+    <div id="loan-modal" class="modal-overlay hidden">
+      <div class="card modal-box" style="padding: 24px">
+        <div
+          class="flex-row medium-bottom-margin"
+          style="justify-content: space-between; align-items: center"
+        >
+          <h3 class="bold big-text no-margin">Novo Empréstimo</h3>
+          <button
+            id="close-modal"
+            type="button"
+            class="base-button bold text"
+            style="background-color: transparent"
+          >
+            ✕
+          </button>
         </div>
+        <form id="loan-form">
+          <div class="small-bottom-margin">
+            <label
+              class="bold small-text small-bottom-margin"
+              style="display: block"
+              >Responsável</label
+            >
+            <input
+              id="loan-responsible"
+              placeholder="Responsável"
+              class="modal-input"
+              required
+            />
+          </div>
+          <div class="small-bottom-margin">
+            <label
+              class="bold small-text small-bottom-margin"
+              style="display: block"
+              >Matrícula</label
+            >
+            <input
+              id="loan-registration"
+              placeholder="Matrícula"
+              class="modal-input"
+              required
+            />
+          </div>
+          <div class="small-bottom-margin">
+            <label
+              class="bold small-text small-bottom-margin"
+              style="display: block"
+              >Item</label
+            >
+            <select id="loan-item" class="modal-input" required></select>
+          </div>
+          <div class="flex-row small-bottom-margin" style="gap: 12px">
+            <div style="flex: 1">
+              <label
+                class="bold small-text small-bottom-margin"
+                style="display: block"
+                >Data Empréstimo</label
+              >
+              <input
+                id="loan-loanDate"
+                type="date"
+                class="modal-input"
+                required
+              />
+            </div>
+            <div style="flex: 1">
+              <label
+                class="bold small-text small-bottom-margin"
+                style="display: block"
+                >Data Retorno</label
+              >
+              <input
+                id="loan-returnDate"
+                type="date"
+                class="modal-input"
+                required
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="base-button bold text"
+            style="
+              background-color: #2d6a4f;
+              color: #ffffff;
+              width: 100%;
+              padding: 10px;
+            "
+          >
+            Confirmar Empréstimo
+          </button>
+        </form>
       </div>
     </div>
-
     <script src="../../components/icons.js"></script>
     <script src="../../components/header.js"></script>
     <script src="../../components/sidebar.js"></script>
     <script src="../../components/search-field.js"></script>
-
     <script src="../../services/loans-storage.js"></script>
-
     <script src="templates.js"></script>
     <script src="actions.js"></script>
     <script src="index.js"></script>
     <script src="modal.js"></script>
     <script>
-      renderSidebar("loans")
-      renderHeader()
+      renderSidebar("loans");
+      renderHeader();
     </script>
   </body>
 </html>

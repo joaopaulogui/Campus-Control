@@ -90,6 +90,7 @@
 .modal-box {
   width: 400px;
   max-width: 90vw;
+  position: relative;
 }
 .modal-input {
   width: 100%;
