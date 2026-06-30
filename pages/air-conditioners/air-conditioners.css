@@ -2,113 +2,93 @@
   width: 16px;
   height: 16px;
 }
-
 .ac-card {
   border-width: 2px;
 }
-
 .working {
   stroke: #2d6a4f;
-  border-color: rgba(34, 106, 79, 0.2);
+  border-color: rgba(45, 106, 79, 0.2);
 }
-
 .working-label {
   color: #2d6a4f;
-  background-color: rgba(34, 106, 79, 0.1);
-  border-color: rgba(34, 106, 79, 0.2);
+  background-color: rgba(45, 106, 79, 0.1);
+  border-color: rgba(45, 106, 79, 0.2);
 }
-
 .warning {
   stroke: #d08700;
   border-color: #fff085;
 }
-
 .warning-label {
   color: #d08700;
   background-color: #fefce8;
   border-color: #fff085;
 }
-
 .broken {
   stroke: #dc2626;
   border-color: rgba(220, 38, 38, 0.2);
 }
-
 .broken-label {
   color: #dc2626;
   background-color: rgba(220, 38, 38, 0.1);
   border-color: rgba(220, 38, 38, 0.2);
 }
-
 .ac-logo {
   background-color: rgba(45, 106, 79, 0.1);
   width: 48px;
   height: 48px;
   border-radius: 0.5rem;
 }
-
 .ac-logo-vec {
   stroke: #2d6a4f;
   width: 24px;
   height: 24px;
 }
-
 .ac-config-vec {
-  stroke: #8b7280;
+  stroke: #6b7280;
   width: 16px;
   height: 16px;
 }
-
 .ac-status {
   border-style: solid;
   border-width: 1px;
   border-radius: 0.5rem;
 }
-
 .ac-on-off-vec {
   stroke: #ffffff;
   width: 16px;
   height: 16px;
 }
-
 .on-off-button {
+  display: flex;
   padding: 8px 16px;
   align-items: center;
   justify-content: center;
   color: #ffffff;
   gap: 8px;
 }
-
 .temp-control-button {
   background-color: #e5e5e5;
   flex: 1;
   padding: 8px 12px;
 }
-
 .temp-control-button:hover {
   background-color: rgba(229, 229, 229, 0.8);
 }
-
 .on {
   background-color: #dc2626;
 }
-
 .on:hover {
   background-color: rgba(220, 38, 38, 0.8);
 }
-
 .off {
   background-color: #2d6a4f;
 }
-
 .off:hover {
-  background-color: rgba(34, 106, 79, 0.8);
+  background-color: rgba(45, 106, 79, 0.8);
 }
-
 .status-container {
   position: relative;
 }
-
 .status-select-overlay {
   position: absolute;
   inset: 0;

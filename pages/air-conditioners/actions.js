@@ -1,44 +1,41 @@
-function toggleAc(roomRame) {
+function toggleAc(roomName) {
   for (const floor of floors) {
-    const room = floor.rooms.find((item) => item.name === roomRame);
+    const room = floor.rooms.find((item) => item.name === roomName);
     if (room) {
       room.ac.isOn = !room.ac.isOn;
       break;
     }
   }
-
   saveFloors(allFloors);
   renderAcsResume();
   renderAcCards();
 }
 
-function decreaseTemp(roomRame) {
+function decreaseTemp(roomName) {
   for (const floor of floors) {
-    const room = floor.rooms.find((item) => item.name === roomRame);
+    const room = floor.rooms.find((item) => item.name === roomName);
     if (room) {
       if (room.ac.temperature > 16) {
         room.ac.temperature--;
-        break;
       }
+      break;
     }
   }
-
   saveFloors(allFloors);
   renderAcsResume();
   renderAcCards();
 }
 
-function increaseTemp(roomRame) {
+function increaseTemp(roomName) {
   for (const floor of floors) {
-    const room = floor.rooms.find((item) => item.name === roomRame);
+    const room = floor.rooms.find((item) => item.name === roomName);
     if (room) {
       if (room.ac.temperature < 32) {
         room.ac.temperature++;
-        break;
       }
+      break;
     }
   }
-
   saveFloors(allFloors);
   renderAcsResume();
   renderAcCards();
@@ -52,7 +49,6 @@ function changeAcStatus(roomName, newStatus) {
       break;
     }
   }
-
   saveFloors(allFloors);
   renderAcsResume();
   renderAcCards();

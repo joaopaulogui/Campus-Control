@@ -6,9 +6,8 @@ function renderResume(floorName, rooms) {
   let brokenAcs = 0;
 
   rooms.forEach((room) => {
-    if (room.ac.isOn) {
-      activeAcs++;
-    }
+    if (room.ac.isOn) activeAcs++;
+
     switch (room.ac.class) {
       case "working":
         workingAcs++;
@@ -25,8 +24,7 @@ function renderResume(floorName, rooms) {
   return `
         <div class="card" style="padding: 24px;">
             <h3 class="bold big-text medium-bottom-margin">${floorName}</h3>
-        <div class="flex-row gray-border-bottom small-bottom-margin" style="padding: 0px 0px 24px
-         0px;">
+            <div class="flex-row gray-border-bottom small-bottom-margin" style="padding: 0px 0px 24px 0px;">
                 <div class="flex-column" style="flex: 1;">
                     <p class="light small-text smaller-bottom-margin">Total de Salas</p>
                     <p class="bold large-text no-margin">${totalRooms}</p>
@@ -38,21 +36,15 @@ function renderResume(floorName, rooms) {
             </div>
             <div class="flex-row" style="gap: 16px;">
                 <div class="flex-row" style="gap: 8px; align-items: center;">
-                    <svg class="logo-vec working ac-icons-vec" viewBox="0 0 24 24">
-                        ${getIcon("checkMark")}
-                    </svg>
+                    ${chooseIcon("working")}
                     <span class="light small-text">${workingAcs}</span>
                 </div>
                 <div class="flex-row" style="gap: 8px; align-items: center;">
-                    <svg class="logo-vec warning ac-icons-vec" viewBox="0 0 24 24">
-                        ${getIcon("warning")}
-                    </svg>
+                    ${chooseIcon("warning")}
                     <span class="light small-text">${defectiveAcs}</span>
                 </div>
                 <div class="flex-row" style="gap: 8px; align-items: center;">
-                    <svg class="logo-vec broken ac-icons-vec" viewBox="0 0 24 24">
-                        ${getIcon("x")}
-                    </svg>
+                    ${chooseIcon("broken")}
                     <span class="light small-text">${brokenAcs}</span>
                 </div>
             </div>
@@ -84,27 +76,35 @@ function chooseLabel(acClass) {
 
 function renderButtons(item) {
   if (item.ac.isOn) {
-    return `<button class="bold text base-button on-off-button on flex-row small-bottom-margin" data-toggle-ac="${item.name}">
+    return `
+        <button class="bold text base-button on-off-button on flex-row small-bottom-margin" data-toggle-ac="${item.name}">
             <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">${getIcon("power")}</svg>
             Desligar
         </button>
         <div class="flex-row" style="justify-content: space-between; gap: 8px;">
             <button class="base-button bold small-text temp-control-button" data-decrease-temp="${item.name}">- 1°C</button>
             <button class="base-button bold small-text temp-control-button" data-increase-temp="${item.name}">+ 1°C</button>
-        </div>`;
-  } else {
-    return `<button class="bold text base-button on-off-button off flex-row"  data-toggle-ac="${item.name}">
+        </div>
+    `;
+  }
+
+  return `
+        <button class="bold text base-button on-off-button off flex-row" data-toggle-ac="${item.name}">
             <svg class="logo-vec ac-on-off-vec" viewBox="0 0 24 24">${getIcon("power")}</svg>
             Ligar
-        </button>`;
-  }
+        </button>
+    `;
 }
 
 function renderCard(floorName, rooms) {
   const cardsHtml = rooms
-    .map((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase())
-        ? `
+    .map((item) => {
+      const matchesSearch = item.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      if (!matchesSearch) return "";
+
+      return `
         <div class="card ac-card ${item.ac.class}" style="padding: 24px;">
             <div class="flex-row medium-bottom-margin" style="justify-content: space-between;">
                 <div>
@@ -112,11 +112,8 @@ function renderCard(floorName, rooms) {
                     <p class="light small-text no-margin">${floorName}</p>
                 </div>
                 <div class="logo ac-logo">
-                 
-                
-                <svg class="logo-vec ac-logo-vec" viewBox="0 0 24 24">${getIcon("air")}</svg>
-            </div>
-            
+                    <svg class="logo-vec ac-logo-vec" viewBox="0 0 24 24">${getIcon("air")}</svg>
+                </div>
             </div>
             <div class="status-container medium-bottom-margin">
                 <div class="label flex-row ac-status ${item.ac.class}-label" style="padding: 12px; justify-content: space-between;">
@@ -142,9 +139,8 @@ function renderCard(floorName, rooms) {
             </div>
             ${renderButtons(item)}
         </div>
-    `
-        : "",
-    )
+      `;
+    })
     .join("");
 
   return `

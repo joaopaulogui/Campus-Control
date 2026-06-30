@@ -1,48 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../core/base.css">
-    <link rel="stylesheet" href="../../components/components.css">
-    <link rel="stylesheet" href="../../core/layout.css">
-    <link rel="stylesheet" href="air-conditioners.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../core/base.css" />
+    <link rel="stylesheet" href="../../components/components.css" />
+    <link rel="stylesheet" href="../../core/layout.css" />
+    <link rel="stylesheet" href="air-conditioners.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="flex-row">
-        <aside id="sidebar"></aside>
-        <div>
-            <div id="header"></div>
-            <div id="content">
-                <!--Page Content Here-->
-                <div style="margin: 0px 0px 24px 0px;">
-                    <h2 class="large-text" style="font-weight: 600; margin: 0px 0px 8px 0px;">Controle de Ar-Condicionado</h2>
-                    <p class="light text no-margin">Gerencie os sistemas de climatização do campus</p>
-                </div>
-                <div id="floor-filter"></div>
-                <div id="acs-resume"></div>
-                <div id="search-container"></div>
-                <div id="ac-cards"></div>
-            </div>
+      <aside id="sidebar"></aside>
+      <div>
+        <div id="header"></div>
+        <div id="content">
+          <!--Page Content Here-->
+          <div style="margin: 0px 0px 24px 0px">
+            <h2
+              class="large-text"
+              style="font-weight: 600; margin: 0px 0px 8px 0px"
+            >
+              Controle de Ar-Condicionado
+            </h2>
+            <p class="light text no-margin">
+              Gerencie os sistemas de climatização do campus
+            </p>
+          </div>
+          <div id="floor-filter"></div>
+          <div id="acs-resume"></div>
+          <div id="search-container"></div>
+          <div id="ac-cards"></div>
         </div>
+      </div>
     </div>
-
     <script src="../../components/icons.js"></script>
     <script src="../../components/header.js"></script>
     <script src="../../components/sidebar.js"></script>
-    <script src="../../components/header.js"></script>
     <script src="../../components/search-field.js"></script>
     <script src="../../components/floor-filter.js"></script>
-    
     <script src="../../services/floors-storage.js"></script>
-
     <script src="templates.js"></script>
     <script src="actions.js"></script>
     <script src="index.js"></script>
     <script>
-        renderSidebar('air-conditioners')
-        renderHeader()
+      renderSidebar("air-conditioners");
+      renderHeader();
     </script>
-</body>
+  </body>
 </html>
