@@ -1,6 +1,6 @@
 import { AirConditioner } from "../entities/air-conditioner";
 
-export interface UsersRepository {
+export interface AirConditionersRepository {
     create(airConditioner: AirConditioner): Promise<void>
     findById(id: string): Promise<AirConditioner | null>
     findManyByRoomId(roomId: string): Promise<AirConditioner[]>
