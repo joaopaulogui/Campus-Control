@@ -6,7 +6,8 @@ export enum LoanStatus {
 
 export interface LoanProps {
     id: string
-    responsibleId: string
+    responsibleName: string
+    responsibleRegistration: string
     itemId: string
     createdAt: Date
     returnDate: Date
@@ -24,12 +25,20 @@ export class Loan {
         return this.props.id
     }
 
-    get responsibleId() {
-        return this.props.responsibleId
+    get responsibleName() {
+        return this.props.responsibleName
     }
 
-    set responsibleId(responsibleId: string) {
-        this.props.responsibleId = responsibleId
+    set responsibleName(responsibleName: string) {
+        this.props.responsibleName = responsibleName
+    }
+
+    get responsibleRegistration() {
+        return this.props.responsibleName
+    }
+
+    set responsibleRegistration(responsibleRegistration: string) {
+        this.props.responsibleRegistration = responsibleRegistration
     }
 
     get itemId() {
