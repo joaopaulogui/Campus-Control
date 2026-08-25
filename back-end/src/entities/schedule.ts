@@ -1,9 +1,8 @@
 export interface ScheduleProps {
     id: string
     roomId: string
-    date: Date
-    startHour: number
-    endHour: number
+    startDate: Date
+    endDate: Date
     title: string
 }
 
@@ -26,28 +25,20 @@ export class Schedule {
         this.props.roomId = roomId
     }
 
-    get date() {
-        return this.props.date
+    get startDate() {
+        return this.props.startDate
     }
 
-    set date(date: Date) {
-        this.props.date = date
+    set startDate(startDate: Date) {
+        this.props.startDate = startDate
     }
 
-    get startHour() {
-        return this.props.startHour
+    get endDate() {
+        return this.props.endDate
     }
 
-    set startHour(startHour: number) {
-        this.props.startHour = startHour
-    }
-
-    get endHour() {
-        return this.props.endHour
-    }
-
-    set endHour(endHour: number) {
-        this.props.endHour = endHour
+    set endDate(endDate: Date) {
+        this.props.endDate = endDate
     }
 
     get title() {
