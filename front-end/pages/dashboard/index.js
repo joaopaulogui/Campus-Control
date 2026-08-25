@@ -29,7 +29,7 @@ function getCampusStats(floors) {
     totalRooms += floor.rooms.length;
 
     floor.rooms.forEach((room) => {
-      if (room.status === "unlocked") {
+      if (room.isLocked === false) {
         openRooms++;
       }
 

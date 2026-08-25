@@ -3,7 +3,7 @@ function renderFloorResume(floor) {
     var openRooms = 0;
 
     floor.rooms.forEach(room => {
-        if (room.status == "unlocked") {openRooms++;}
+        if (!room.isLocked) {openRooms++;}
     });
 
     const lockedRooms = totalRooms - openRooms;
@@ -29,8 +29,8 @@ function renderFloorResume(floor) {
     `;
 }
 
-function getDoorIcon(status) {
-    if (status == "unlocked") {
+function getDoorIcon(isLocked) {
+    if (!isLocked) {
         return `
             <svg class="logo-vec door-icon unlocked" viewBox="0 0 24 24">
                 ${getIcon("openDoor")}
@@ -45,8 +45,8 @@ function getDoorIcon(status) {
     `;
 }
 
-function getLockIcon(status) {
-    if (status == "unlocked") {
+function getLockIcon(isLocked) {
+    if (!isLocked) {
         return `
             <svg class="logo-vec lock-icon unlocked" viewBox="0 0 24 24">
                 ${getIcon("openPadlock")} 
@@ -66,7 +66,7 @@ function renderTableRow(floorName, room) {
         <tr class="gray-border-bottom">
             <td class="table-td">
                 <div class="flex-row" style="gap: 12px;">
-                    ${getDoorIcon(room.status)}
+                    ${getDoorIcon(room.isLocked)}
                     <span class="bold small-text">${room.name}</span>
                 </div>
             </td>
@@ -74,13 +74,13 @@ function renderTableRow(floorName, room) {
             <td class="small-text table-td">${room.type}</td>
             <td class="small-text table-td">${room.capacity}</td>
             <td class="small-text table-td">
-                <div class="flex-row ${room.status}-status-label">
-                    ${getLockIcon(room.status)}
-                    <span class="bold smaller-text">${room.status == "unlocked" ? "Destrancada" : "Trancada"}</span>
+                <div class="flex-row ${room.isLocked ? "locked"  : "unlocked"}-status-label">
+                    ${getLockIcon(room.isLocked)}
+                    <span class="bold smaller-text">${room.isLocked ? "Trancada" : "Destrancada"}</span>
                 </div>
             </td>
             <td class="table-td">
-                <button class="base-button bold small-text ${room.status == "unlocked" ? "lock" : "unlock"}-button" data-toggle-door="${room.name}">${room.status == "unlocked" ? "Trancar" : "Destrancar"}</button>
+                <button class="base-button bold small-text ${room.isLocked ? "unlock" : "lock"}-button" data-toggle-door="${room.name}">${room.isLocked ? "Destrancar" : "Trancar"}</button>
             </td>
         </tr>
     `;

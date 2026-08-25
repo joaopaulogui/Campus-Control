@@ -5,17 +5,12 @@ export enum RoomType {
     AUDITORIUM
 }
 
-export enum RoomStatus {
-    LOCKED,
-    UNLOCKED
-}
-
 export interface RoomProps {
     id: string
     name: string
     type: RoomType
     capacity: number
-    status: RoomStatus
+    isLocked: boolean
     floorId: string
 }
 
@@ -54,12 +49,12 @@ export class Room {
         this.props.capacity = capacity
     }
 
-    get status() {
-        return this.props.status
+    get isLocked() {
+        return this.props.isLocked
     }
 
-    set status(status: RoomStatus) {
-        this.props.status = status
+    set isLocked(isLocked: boolean) {
+        this.props.isLocked = isLocked
     }
 
     get floorId() {
