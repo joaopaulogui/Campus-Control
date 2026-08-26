@@ -1,7 +1,11 @@
+interface ChatParticipant {
+    userId: string
+    unread: number
+}
+
 export interface ChatProps {
     id: string
-    participantId: string
-    unread: number
+    participants: ChatParticipant[]
 }
 
 export class Chat {
@@ -15,15 +19,21 @@ export class Chat {
         return this.props.id
     }
 
-    get participantId() {
-        return this.props.participantId
+    get participantIds() {
+        return this.props.participants.map(participant => participant.userId)
     }
 
-    get unread() {
-        return this.props.unread
+    hasParticipant(participantId: string): boolean {
+        return this.props.participants.some(participant => participant.userId === participantId)
     }
 
-    set unread(unread: number) {
-        this.props.unread = unread
+    unreadFor(participantId: string): number {
+        const participant = this.props.participants.find(participant => participant.userId === participantId)
+
+        if(!participant) {
+            throw new Error()
+        }
+
+        return participant.unread
     }
 }

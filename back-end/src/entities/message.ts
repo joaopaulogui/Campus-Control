@@ -1,7 +1,8 @@
 export interface MessageProps {
     id: string
+    chatId: string
     senderId: string
-    text: string
+    content: string
     createdAt: Date
 }
 
@@ -16,12 +17,16 @@ export class Message {
         return this.props.id
     }
 
+    get chatId() {
+        return this.props.chatId
+    }
+
     get senderId() {
         return this.props.senderId
     }
 
-    get text() {
-        return this.props.text
+    get content() {
+        return this.props.content
     }
 
     get createdAt() {
