@@ -1,5 +1,5 @@
-import { Item } from "../entities/item";
-import { Loan } from "../entities/loan";
+import { Item } from "../entities/item.js";
+import { Loan } from "../entities/loan.js";
 
 export interface LoansRepository {
     create(loan: Loan): Promise<void>

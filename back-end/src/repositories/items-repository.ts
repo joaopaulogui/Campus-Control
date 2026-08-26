@@ -1,4 +1,4 @@
-import { Item } from "../entities/item";
+import { Item } from "../entities/item.js";
 
 export interface ItemsRepository {
     create(item: Item): Promise<void>

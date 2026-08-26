@@ -1,5 +1,5 @@
-import { AirConditioner } from "../entities/air-conditioner"
-import { AirConditionersRepository } from "../repositories/air-conditioners-repository"
+import type { AirConditioner } from "../entities/air-conditioner.js"
+import type { AirConditionersRepository } from "../repositories/air-conditioners-repository.js"
 
 interface ListAirConditionersUseCaseRequest {
     floorId?: string

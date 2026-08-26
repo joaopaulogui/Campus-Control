@@ -1,4 +1,4 @@
-import { Schedule } from "../entities/schedule";
+import { Schedule } from "../entities/schedule.js";
 
 export enum WeekFilter {
     THIS_WEEK,

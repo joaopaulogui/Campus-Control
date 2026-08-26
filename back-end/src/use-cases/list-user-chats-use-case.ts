@@ -1,5 +1,5 @@
-import { Chat } from "../entities/chat";
-import { ChatsRepository } from "../repositories/chats-repository";
+import type { Chat } from "../entities/chat.js";
+import type { ChatsRepository } from "../repositories/chats-repository.js";
 
 interface ListUserChatsUseCaseRequest {
     userId: string

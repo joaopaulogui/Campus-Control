@@ -1,5 +1,5 @@
-import { Room } from "../entities/room";
-import { RoomsRepository } from "../repositories/rooms-repository";
+import type { Room } from "../entities/room.js";
+import type { RoomsRepository } from "../repositories/rooms-repository.js";
 
 interface ListFloorRoomsUseCaseRequest {
     floorId: string

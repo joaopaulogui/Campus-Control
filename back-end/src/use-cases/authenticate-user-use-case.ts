@@ -1,4 +1,4 @@
-import { UsersRepository } from "../repositories/users-repositoy";
+import type { UsersRepository } from "../repositories/users-repositoy.js";
 
 interface AuthenticateUserUseCaseRequest {
     email: string

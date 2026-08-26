@@ -1,4 +1,4 @@
-import { AirConditionersRepository } from "../repositories/air-conditioners-repository";
+import type { AirConditionersRepository } from "../repositories/air-conditioners-repository.js";
 
 interface ToggleAirConditionerUseCaseRequest {
     id: string

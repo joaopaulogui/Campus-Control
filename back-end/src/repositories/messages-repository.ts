@@ -1,4 +1,4 @@
-import { Message } from "../entities/message";
+import { Message } from "../entities/message.js";
 
 export interface MessagesRepository {
     create(message: Message): Promise<void>

@@ -1,4 +1,4 @@
-import { Floor } from "../entities/floor"
+import { Floor } from "../entities/floor.js"
 
 export interface FloorsRepository {
     create(floor: Floor): Promise<void>

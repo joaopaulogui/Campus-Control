@@ -1,4 +1,4 @@
-import { AirConditioner } from "../entities/air-conditioner";
+import { AirConditioner } from "../entities/air-conditioner.js";
 
 export interface AirConditionersRepository {
     create(airConditioner: AirConditioner): Promise<void>

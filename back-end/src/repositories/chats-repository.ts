@@ -1,4 +1,4 @@
-import { Chat } from "../entities/chat";
+import { Chat } from "../entities/chat.js";
 
 export interface ChatsRepository {
     create(chat: Chat): Promise<void>
