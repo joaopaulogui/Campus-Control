@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RoomType {
+  CLASSROOM
+  LAB
+  MEETING_ROOM
+  AUDITORIUM
+}
+
+enum AirConditionerStatus {
+  WORKING
+  WARNING
+  BROKEN
+}
+
+enum LoanStatus {
+  IN_USE
+  LATE
+  RETURNED
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  chats    ChatParticipant[]
+  messages Message[]
+}
+
+model Floor {
+  id    String @id @default(uuid())
+  name  String
+  rooms Room[]
+}
+
+model Room {
+  id       String   @id @default(uuid())
+  name     String
+  type     RoomType
+  capacity Int
+  isLocked Boolean  @default(false)
+  floorId  String
+  floor    Floor    @relation(fields: [floorId], references: [id])
+
+  airConditioners AirConditioner[]
+  schedules       Schedule[]
+}
+
+model AirConditioner {
+  id          String               @id @default(uuid())
+  status      AirConditionerStatus
+  temperature Int
+  isOn        Boolean              @default(false)
+  roomId      String
+  room        Room                 @relation(fields: [roomId], references: [id])
+}
+
+model Schedule {
+  id        String   @id @default(uuid())
+  title     String
+  startDate DateTime
+  endDate   DateTime
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id])
+}
+
+model Item {
+  id       String @id @default(uuid())
+  name     String
+  quantity Int
+  loans    Loan[]
+}
+
+model Loan {
+  id                      String     @id @default(uuid())
+  responsibleName         String
+  responsibleRegistration String
+  createdAt               DateTime   @default(now())
+  returnDate              DateTime
+  status                  LoanStatus
+  itemId                  String
+  item                    Item       @relation(fields: [itemId], references: [id])
+}
+
+model Chat {
+  id           String            @id @default(uuid())
+  participants ChatParticipant[]
+  messages     Message[]
+}
+
+model ChatParticipant {
+  unread Int    @default(0)
+  chatId String
+  userId String
+  chat   Chat   @relation(fields: [chatId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@id([chatId, userId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  chatId    String
+  senderId  String
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  sender    User     @relation(fields: [senderId], references: [id])
+}

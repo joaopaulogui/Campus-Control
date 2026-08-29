@@ -5,37 +5,37 @@ const menuItems = [
     id: "dashboard",
     label: "Dashboard",
     icon: "house",
-    href: "../dashboard/dashboard.html",
+    href: "../dashboard",
   },
   {
     id: "air-conditioners",
     label: "Ar-Condicionado",
     icon: "air",
-    href: "../air-conditioners/air-conditioners.html",
+    href: "../air-conditioners",
   },
   {
     id: "rooms-control",
     label: "Controle de Salas",
     icon: "closedDoor",
-    href: "../rooms-control/rooms-control.html",
+    href: "../rooms-control",
   },
   {
     id: "schedules",
     label: "Horários",
     icon: "clock",
-    href: "../schedules/schedules.html",
+    href: "../schedules",
   },
   {
     id: "chat",
     label: "Chat Interno",
     icon: "chat",
-    href: "../chat/chat.html",
+    href: "../chat",
   },
   {
     id: "loans",
     label: "Empréstimos",
     icon: "box",
-    href: "../loans/loans.html",
+    href: "../loans",
   },
 ];
 

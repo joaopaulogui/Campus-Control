@@ -1,0 +1,42 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --ext .ts --fix",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:reset": "npm run db:down && npm run db:up && npm run db:migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.3.0",
+    "@types/pg": "^8.23.1",
+    "eslint": "^10.9.1",
+    "prisma": "^7.10.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.23.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "prisma@7.10.0": true,
+    "@prisma/client@7.10.0": true,
+    "@prisma/engines@7.10.0": true
+  }
+}

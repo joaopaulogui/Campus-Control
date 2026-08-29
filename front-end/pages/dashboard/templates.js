@@ -57,7 +57,7 @@ function renderStatsFloor(floor) {
   let activeAcs = 0;
 
   floor.rooms.forEach((room) => {
-    if (room.status === "unlocked") {
+    if (room.isLocked === false) {
       openRooms++;
     }
 
