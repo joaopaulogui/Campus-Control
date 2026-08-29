@@ -1,14 +1,34 @@
-const allFloors = getFloors();
-let floors = allFloors;
-
+let allFloors = [];
+let floors = [];
 let search = "";
 
-initFloorFilter(allFloors, () => {
-    renderRoomsTable()
-    renderFloorsResume()
-});
+async function loadRoomsPage() {
+    try {
+        allFloors = await getFloorsFromApi();
+        floors = allFloors;
+
+        initFloorFilter(allFloors, () => {
+            renderRoomsTable();
+            renderFloorsResume();
+        });
+
+        renderRoomsTable();
+        renderFloorsResume();
+    } catch (error) {
+        console.error("Não foi possível carregar as salas.", error);
+        document.getElementById('rooms-table').innerHTML = `
+            <div class="card">
+                <p class="bold text">Não foi possível carregar os dados das salas.</p>
+            </div>
+        `;
+    }
+}
 
 function renderFloorsResume() {
+    if (!allFloors.length) {
+        return;
+    }
+
     const floorsResumeHtml = allFloors.map(floor => renderFloorResume(floor)).join('');
 
     const html = `
@@ -21,6 +41,10 @@ function renderFloorsResume() {
 }
 
 function renderRoomsTable() {
+    if (!floors.length) {
+        return;
+    }
+
     const headers = [ "Sala", "Andar", "Tipo", "Capacidade", "Status", "Ações" ];
 
     const thRowsHtml = headers.map(header => `<th class="table-th light bold smaller-text">${header}</th>`).join('');
@@ -62,5 +86,4 @@ document.getElementById("search-container").addEventListener("input", (event) =>
   }
 });
 
-renderRoomsTable();
-renderFloorsResume();
+loadRoomsPage();

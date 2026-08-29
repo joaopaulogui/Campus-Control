@@ -80,7 +80,7 @@ function renderTableRow(floorName, room) {
                 </div>
             </td>
             <td class="table-td">
-                <button class="base-button bold small-text ${room.status == "unlocked" ? "lock" : "unlock"}-button" data-toggle-door="${room.name}">${room.status == "unlocked" ? "Trancar" : "Destrancar"}</button>
+                <button class="base-button bold small-text ${room.isLocked ? "unlock" : "lock"}-button" data-toggle-door="${room.id}">${room.isLocked ? "Destrancar" : "Trancar"}</button>
             </td>
         </tr>
     `;

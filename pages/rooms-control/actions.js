@@ -1,16 +1,32 @@
-function toggleDoor(roomName) {
-  for (const floor of floors) {
-    const room = floor.rooms.find((item) => item.name === roomName);
-    if (room) {
-      if (room.status == "locked") {
-        room.status = "unlocked";
-      } else if (room.status == "unlocked") {
-        room.status = "locked";
-      }
-    }
+async function toggleDoor(roomId) {
+  const room = allFloors
+    .flatMap((floor) => floor.rooms)
+    .find((item) => item.id === roomId);
+
+  if (!room) {
+    return;
   }
 
-  saveFloors(allFloors);
-  renderFloorsResume();
-  renderRoomsTable();
+  try {
+    const updatedRoom = await toggleRoomLockOnApi(roomId);
+
+    for (const floor of allFloors) {
+      const roomToUpdate = floor.rooms.find((item) => item.id === roomId);
+      if (roomToUpdate) {
+        roomToUpdate.isLocked = updatedRoom.isLocked;
+      }
+    }
+
+    for (const floor of floors) {
+      const roomToUpdate = floor.rooms.find((item) => item.id === roomId);
+      if (roomToUpdate) {
+        roomToUpdate.isLocked = updatedRoom.isLocked;
+      }
+    }
+
+    renderFloorsResume();
+    renderRoomsTable();
+  } catch (error) {
+    console.error("Não foi possível trocar o status da sala.", error);
+  }
 }
