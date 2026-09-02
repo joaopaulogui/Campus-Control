@@ -26,7 +26,6 @@ describe("Create Room", () => {
             type: RoomType.CLASSROOM,
             capacity: 30,
             floorId: floor.id,
-            isLocked: true,
         })
 
         expect(roomsRepository.items).toHaveLength(1)
@@ -38,7 +37,6 @@ describe("Create Room", () => {
             type: RoomType.CLASSROOM,
             capacity: 30,
             floorId: "1",
-            isLocked: true,
         })).rejects.toThrow()
     })
 })
