@@ -8,7 +8,7 @@ O banco já está modelado no Prisma. Quem for implementar features deve criar r
 
 - Node.js + TypeScript (ESM)
 - Express
-- Prisma 6 + PostgreSQL 16
+- Prisma 7 + PostgreSQL 16
 - Docker Compose (banco local)
 - ESLint (config Rocketseat)
 
