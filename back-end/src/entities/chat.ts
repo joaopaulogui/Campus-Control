@@ -1,22 +1,25 @@
+import { randomUUID } from "node:crypto"
+
 interface ChatParticipant {
     userId: string
     unread: number
 }
 
 export interface ChatProps {
-    id: string
     participants: ChatParticipant[]
 }
 
 export class Chat {
+    _id: string
     private props: ChatProps
 
-    constructor(props: ChatProps) {
+    constructor(props: ChatProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get participantIds() {

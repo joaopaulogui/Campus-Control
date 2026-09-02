@@ -1,5 +1,6 @@
+import { randomUUID } from "node:crypto"
+
 export interface ScheduleProps {
-    id: string
     roomId: string
     startDate: Date
     endDate: Date
@@ -7,14 +8,16 @@ export interface ScheduleProps {
 }
 
 export class Schedule {
+    private _id: string
     private props: ScheduleProps
 
-    constructor(props: ScheduleProps) {
+    constructor(props: ScheduleProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get roomId() {

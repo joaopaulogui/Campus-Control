@@ -1,17 +1,20 @@
+import { randomUUID } from "node:crypto"
+
 export interface FloorProps {
-    id: string
     name: string 
 }
 
 export class Floor {
+    private _id
     private props: FloorProps
 
-    constructor(props: FloorProps) {
+    constructor(props: FloorProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get name() {

@@ -1,12 +1,13 @@
+import { randomUUID } from "node:crypto"
+
 export enum RoomType {
-    CLASSROOM,
-    LAB,
-    MEETING_ROOM,
-    AUDITORIUM
+    CLASSROOM = "CLASSROOM",
+    LAB = "LAB",
+    MEETING_ROOM = "MEETING_ROOM",
+    AUDITORIUM = "AUDITORIUM",
 }
 
 export interface RoomProps {
-    id: string
     name: string
     type: RoomType
     capacity: number
@@ -15,14 +16,16 @@ export interface RoomProps {
 }
 
 export class Room {
+    private _id: string
     private props: RoomProps
 
-    constructor(props: RoomProps) {
+    constructor(props: RoomProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get name() {
