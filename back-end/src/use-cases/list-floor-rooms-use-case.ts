@@ -1,15 +1,9 @@
-import type { Floor } from "../entities/floor.js";
-import type { Room } from "../entities/room.js";
+import type { FloorWithRooms } from "../presenters/floor-with-rooms-presenter.js";
 import type { FloorsRepository } from "../repositories/floors-repository.js";
 import type { RoomsRepository } from "../repositories/rooms-repository.js";
 
-interface FloorWithRooms {
-    floor: Floor
-    rooms: Room[]
-}
-
 interface ListFloorRoomsUseCaseRequest {
-    floorId?: string
+    floorId?: string | undefined
 }
 
 interface ListFloorRoomsUseCaseResponse {
