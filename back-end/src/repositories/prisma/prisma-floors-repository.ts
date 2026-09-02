@@ -11,6 +11,16 @@ export class PrismaFloorsRepository implements FloorsRepository {
         await prisma.floor.create({ data, })
     }
 
+    async findById(id: string): Promise<Floor | null> {
+        const floor = await prisma.floor.findUnique({ where: {id}, })
+    
+        if(!floor) {
+            return null
+        }
+        
+        return PrismaFloorMapper.toDomain(floor)
+    }
+
     async findMany(filters: FloorFilters): Promise<Floor[]> {
         const where: Prisma.FloorWhereInput = {}
 
