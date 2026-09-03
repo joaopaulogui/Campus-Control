@@ -11,6 +11,8 @@ const listFloorRoomsController = new ListFloorRoomsController()
 
 router.get('/', (req, res) => listFloorRoomsController.handle(req, res))
 
+router.get('/:floorId', (req, res) => listFloorRoomsController.handle(req, res))
+
 router.post('/', (req, res) => createFloorController.handle(req, res))
 
 router.post('/:floorId/rooms', (req, res) => createRoomController.handle(req, res))
