@@ -5,7 +5,7 @@ import { PrismaRoomsRepository } from '../repositories/prisma/prisma-rooms-repos
 import { z } from 'zod';
 import { FloorWithRoomsPresenter } from '../presenters/floor-with-rooms-presenter';
 
-const listFloorRoomsParamsSchema = z.object({
+const listFloorRoomsQuerySchema = z.object({
     floorId: z.uuid().optional()
 })
 
@@ -16,7 +16,7 @@ export class ListFloorRoomsController {
 
         const listFloorRooms = new ListFloorRoomsUseCase(floorsRepository, roomsRepository)
 
-        const { floorId } = listFloorRoomsParamsSchema.parse(req.params)
+        const { floorId } = listFloorRoomsQuerySchema.parse(req.query)
 
         const result = await listFloorRooms.execute({ floorId })
 
