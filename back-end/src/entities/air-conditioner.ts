@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto"
 
 export enum AirConditionerStatus {
-    WORKING,
-    WARNING,
-    BROKEN
+    WORKING = "WORKING",
+    WARNING = "WARNING",
+    BROKEN = "BROKEN",
 }
 
 export interface AirConditionerProps {
