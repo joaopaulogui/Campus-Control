@@ -18,6 +18,7 @@ export class PrismaRoomMapper {
         const mappedType = PrismaRoomType[room.type as keyof typeof PrismaRoomType];
 
         return {
+            id: room.id,
             name: room.name,
             type: mappedType,
             capacity: room.capacity,
