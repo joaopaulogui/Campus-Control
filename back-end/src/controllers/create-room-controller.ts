@@ -5,14 +5,11 @@ import { PrismaFloorsRepository } from '../repositories/prisma/prisma-floors-rep
 import { PrismaRoomsRepository } from '../repositories/prisma/prisma-rooms-repository';
 import { CreateRoomUseCase } from '../use-cases/create-room-use-case';
 
-const CreateRoomParamsSchema = z.object({
-    floorId: z.uuid()
-})
-
 const CreateRoomBodySchema = z.object({
     name: z.string(),
     type: z.enum(RoomType),
     capacity: z.int(),
+    floorId: z.uuid()
 })
 
 export class CreateRoomController {
@@ -22,9 +19,7 @@ export class CreateRoomController {
 
         const createRoom = new CreateRoomUseCase(roomsRepository, floorsRepository)
 
-        const { name, type, capacity } = CreateRoomBodySchema.parse(req.body)
-
-        const { floorId } = CreateRoomParamsSchema.parse(req.params)
+        const { name, type, capacity, floorId } = CreateRoomBodySchema.parse(req.body)
 
         await createRoom.execute({ name, type, capacity, floorId })
 
