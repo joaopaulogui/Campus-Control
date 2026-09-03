@@ -3,6 +3,7 @@ import cors from 'cors'
 
 import floorRoutes from './routes/floors'
 import roomRoutes from './routes/rooms'
+import airConditionerRoutes from './routes/air-conditioners'
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/floors', floorRoutes)
 app.use('/api/rooms', roomRoutes)
+app.use('/api/air-conditioners', airConditionerRoutes)
 
 app.listen(3333, () => {
     console.log('HTTP server running')
