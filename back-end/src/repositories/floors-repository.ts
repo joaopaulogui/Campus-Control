@@ -1,7 +1,19 @@
+import type { AirConditioner } from "../entities/air-conditioner.js"
 import { Floor } from "../entities/floor.js"
+import type { Room } from "../entities/room.js"
 
 export interface FloorFilters {
-    id?: string
+    id?: string | undefined
+}
+
+export type RoomWithAirConditioners = {
+    room: Room
+    airConditioners: AirConditioner[]
+}
+
+export type FloorWithRoomsAndAirConditioners = {
+    floor: Floor
+    rooms: RoomWithAirConditioners[]
 }
 
 export interface FloorsRepository {
