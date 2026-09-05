@@ -7,7 +7,8 @@ export function makeAirConditioner(override: Partial<AirConditionerProps>, id?: 
         roomId: randomUUID(),
         temperature: faker.number.int({ min: 15, max: 35 }),
         status: faker.helpers.enumValue(AirConditionerStatus),
-        isOn: faker.datatype.boolean()
+        isOn: faker.datatype.boolean(),
+        ...override,
     }, id)
 
     return airConditioner
