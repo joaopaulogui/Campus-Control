@@ -1,8 +1,8 @@
 import { AirConditioner, AirConditionerStatus } from "../entities/air-conditioner.js";
 
 export interface AirConditionerFilters {
-    roomId?: string,
-    status?: AirConditionerStatus
+    roomIds?: string[] | undefined,
+    status?: AirConditionerStatus | undefined,
 }
 
 export interface AirConditionersRepository {

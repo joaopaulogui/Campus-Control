@@ -26,8 +26,8 @@ export class PrismaAirConditionersRepository implements AirConditionersRepositor
     async findMany(filters: AirConditionerFilters): Promise<AirConditioner[]> {
         const where: Prisma.AirConditionerWhereInput = {}
 
-        if(filters.roomId) {
-            where.roomId = filters.roomId
+        if(filters.roomIds) {
+            where.roomId = { in: filters.roomIds }
         }
 
         if(filters.status) {
