@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto"
+
 export enum LoanStatus {
     IN_USE,
     LATE,
@@ -5,7 +7,6 @@ export enum LoanStatus {
 }
 
 export interface LoanProps {
-    id: string
     responsibleName: string
     responsibleRegistration: string
     itemId: string
@@ -15,14 +16,16 @@ export interface LoanProps {
 }
 
 export class Loan {
+    private _id: string
     private props: LoanProps
 
-    constructor(props: LoanProps) {
+    constructor(props: LoanProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get responsibleName() {

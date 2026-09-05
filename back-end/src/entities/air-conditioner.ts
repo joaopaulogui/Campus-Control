@@ -1,11 +1,12 @@
+import { randomUUID } from "node:crypto"
+
 export enum AirConditionerStatus {
-    WORKING,
-    WARNING,
-    BROKEN
+    WORKING = "WORKING",
+    WARNING = "WARNING",
+    BROKEN = "BROKEN",
 }
 
 export interface AirConditionerProps {
-    id: string
     status: AirConditionerStatus
     temperature: number
     isOn: boolean
@@ -13,14 +14,16 @@ export interface AirConditionerProps {
 }
 
 export class AirConditioner {
+    private _id: string
     private props: AirConditionerProps
 
-    constructor(props: AirConditionerProps) {
+    constructor(props: AirConditionerProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get status() {

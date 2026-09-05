@@ -1,19 +1,22 @@
+import { randomUUID } from "node:crypto"
+
 export interface UserProps {
-    id: string
     name: string  
     email: string
     password: string
 }
 
 export class User {
+    private _id: string
     private props: UserProps
 
-    constructor(props: UserProps) {
+    constructor(props: UserProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get name() {
