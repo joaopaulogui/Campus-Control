@@ -25,7 +25,7 @@ describe("Create Air Conditioner", () => {
         expect(airConditionersRepository.items).toHaveLength(1)
     })
 
-    test("It should be able to create an air conditioner in an unexistent room", async () => {
-        expect(async () => (await sut.execute({ roomId: "1", }))).rejects.toThrow()
+    test("It should not be able to create an air conditioner in an unexistent room", async () => {
+        await expect(async () => (await sut.execute({ roomId: "1", }))).rejects.toThrow()
     })
 })
