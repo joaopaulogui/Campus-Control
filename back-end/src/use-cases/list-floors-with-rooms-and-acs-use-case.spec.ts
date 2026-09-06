@@ -6,25 +6,32 @@ import { ListFloorsWithRoomsAndAirConditionersUseCase } from "./list-floors-with
 import { makeRoom } from "../test/factories/make-room";
 import { makeFloor } from "../test/factories/make-floor";
 import { makeAirConditioner } from "../test/factories/make-air-conditioner";
+import { makeBuilding } from "../test/factories/make-building";
+import { InMemoryBuildingsRepository } from "../test/repositories/in-memory-buildings-repository";
 
 let airConditionersRepository: InMemoryAirConditionersRepository
 let roomsRepository: InMemoryRoomsRepository
 let floorsRepository: InMemoryFloorsRepository
+let buildingsRepository: InMemoryBuildingsRepository
 let sut: ListFloorsWithRoomsAndAirConditionersUseCase
 
-describe("List ari conditioners", () => {
+describe("List floor with rooms and ACs", () => {
     beforeEach(() => {
         airConditionersRepository = new InMemoryAirConditionersRepository()
         roomsRepository = new InMemoryRoomsRepository()
         floorsRepository = new InMemoryFloorsRepository()
+        buildingsRepository = new InMemoryBuildingsRepository()
         sut = new ListFloorsWithRoomsAndAirConditionersUseCase(airConditionersRepository, roomsRepository, floorsRepository)
     })
 
     test("It should be able to list all floors with rooms and acs", async () => {
-        const floor1 = makeFloor()
+        const building = makeBuilding()
+        buildingsRepository.create(building)
+
+        const floor1 = makeFloor({ buildingId: building.id })
         floorsRepository.create(floor1)
 
-        const floor2 = makeFloor()
+        const floor2 = makeFloor({ buildingId: building.id })
         floorsRepository.create(floor2)
 
         const room1 = makeRoom({ floorId: floor1.id })
