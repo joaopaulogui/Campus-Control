@@ -23,6 +23,12 @@ export class InMemoryFloorsRepository implements FloorsRepository {
             if(filters?.id && item.id !== filters.id) {
                 return false
             }
+            if(filters?.buildingId && item.buildingId !== filters.buildingId) {
+                return false
+            }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
             return true
         })
 

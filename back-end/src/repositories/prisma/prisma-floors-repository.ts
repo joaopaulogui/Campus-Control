@@ -28,6 +28,14 @@ export class PrismaFloorsRepository implements FloorsRepository {
             where.id = filters.id
         }
 
+        if(filters?.buildingId) {
+            where.buildingId = filters.buildingId
+        }
+
+        if(filters?.name) {
+            where.name = { contains: filters.name }
+        }
+
         const floors = await prisma.floor.findMany({
             where,
         })
