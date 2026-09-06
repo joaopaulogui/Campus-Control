@@ -13,6 +13,7 @@ export interface RoomProps {
     capacity: number
     isLocked: boolean
     floorId: string
+    updatedAt?: Date | null
 }
 
 export class Room {
@@ -34,6 +35,7 @@ export class Room {
 
     set name(name: string) {
         this.props.name = name
+        this.touch()
     }
 
     get type() {
@@ -42,6 +44,7 @@ export class Room {
 
     set type(type: RoomType) {
         this.props.type = type
+        this.touch()
     }
 
     get capacity() {
@@ -50,6 +53,7 @@ export class Room {
 
     set capacity(capacity: number) {
         this.props.capacity = capacity
+        this.touch()
     }
 
     get isLocked() {
@@ -58,6 +62,7 @@ export class Room {
 
     set isLocked(isLocked: boolean) {
         this.props.isLocked = isLocked
+        this.touch()
     }
 
     get floorId() {
@@ -66,5 +71,14 @@ export class Room {
 
     set floorId(floorId: string) {
         this.props.floorId = floorId
+        this.touch()
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
     }
 }
