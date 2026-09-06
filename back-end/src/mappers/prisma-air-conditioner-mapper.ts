@@ -10,6 +10,7 @@ export class PrismaAirConditionerMapper {
             temperature: raw.temperature,
             isOn: raw.isOn,
             roomId: raw.roomId,
+            updatedAt: raw.updatedAt
         }, raw.id)
     }
 
@@ -22,6 +23,7 @@ export class PrismaAirConditionerMapper {
             status: mappedStatus,
             temperature: airConditioner.temperature,
             isOn: airConditioner.isOn,
+            updatedAt: airConditioner.updatedAt ?? null
         }
     }
 }
