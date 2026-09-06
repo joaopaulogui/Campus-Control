@@ -11,6 +11,7 @@ export class PrismaRoomMapper {
             capacity: raw.capacity,
             floorId: raw.floorId,
             isLocked: raw.isLocked,
+            updatedAt: raw.updatedAt,
         }, raw.id)
     }
 
@@ -24,6 +25,7 @@ export class PrismaRoomMapper {
             capacity: room.capacity,
             floorId: room.floorId,
             isLocked: room.isLocked,
+            updatedAt: room.updatedAt ?? null
         }
     }
 }
