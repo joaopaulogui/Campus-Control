@@ -7,6 +7,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
 enum RoomType {
   CLASSROOM
   LAB
@@ -14,7 +19,7 @@ enum RoomType {
   AUDITORIUM
 }
 
-enum AirConditionerStatus {
+enum EquipmentStatus {
   WORKING
   WARNING
   BROKEN
@@ -26,68 +31,121 @@ enum LoanStatus {
   RETURNED
 }
 
+enum ItemType {
+  EQUIPMENT
+  STATIONARY
+  OTHER
+}
+
+enum EntityType {
+  BUILING
+  FLOOR
+  ROOM
+  AIR_CONDITIONER
+  PROJECTOR
+  SCHEDULE
+  ITEM
+  LOAN
+  USER
+}
+
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   chats    ChatParticipant[]
   messages Message[]
+  logs     Log[]
+}
+
+model Building {
+  id        String    @id @default(uuid())
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  floors Floor[]
 }
 
 model Floor {
-  id    String @id @default(uuid())
-  name  String
+  id         String    @id @default(uuid())
+  name       String
+  buildingId String    @map("building_id")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  building   Building  @relation(fields: [buildingId], references: [id])
+
   rooms Room[]
 }
 
 model Room {
-  id       String   @id @default(uuid())
-  name     String
-  type     RoomType
-  capacity Int
-  isLocked Boolean  @default(false)
-  floorId  String
-  floor    Floor    @relation(fields: [floorId], references: [id])
+  id        String    @id @default(uuid())
+  name      String
+  type      RoomType
+  capacity  Int
+  isLocked  Boolean   @default(false) @map("is_locked")
+  floorId   String    @map("floor_id")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  floor     Floor     @relation(fields: [floorId], references: [id])
 
   airConditioners AirConditioner[]
   schedules       Schedule[]
+  projectors      Projector[]
 }
 
 model AirConditioner {
-  id          String               @id @default(uuid())
-  status      AirConditionerStatus
+  id          String          @id @default(uuid())
+  status      EquipmentStatus
   temperature Int
-  isOn        Boolean              @default(false)
-  roomId      String
-  room        Room                 @relation(fields: [roomId], references: [id])
+  isOn        Boolean         @default(false) @map("is_on")
+  roomId      String          @map("room_id")
+  updatedAt   DateTime?       @updatedAt @map("updated_at")
+  room        Room            @relation(fields: [roomId], references: [id])
+}
+
+model Projector {
+  id        String          @id @default(uuid())
+  status    EquipmentStatus
+  roomId    String          @map("room_id")
+  updatedAt DateTime?       @updatedAt @map("updated_at")
+  room      Room            @relation(fields: [roomId], references: [id])
 }
 
 model Schedule {
-  id        String   @id @default(uuid())
-  title     String
-  startDate DateTime
-  endDate   DateTime
-  roomId    String
-  room      Room     @relation(fields: [roomId], references: [id])
+  id         String    @id @default(uuid())
+  title      String
+  startDate  DateTime  @map("start_date")
+  endDate    DateTime  @map("end_date")
+  roomKeeper String    @map("room_keeper")
+  roomId     String    @map("room_id")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  room       Room      @relation(fields: [roomId], references: [id])
 }
 
 model Item {
-  id       String @id @default(uuid())
-  name     String
-  quantity Int
-  loans    Loan[]
+  id                String    @id @default(uuid())
+  name              String
+  type              ItemType
+  availableQuantity Int       @map("available_quantity")
+  totalQuantity     Int       @map("total_quantity")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
+
+  loans Loan[]
 }
 
 model Loan {
   id                      String     @id @default(uuid())
-  responsibleName         String
-  responsibleRegistration String
-  createdAt               DateTime   @default(now())
-  returnDate              DateTime
+  responsibleName         String     @map("responsible_name")
+  responsibleRegistration String     @map("responsible_registration")
+  createdAt               DateTime   @default(now()) @map("created_at")
+  returnedAt              DateTime?  @map("returned_at")
+  deadline                DateTime
   status                  LoanStatus
-  itemId                  String
+  itemId                  String     @map("item_id")
+  quantity                Int
   item                    Item       @relation(fields: [itemId], references: [id])
 }
 
@@ -99,8 +157,8 @@ model Chat {
 
 model ChatParticipant {
   unread Int    @default(0)
-  chatId String
-  userId String
+  chatId String @map("chat_id")
+  userId String @map("user_id")
   chat   Chat   @relation(fields: [chatId], references: [id])
   user   User   @relation(fields: [userId], references: [id])
 
@@ -110,9 +168,21 @@ model ChatParticipant {
 model Message {
   id        String   @id @default(uuid())
   content   String
-  createdAt DateTime @default(now())
-  chatId    String
-  senderId  String
+  createdAt DateTime @default(now()) @map("created_at")
+  chatId    String   @map("chat_id")
+  senderId  String   @map("sender_id")
   chat      Chat     @relation(fields: [chatId], references: [id])
   sender    User     @relation(fields: [senderId], references: [id])
+}
+
+model Log {
+  id          String     @id @default(uuid())
+  userId      String?    @map("user_id")
+  user        User?      @relation(fields: [userId], references: [id])
+  eventType   EntityType @map("event_type")
+  eventEntity String     @map("event_entity")
+  entityId    String     @map("entity_id")
+  description String
+  createdAt   DateTime   @default(now()) @map("created_at")
+  metadata    Json
 }
