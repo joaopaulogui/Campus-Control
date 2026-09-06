@@ -4,7 +4,9 @@ import { Prisma, type Floor as PrismaFloor } from '../generated/prisma/client'
 export class PrismaFloorMapper {
     static toDomain(raw: PrismaFloor): Floor  {
         return new Floor({
-            name: raw.name
+            name: raw.name,
+            buildingId: raw.buildingId,
+            updatedAt: raw.updatedAt,
         }, raw.id)
     }
 
@@ -12,6 +14,8 @@ export class PrismaFloorMapper {
         return {
             id: floor.id,
             name: floor.name,
+            buildingId: floor.buildingId,
+            updatedAt: floor.updatedAt ?? null
         }
     }
 }
