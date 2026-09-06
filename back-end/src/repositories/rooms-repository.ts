@@ -2,6 +2,7 @@ import { Room } from "../entities/room.js";
 
 export interface RoomFilters {
     floorId?: string | undefined
+    name?: string | undefined
 }
 
 export interface RoomsRepository {
