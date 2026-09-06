@@ -34,6 +34,10 @@ export class PrismaRoomsRepository implements RoomsRepository {
             where.floorId = filters.floorId
         }
 
+        if(filters?.name) {
+            where.name = { contains: filters.name }
+        }
+
         const rooms = await prisma.room.findMany({
             where,
         })

@@ -11,6 +11,7 @@ export interface AirConditionerProps {
     temperature: number
     isOn: boolean
     roomId: string
+    updatedAt?: Date | null
 }
 
 export class AirConditioner {
@@ -32,6 +33,7 @@ export class AirConditioner {
 
     set status(status: AirConditionerStatus) {
         this.props.status = status
+        this.touch()
     }
 
     get temperature() {
@@ -40,6 +42,7 @@ export class AirConditioner {
 
     set temperature(temperature: number) {
         this.props.temperature = temperature
+        this.touch()
     }
 
     get isOn() {
@@ -48,6 +51,7 @@ export class AirConditioner {
 
     set isOn(isOn: boolean) {
         this.props.isOn = isOn
+        this.touch()
     }
 
     get roomId() {
@@ -56,5 +60,14 @@ export class AirConditioner {
 
     set roomId(roomId: string) {
         this.props.roomId = roomId
+        this.touch()
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
     }
 }

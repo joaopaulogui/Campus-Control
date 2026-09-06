@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto"
 
 interface ChatParticipant {
     userId: string
+    chatId: string
     unread: number
 }
 
@@ -10,7 +11,7 @@ export interface ChatProps {
 }
 
 export class Chat {
-    _id: string
+    private _id: string
     private props: ChatProps
 
     constructor(props: ChatProps, id?: string) {

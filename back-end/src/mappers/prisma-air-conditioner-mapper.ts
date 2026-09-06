@@ -1,5 +1,5 @@
 import { AirConditioner, AirConditionerStatus as DomainAirConditionerStatus } from "../entities/air-conditioner";
-import { Prisma, type AirConditioner as PrismaAirConditioner, AirConditionerStatus as PrismaAirConditionerStatus } from "../generated/prisma/client";
+import { Prisma, type AirConditioner as PrismaAirConditioner, EquipmentStatus as PrismaAirConditionerStatus } from "../generated/prisma/client";
 
 export class PrismaAirConditionerMapper {
     static toDomain(raw: PrismaAirConditioner): AirConditioner {

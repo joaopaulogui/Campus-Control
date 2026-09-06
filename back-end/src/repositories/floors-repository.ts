@@ -4,6 +4,8 @@ import type { Room } from "../entities/room.js"
 
 export interface FloorFilters {
     id?: string | undefined
+    buildingId?: string | undefined
+    name?: string | undefined
 }
 
 export type RoomWithAirConditioners = {

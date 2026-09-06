@@ -1,8 +1,17 @@
 import { randomUUID } from "node:crypto"
 
+export enum ItemTypes {
+    EQUIPMENT = "EQUIPMENT",
+    STATIONARY = "STATIONARY",
+    OTHER = "OTHER",
+}
+
 export interface ItemProps {
     name: string
-    quantity: number
+    type: ItemTypes
+    totalQuantity: number
+    availableQuantity: number
+    updatedAt?: Date | null
 }
 
 export class Item {
@@ -24,13 +33,32 @@ export class Item {
 
     set name(name: string) {
         this.props.name = name
+        this.touch()
+    }
+    
+    get totalQuantity() {
+        return this.props.totalQuantity
     }
 
-    get quantity() {
-        return this.props.quantity
+    set totalQuantity(totalQuantity: number) {
+        this.props.totalQuantity = totalQuantity
+        this.touch()
     }
 
-    set quantity(quantity: number) {
-        this.props.quantity = quantity
+    get availableQuantity() {
+        return this.props.availableQuantity
+    }
+
+    set availableQuantity(availableQuantity: number) {
+        this.props.availableQuantity = availableQuantity
+        this.touch()
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+    
+    private touch() {
+        this.props.updatedAt = new Date()
     }
 }

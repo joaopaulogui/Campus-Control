@@ -20,7 +20,7 @@ export class InMemoryAirConditionersRepository implements AirConditionersReposit
 
     async findMany(filter: AirConditionerFilters): Promise<AirConditioner[]> {
         const airConditioner = this.items.filter(item => {
-            if(filter.roomId && item.roomId !== filter.roomId) {
+            if(filter.roomIds && !filter.roomIds.includes(item.roomId)) {
                 return false
             }
             if(filter.status && item.status !== filter.status) {

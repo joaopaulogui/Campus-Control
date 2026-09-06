@@ -23,6 +23,9 @@ export class InMemoryRoomsRepository implements RoomsRepository {
             if(filters?.floorId && item.floorId !== filters.floorId) {
                 return false
             }
+            if(filters.name && !item.name.includes(filters.name)) {
+                return false
+            }
             return true
         })
 

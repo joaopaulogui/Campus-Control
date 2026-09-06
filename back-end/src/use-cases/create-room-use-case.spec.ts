@@ -32,7 +32,7 @@ describe("Create Room", () => {
     })
 
     test("It should not be able to create a room in an unexistent floor", async () => {
-        expect(async() => await sut.execute({
+        await expect(async() => await sut.execute({
             name: "Floor 1",
             type: RoomType.CLASSROOM,
             capacity: 30,

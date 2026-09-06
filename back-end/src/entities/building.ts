@@ -1,16 +1,15 @@
 import { randomUUID } from "node:crypto"
 
-export interface FloorProps {
-    name: string 
-    buildingId: string
+export interface BuildingProps {
+    name: string
     updatedAt?: Date | null
 }
 
-export class Floor {
-    private _id
-    private props: FloorProps
+export class Building {
+    private _id: string
+    private props: BuildingProps
 
-    constructor(props: FloorProps, id?: string) {
+    constructor(props: BuildingProps, id?: string) {
         this._id = id ?? randomUUID()
         this.props = props
     }
@@ -28,18 +27,10 @@ export class Floor {
         this.touch()
     }
 
-    get buildingId() {
-        return this.props.buildingId
-    }
-
-    set buildingId(buildingId: string) {
-        this.props.buildingId = buildingId
-    }
-
     get updatedAt() {
         return this.props.updatedAt
     }
-    
+
     private touch() {
         this.props.updatedAt = new Date()
     }
