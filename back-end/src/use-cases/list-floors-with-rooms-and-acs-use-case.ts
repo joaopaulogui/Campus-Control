@@ -23,7 +23,9 @@ export class ListFloorsWithRoomsAndAirConditionersUseCase {
         
         const floors = await this.floorsRepository.findMany({ id: floorId })
 
-        const rooms = await this.roomsRepository.findMany({ floorId, })
+        const floorIds = floors.map(floor => floor.id)
+
+        const rooms = await this.roomsRepository.findMany({ floorIds, })
 
         const roomIds = rooms.map((room) => room.id)
 
