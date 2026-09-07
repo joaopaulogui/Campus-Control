@@ -5,7 +5,7 @@ import { FloorPresenter } from "../presenters/floor-presenter"
 import { z } from "zod"
 
 const ListFloorsQuerySchema = z.object({
-    buildingId: z.uuid().optional()
+    buildingId: z.uuid()
 })
 
 export class ListFloorsController {
