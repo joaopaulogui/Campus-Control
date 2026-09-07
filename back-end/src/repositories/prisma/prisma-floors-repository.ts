@@ -53,10 +53,8 @@ export class PrismaFloorsRepository implements FloorsRepository {
     }
 
     async delete(floor: Floor): Promise<void> {
-        const data = PrismaFloorMapper.toPrisma(floor)
-
         await prisma.floor.delete({ 
-            where: { id: data.id! }, 
+            where: { id: floor.id }, 
         })
     }
 }

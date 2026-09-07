@@ -53,7 +53,7 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
 
     async delete(building: Building): Promise<void> {
         await prisma.building.delete({
-            where: { id: building.id! },
+            where: { id: building.id },
         })
     }
 }
