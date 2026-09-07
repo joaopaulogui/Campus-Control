@@ -55,10 +55,8 @@ export class PrismaRoomsRepository implements RoomsRepository {
     }
 
     async delete(room: Room): Promise<void> {
-        const data = PrismaRoomMapper.toPrisma(room)
-
         await prisma.room.delete({
-            where: { id: data.id!, },
+            where: { id: room.id, },
         })
     }
 }

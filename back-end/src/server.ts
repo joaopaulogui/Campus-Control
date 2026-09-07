@@ -5,6 +5,7 @@ import buildingRoutes from './routes/buildings'
 import floorRoutes from './routes/floors'
 import roomRoutes from './routes/rooms'
 import airConditionerRoutes from './routes/air-conditioners'
+import userRoutes from './routes/users'
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use('/api/buildings', buildingRoutes)
 app.use('/api/floors', floorRoutes)
 app.use('/api/rooms', roomRoutes)
 app.use('/api/air-conditioners', airConditionerRoutes)
+app.use('/api/users', userRoutes)
 
 app.listen(3333, () => {
     console.log('HTTP server running')

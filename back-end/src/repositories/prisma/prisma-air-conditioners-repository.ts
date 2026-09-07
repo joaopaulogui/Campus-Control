@@ -52,10 +52,8 @@ export class PrismaAirConditionersRepository implements AirConditionersRepositor
     }
 
     async delete(airConditioner: AirConditioner): Promise<void> {
-        const data = PrismaAirConditionerMapper.toPrisma(airConditioner)
-
         await prisma.airConditioner.delete({
-            where: { id: data.id! },
+            where: { id: airConditioner.id },
         })
     }
 }
