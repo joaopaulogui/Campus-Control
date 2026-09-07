@@ -1,7 +1,7 @@
 import { Room } from "../entities/room.js";
 
 export interface RoomFilters {
-    floorId?: string | undefined
+    floorIds?: string[] | undefined
     name?: string | undefined
 }
 
