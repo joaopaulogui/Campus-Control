@@ -1,12 +1,12 @@
 import express from "express"
 import { CreateRoomController } from "../controllers/create-room-controller"
-import { ListFloorRoomsController } from "../controllers/list-floor-rooms-controller"
+import { ListRoomsController } from "../controllers/list-rooms-controller"
 import { ToggleRoomLockController } from "../controllers/toggle-room-lock-controller"
 
 const router = express.Router()
 
 const createRoomController = new CreateRoomController()
-const listFloorRoomsController = new ListFloorRoomsController()
+const listFloorRoomsController = new ListRoomsController()
 const toggleRoomLockController = new ToggleRoomLockController()
 
 router.post('/', (req, res) => createRoomController.handle(req, res))

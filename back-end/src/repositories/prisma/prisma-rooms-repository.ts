@@ -30,8 +30,8 @@ export class PrismaRoomsRepository implements RoomsRepository {
     async findMany(filters: RoomFilters): Promise<Room[]> {
         const where: Prisma.RoomWhereInput = {}
 
-        if(filters?.floorId) {
-            where.floorId = filters.floorId
+        if(filters?.floorIds) {
+            where.floorId = { in: filters.floorIds }
         }
 
         if(filters?.name) {

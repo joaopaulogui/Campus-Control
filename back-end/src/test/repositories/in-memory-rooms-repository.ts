@@ -20,7 +20,7 @@ export class InMemoryRoomsRepository implements RoomsRepository {
 
     async findMany(filters: RoomFilters): Promise<Room[]> {
         const rooms = this.items.filter(item => {
-            if(filters?.floorId && item.floorId !== filters.floorId) {
+            if(filters?.floorIds && !filters.floorIds.includes(item.floorId)) {
                 return false
             }
             if(filters.name && !item.name.includes(filters.name)) {
