@@ -21,8 +21,6 @@ export class ListRoomsController {
         
         const result = await listRooms.execute({ buildingId, floorId, })
 
-        console.log(result.rooms)
-
         res.status(200).json(result.rooms.map(RoomsPresenter.toHTTP))
     }
 }
