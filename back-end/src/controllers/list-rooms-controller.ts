@@ -2,13 +2,8 @@ import { type Request, type Response } from 'express'
 import { ListRoomsUseCase } from '../use-cases/list-rooms-use-case';
 import { PrismaFloorsRepository } from '../repositories/prisma/prisma-floors-repository';
 import { PrismaRoomsRepository } from '../repositories/prisma/prisma-rooms-repository';
-import { z } from 'zod';
 import { RoomsPresenter } from '../presenters/room-presenter';
-
-const listRoomsQuerySchema = z.object({
-    buildingId: z.uuid(),
-    floorId: z.uuid().optional(),
-})
+import { listRoomsQuerySchema } from '../http/schemas/rooms';
 
 export class ListRoomsController {
     public async handle(req: Request, res: Response) {

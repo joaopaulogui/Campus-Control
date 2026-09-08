@@ -1,12 +1,8 @@
 import { type Request, type Response } from "express";
-import { z } from "zod";
 import { PrismaRoomsRepository } from "../repositories/prisma/prisma-rooms-repository";
 import { PrismaAirConditionersRepository } from "../repositories/prisma/prisma-air-conditioners-repository";
 import { CreateAirConditionerUseCase } from "../use-cases/create-air-conditioner-use-case";
-
-const CreateAirConditionerBodySchema = z.object({
-    roomId: z.uuid()
-})
+import { createAirConditionerBodySchema } from "../http/schemas/air-conditioners";
 
 export class CreateAirConditionerController {
     async handle(req: Request, res: Response) {
@@ -15,7 +11,7 @@ export class CreateAirConditionerController {
 
         const createAirConditioner = new CreateAirConditionerUseCase(roomsRepository, airConditionersRepository)
 
-        const { roomId } = CreateAirConditionerBodySchema.parse(req.body)
+        const { roomId } = createAirConditionerBodySchema.parse(req.body)
 
         await createAirConditioner.execute({ roomId })
 

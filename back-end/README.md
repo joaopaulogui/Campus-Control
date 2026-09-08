@@ -23,6 +23,7 @@ A porta **5432** costuma estar ocupada por outro Postgres. Por isso o banco dest
 | Serviço     | Porta | Para quê                          |
 |-------------|-------|-----------------------------------|
 | API         | 3333  | `npm run dev`                     |
+| Docs        | 3333  | Swagger UI em `/docs`             |
 | PostgreSQL  | 5433  | conexão local (dentro do container continua 5432) |
 
 ## Subir o projeto
@@ -40,6 +41,8 @@ npm run dev
 Confirme:
 
 - API: [http://localhost:3333](http://localhost:3333) deve responder `{ "ok": true }`
+- Docs: [http://localhost:3333/docs](http://localhost:3333/docs)
+- Spec: [http://localhost:3333/openapi.json](http://localhost:3333/openapi.json)
 - Banco: `docker compose ps` deve mostrar o container `postgres` como `running`
 
 Se o `migrate` pedir um nome e a migration `init` já existir, o comando só aplica o que falta. Não apague a pasta `prisma/migrations`.
@@ -78,22 +81,37 @@ Se o Postgres for o da equipe (não o Docker local), só troque a `DATABASE_URL`
 
 `db:reset` no `package.json` derruba e sobe o Compose de novo. **Não apaga o volume** — não é um wipe do banco. Evite usar no dia a dia.
 
+## Documentação da API (Swagger)
+
+A spec OpenAPI é **gerada dos schemas Zod** em `src/http/schemas/` — os mesmos que os controllers usam no `.parse()`. Não edite um `swagger.json` na mão.
+
+- UI: [http://localhost:3333/docs](http://localhost:3333/docs)
+- JSON: [http://localhost:3333/openapi.json](http://localhost:3333/openapi.json)
+
+Para testar rotas protegidas no Swagger: `POST /api/users/login`, copie o `accessToken`, clique em **Authorize** e cole `Bearer <token>` (ou só o token; a UI já envia como Bearer).
+
+Nova rota: crie/atualize o Zod em `src/http/schemas`, use no controller, e registre o path em `src/docs/openapi.ts`.
+
 ## Estrutura
 
 ```
 src/
-  entities/        domínio (User, Room, Floor, …) — não misturar Prisma aqui
-  repositories/    interfaces (contrato). Implementações Prisma ainda não existem
-  use-cases/       regras de aplicação (ainda sem HTTP)
-  lib/prisma.ts    cliente Prisma único — importe daqui, não dê new PrismaClient() em vários arquivos
-  server.ts        Express (hoje só um GET / de health)
+  http/schemas/    contratos Zod (request/response) — fonte da spec OpenAPI
+  docs/            monta OpenAPI + Swagger UI
+  controllers/     HTTP → use case
+  routes/          Express routers
+  use-cases/
+  repositories/
+  entities/
+  lib/prisma.ts
+  server.ts
 
 prisma/
-  schema.prisma    modelos = tabelas
-  migrations/      histórico do banco — versionar no Git
+  schema.prisma
+  migrations/
 
-docker-compose.yml Postgres 16 local
-.env.example       modelo da DATABASE_URL
+docker-compose.yml
+.env.example
 ```
 
 Código-fonte é `src/`. A pasta `dist/` é saída do `tsc` — ignore, não edite.

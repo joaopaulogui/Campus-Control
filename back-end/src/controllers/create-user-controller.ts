@@ -1,16 +1,8 @@
 import { type Request, type Response } from "express";
-import { z } from "zod";
-import { UserRole } from "../entities/user";
 import { PrismaUsersRepository } from "../repositories/prisma/prisma-users-repository";
 import { CreateUserUseCase } from "../use-cases/create-user-use-case";
 import { BcryptHasher } from "../cryptography/bcrypt/bcrypt-hasher";
-
-const CreateUserBodySchema = z.object({
-    name: z.string(),
-    email: z.email(),
-    password: z.string(),
-    role: z.enum(UserRole)
-})
+import { createUserBodySchema } from "../http/schemas/users";
 
 export class CreateUserController {
     async handle(req: Request, res: Response) {
@@ -19,7 +11,7 @@ export class CreateUserController {
 
         const createUser = new CreateUserUseCase(usersRepository, hasher)
 
-        const { name, email, password, role } = CreateUserBodySchema.parse(req.body)
+        const { name, email, password, role } = createUserBodySchema.parse(req.body)
 
         await createUser.execute({ name, email, password, role })
 

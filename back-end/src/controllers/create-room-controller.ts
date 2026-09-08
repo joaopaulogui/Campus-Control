@@ -1,16 +1,8 @@
 import { type Request, type Response } from 'express'
-import { z } from "zod";
-import { RoomType } from "../entities/room";
 import { PrismaFloorsRepository } from '../repositories/prisma/prisma-floors-repository';
 import { PrismaRoomsRepository } from '../repositories/prisma/prisma-rooms-repository';
 import { CreateRoomUseCase } from '../use-cases/create-room-use-case';
-
-const CreateRoomBodySchema = z.object({
-    name: z.string(),
-    type: z.enum(RoomType),
-    capacity: z.int(),
-    floorId: z.uuid()
-})
+import { createRoomBodySchema } from '../http/schemas/rooms';
 
 export class CreateRoomController {
     async handle(req: Request, res: Response) {
@@ -19,7 +11,7 @@ export class CreateRoomController {
 
         const createRoom = new CreateRoomUseCase(roomsRepository, floorsRepository)
 
-        const { name, type, capacity, floorId } = CreateRoomBodySchema.parse(req.body)
+        const { name, type, capacity, floorId } = createRoomBodySchema.parse(req.body)
 
         await createRoom.execute({ name, type, capacity, floorId })
 

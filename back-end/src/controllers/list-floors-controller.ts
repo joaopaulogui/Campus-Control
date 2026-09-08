@@ -2,11 +2,7 @@ import { type Request, type Response } from "express"
 import { PrismaFloorsRepository } from "../repositories/prisma/prisma-floors-repository"
 import { ListFloorsUseCase } from "../use-cases/list-floors-use-case"
 import { FloorPresenter } from "../presenters/floor-presenter"
-import { z } from "zod"
-
-const ListFloorsQuerySchema = z.object({
-    buildingId: z.uuid()
-})
+import { listFloorsQuerySchema } from "../http/schemas/floors"
 
 export class ListFloorsController {
     async handle(req: Request, res: Response) {
@@ -14,7 +10,7 @@ export class ListFloorsController {
 
         const listAllFloors = new ListFloorsUseCase(floorsRepository)
 
-        const { buildingId } = ListFloorsQuerySchema.parse(req.query)
+        const { buildingId } = listFloorsQuerySchema.parse(req.query)
 
         const { floors } = await listAllFloors.execute({ buildingId, })
 

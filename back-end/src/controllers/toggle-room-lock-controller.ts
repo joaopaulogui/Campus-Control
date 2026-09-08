@@ -1,11 +1,7 @@
 import { type Request, type Response } from "express"
-import { z } from "zod";
 import { PrismaRoomsRepository } from "../repositories/prisma/prisma-rooms-repository";
 import { ToggleRoomLockUseCase } from "../use-cases/toggle-room-lock-use-case";
-
-const ToggleRoomLockParamsSchema = z.object({
-    roomId: z.uuid()
-})
+import { toggleRoomLockParamsSchema } from "../http/schemas/rooms";
 
 export class ToggleRoomLockController {
     async handle(req: Request, res: Response) {
@@ -13,7 +9,7 @@ export class ToggleRoomLockController {
 
         const toggleRoomLock = new ToggleRoomLockUseCase(roomsRepository)
 
-        const { roomId } = ToggleRoomLockParamsSchema.parse(req.params)
+        const { roomId } = toggleRoomLockParamsSchema.parse(req.params)
 
         await toggleRoomLock.execute({ roomId, })
 
