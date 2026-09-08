@@ -3,14 +3,17 @@ import { InMemoryUsersRepository } from "../test/repositories/in-memory-users-re
 import { CreateUserUseCase } from "./create-user-use-case";
 import { UserRole } from "../entities/user";
 import { compare, hash } from "bcryptjs";
+import { FakeHasher } from "../test/cryptography/fake-hasher";
 
 let usersRepository: InMemoryUsersRepository
+let fakeHasher: FakeHasher
 let sut: CreateUserUseCase
 
 describe("Create user", () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository()
-        sut = new CreateUserUseCase(usersRepository)
+        fakeHasher = new FakeHasher()
+        sut = new CreateUserUseCase(usersRepository, fakeHasher)
     })
 
     test("It should be able to create an user", async () => {
@@ -24,6 +27,6 @@ describe("Create user", () => {
         expect(usersRepository.items).toHaveLength(1)
         expect(usersRepository.items[0]).toEqual(expect.objectContaining({ name: "Test user" }))
 
-        expect(await compare("123456", usersRepository.items[0]?.password!)).toBe(true)
+        expect(await fakeHasher.compare("123456", usersRepository.items[0]?.password!)).toBe(true)
     })
 })
