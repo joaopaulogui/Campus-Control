@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
 
-import buildingRoutes from './routes/buildings'
-import floorRoutes from './routes/floors'
-import roomRoutes from './routes/rooms'
-import airConditionerRoutes from './routes/air-conditioners'
-import userRoutes from './routes/users'
+import buildingRoutes from './http/routes/buildings'
+import floorRoutes from './http/routes/floors'
+import roomRoutes from './http/routes/rooms'
+import airConditionerRoutes from './http/routes/air-conditioners'
+import userRoutes from './http/routes/users'
 import { setupSwagger } from './docs/setup-swagger'
 
 const app = express()

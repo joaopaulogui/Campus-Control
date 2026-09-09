@@ -1,8 +1,8 @@
 import { type Request, type Response } from "express";
-import { PrismaRoomsRepository } from "../repositories/prisma/prisma-rooms-repository";
-import { PrismaAirConditionersRepository } from "../repositories/prisma/prisma-air-conditioners-repository";
-import { CreateAirConditionerUseCase } from "../use-cases/create-air-conditioner-use-case";
-import { createAirConditionerBodySchema } from "../http/schemas/air-conditioners";
+import { PrismaRoomsRepository } from "../../repositories/prisma/prisma-rooms-repository";
+import { PrismaAirConditionersRepository } from "../../repositories/prisma/prisma-air-conditioners-repository";
+import { CreateAirConditionerUseCase } from "../../use-cases/create-air-conditioner-use-case";
+import { createAirConditionerBodySchema } from "../schemas/air-conditioners";
 
 export class CreateAirConditionerController {
     async handle(req: Request, res: Response) {

@@ -1,10 +1,10 @@
 import { type Request, type Response } from "express";
-import { PrismaUsersRepository } from "../repositories/prisma/prisma-users-repository";
-import { BcryptHasher } from "../cryptography/bcrypt/bcrypt-hasher";
-import { JwtEncrypter } from "../cryptography/jwt/jwt-encrypter";
+import { PrismaUsersRepository } from "../../repositories/prisma/prisma-users-repository";
+import { BcryptHasher } from "../../cryptography/bcrypt/bcrypt-hasher";
+import { JwtEncrypter } from "../../cryptography/jwt/jwt-encrypter";
 import "dotenv/config"
-import { AuthenticateUserUseCase } from "../use-cases/authenticate-user-use-case";
-import { authenticateUserBodySchema } from "../http/schemas/users";
+import { AuthenticateUserUseCase } from "../../use-cases/authenticate-user-use-case";
+import { authenticateUserBodySchema } from "../schemas/users";
 
 export class AuthenticateUserController {
     async handle(req: Request, res: Response) {

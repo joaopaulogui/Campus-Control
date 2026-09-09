@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express"
-import { PrismaRoomsRepository } from "../repositories/prisma/prisma-rooms-repository";
-import { ToggleRoomLockUseCase } from "../use-cases/toggle-room-lock-use-case";
-import { toggleRoomLockParamsSchema } from "../http/schemas/rooms";
+import { PrismaRoomsRepository } from "../../repositories/prisma/prisma-rooms-repository";
+import { ToggleRoomLockUseCase } from "../../use-cases/toggle-room-lock-use-case";
+import { toggleRoomLockParamsSchema } from "../schemas/rooms";
 
 export class ToggleRoomLockController {
     async handle(req: Request, res: Response) {

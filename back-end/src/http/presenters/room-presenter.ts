@@ -1,4 +1,4 @@
-import type { Room } from "../entities/room"
+import type { Room } from "../../entities/room"
 
 export class RoomsPresenter {
     static toHTTP(room: Room) {

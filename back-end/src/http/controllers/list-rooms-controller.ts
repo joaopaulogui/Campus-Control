@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
-import { ListRoomsUseCase } from '../use-cases/list-rooms-use-case';
-import { PrismaFloorsRepository } from '../repositories/prisma/prisma-floors-repository';
-import { PrismaRoomsRepository } from '../repositories/prisma/prisma-rooms-repository';
+import { ListRoomsUseCase } from '../../use-cases/list-rooms-use-case';
+import { PrismaFloorsRepository } from '../../repositories/prisma/prisma-floors-repository';
+import { PrismaRoomsRepository } from '../../repositories/prisma/prisma-rooms-repository';
 import { RoomsPresenter } from '../presenters/room-presenter';
-import { listRoomsQuerySchema } from '../http/schemas/rooms';
+import { listRoomsQuerySchema } from '../schemas/rooms';
 
 export class ListRoomsController {
     public async handle(req: Request, res: Response) {

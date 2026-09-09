@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
-import { PrismaBuildingsRepository } from "../repositories/prisma/prisma-buildings-repository";
-import { CreateBuildingUseCase } from "../use-cases/create-building-use-case";
-import { createBuildingBodySchema } from "../http/schemas/buildings";
+import { PrismaBuildingsRepository } from "../../repositories/prisma/prisma-buildings-repository";
+import { CreateBuildingUseCase } from "../../use-cases/create-building-use-case";
+import { createBuildingBodySchema } from "../schemas/buildings";
 
 export class CreateBuildingController {
     async handle(req: Request, res: Response) {

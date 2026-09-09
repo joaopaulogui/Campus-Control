@@ -1,5 +1,5 @@
-import type { AirConditioner } from "../entities/air-conditioner";
-import type { FloorWithRoomsAndAirConditioners } from "../repositories/floors-repository";
+import type { AirConditioner } from "../../entities/air-conditioner";
+import type { FloorWithRoomsAndAirConditioners } from "../../repositories/floors-repository";
 
 export class AirConditionerPresenter {
     static toHTTP(airConditioner: AirConditioner) {

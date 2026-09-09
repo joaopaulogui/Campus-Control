@@ -1,6 +1,6 @@
 import { type Request, type Response } from "express";
-import { PrismaBuildingsRepository } from "../repositories/prisma/prisma-buildings-repository";
-import { ListBuildingsUseCase } from "../use-cases/list-buildings-use-case";
+import { PrismaBuildingsRepository } from "../../repositories/prisma/prisma-buildings-repository";
+import { ListBuildingsUseCase } from "../../use-cases/list-buildings-use-case";
 import { BuildingPresenter } from "../presenters/building-presenter";
 
 export class ListBuildingsController {

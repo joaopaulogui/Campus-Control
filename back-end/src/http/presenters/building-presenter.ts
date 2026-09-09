@@ -1,4 +1,4 @@
-import type { Building } from "../entities/building";
+import type { Building } from "../../entities/building";
 
 export class BuildingPresenter {
     static toHTTP(building: Building) {

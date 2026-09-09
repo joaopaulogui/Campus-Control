@@ -1,8 +1,8 @@
 import { type Request, type Response } from "express"
-import { PrismaFloorsRepository } from "../repositories/prisma/prisma-floors-repository"
-import { ListFloorsUseCase } from "../use-cases/list-floors-use-case"
+import { PrismaFloorsRepository } from "../../repositories/prisma/prisma-floors-repository"
+import { ListFloorsUseCase } from "../../use-cases/list-floors-use-case"
 import { FloorPresenter } from "../presenters/floor-presenter"
-import { listFloorsQuerySchema } from "../http/schemas/floors"
+import { listFloorsQuerySchema } from "../schemas/floors"
 
 export class ListFloorsController {
     async handle(req: Request, res: Response) {
