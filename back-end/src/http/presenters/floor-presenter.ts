@@ -1,4 +1,4 @@
-import type { Floor } from "../entities/floor";
+import type { Floor } from "../../entities/floor";
 
 export class FloorPresenter {
     static toHTTP(floor: Floor) {

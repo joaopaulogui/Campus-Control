@@ -1,10 +1,10 @@
 import { type Request, type Response } from "express";
-import { PrismaAirConditionersRepository } from "../repositories/prisma/prisma-air-conditioners-repository";
-import { PrismaRoomsRepository } from "../repositories/prisma/prisma-rooms-repository";
-import { PrismaFloorsRepository } from "../repositories/prisma/prisma-floors-repository";
-import { ListFloorsWithRoomsAndAirConditionersUseCase } from "../use-cases/list-floors-with-rooms-and-acs-use-case";
+import { PrismaAirConditionersRepository } from "../../repositories/prisma/prisma-air-conditioners-repository";
+import { PrismaRoomsRepository } from "../../repositories/prisma/prisma-rooms-repository";
+import { PrismaFloorsRepository } from "../../repositories/prisma/prisma-floors-repository";
+import { ListFloorsWithRoomsAndAirConditionersUseCase } from "../../use-cases/list-floors-with-rooms-and-acs-use-case";
 import { AirConditionerPresenter } from "../presenters/air-conditioners-presenter";
-import { listAirConditionersQuerySchema } from "../http/schemas/air-conditioners";
+import { listAirConditionersQuerySchema } from "../schemas/air-conditioners";
 
 export class ListAirConditionersController {
     async handle(req: Request, res: Response) {

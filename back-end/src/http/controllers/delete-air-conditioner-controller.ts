@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
-import { PrismaAirConditionersRepository } from "../repositories/prisma/prisma-air-conditioners-repository";
-import { DeleteAirConditionerUseCase } from "../use-cases/delete-air-conditioner-use-case";
-import { deleteAirConditionerParamsSchema } from "../http/schemas/air-conditioners";
+import { PrismaAirConditionersRepository } from "../../repositories/prisma/prisma-air-conditioners-repository";
+import { DeleteAirConditionerUseCase } from "../../use-cases/delete-air-conditioner-use-case";
+import { deleteAirConditionerParamsSchema } from "../schemas/air-conditioners";
 
 export class DeleteAirConditionerController {
     async handle(req: Request, res: Response) {
