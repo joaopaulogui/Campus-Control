@@ -14,6 +14,10 @@ export const toggleAirConditionerParamsSchema = z.object({
     airConditionerId: z.uuid(),
 })
 
+export const deleteAirConditionerParamsSchema = z.object({
+    airConditionerId: z.uuid(),
+})
+
 export const groupedAirConditionerResponseSchema = z.object({
     floorName: z.string(),
     rooms: z.array(z.object({

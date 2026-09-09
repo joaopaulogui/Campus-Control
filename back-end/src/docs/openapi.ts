@@ -25,6 +25,7 @@ import {
     listAirConditionersQuerySchema,
     listAirConditionersResponseSchema,
     toggleAirConditionerParamsSchema,
+    deleteAirConditionerParamsSchema,
 } from "../http/schemas/air-conditioners"
 
 const unauthorizedResponse = {
@@ -77,7 +78,7 @@ export const openApiDocument = {
                     ...jsonContent(authenticateUserBodySchema),
                 },
                 responses: {
-                    201: {
+                    200: {
                         description: "JWT issued",
                         ...jsonContent(authenticateUserResponseSchema),
                     },
@@ -193,7 +194,7 @@ export const openApiDocument = {
                 security: bearerAuth,
                 parameters: toOpenApiParameters(toggleRoomLockParamsSchema, "path"),
                 responses: {
-                    200: { description: "Lock status toggled" },
+                    204: { description: "Lock status toggled" },
                     401: unauthorizedResponse,
                 },
             },
@@ -234,11 +235,24 @@ export const openApiDocument = {
                 security: bearerAuth,
                 parameters: toOpenApiParameters(toggleAirConditionerParamsSchema, "path"),
                 responses: {
-                    200: { description: "Power status toggled" },
+                    204: { description: "Power status toggled" },
                     401: unauthorizedResponse,
                 },
             },
         },
+        "/api/air-conditioners/{airConditionerId}": {
+            delete: {
+                tags: ["Air conditioners"],
+                summary: "Delete air conditioner",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteAirConditionerParamsSchema, "path"),
+                responses: {
+                    204: { description: "Air conditioner deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        }
     },
     components: {
         securitySchemes: {

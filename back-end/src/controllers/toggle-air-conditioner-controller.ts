@@ -13,6 +13,6 @@ export class ToggleAirConditionerController {
 
         await toggleAirConditioner.execute({ id: airConditionerId })
 
-        res.status(200).send()
+        res.status(204).send()
     }
 }

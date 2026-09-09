@@ -13,6 +13,6 @@ export class ToggleRoomLockController {
 
         await toggleRoomLock.execute({ roomId, })
 
-        res.status(200).send()
+        res.status(204).send()
     }
 }
