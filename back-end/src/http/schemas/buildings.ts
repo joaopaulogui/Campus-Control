@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const createBuildingBodySchema = z.object({
+export const registerBuildingBodySchema = z.object({
     name: z.string(),
 })
 

@@ -1,21 +1,21 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryFloorsRepository } from "../test/repositories/in-memory-floors-repository";
-import { CreateFloorUseCase } from "./create-floor-use-case";
+import { RegisterFloorUseCase } from "./register-floor-use-case";
 import { InMemoryBuildingsRepository } from "../test/repositories/in-memory-buildings-repository";
 import { makeBuilding } from "../test/factories/make-building";
 
 let floorsRepository: InMemoryFloorsRepository
 let buildingsRepository: InMemoryBuildingsRepository
-let sut: CreateFloorUseCase
+let sut: RegisterFloorUseCase
 
-describe("Create Floor", () => {
+describe("Register Floor", () => {
     beforeEach(() => {
         floorsRepository = new InMemoryFloorsRepository()
         buildingsRepository = new InMemoryBuildingsRepository()
-        sut = new CreateFloorUseCase(floorsRepository, buildingsRepository)
+        sut = new RegisterFloorUseCase(floorsRepository, buildingsRepository)
     })
 
-    test("It should be able to create a floor", async () => {
+    test("It should be able to register a floor", async () => {
         const building = makeBuilding()
 
         buildingsRepository.create(building)

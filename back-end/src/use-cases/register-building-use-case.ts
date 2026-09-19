@@ -1,16 +1,16 @@
 import { Building } from "../entities/building";
 import type { BuildingsRepository } from "../repositories/buildings-repository";
 
-interface CreateBuildingUseCaseRequest {
+interface RegisterBuildingUseCaseRequest {
     name: string
 }
 
-interface CreateBuildingUseCaseResponse {}
+interface RegisterBuildingUseCaseResponse {}
 
-export class CreateBuildingUseCase {
+export class RegisterBuildingUseCase {
     constructor(private buildingsRepository: BuildingsRepository) {}
 
-    async execute({ name }: CreateBuildingUseCaseRequest): Promise<CreateBuildingUseCaseResponse> {
+    async execute({ name }: RegisterBuildingUseCaseRequest): Promise<RegisterBuildingUseCaseResponse> {
         const building = new Building({ name, })
         
         await this.buildingsRepository.create( building )

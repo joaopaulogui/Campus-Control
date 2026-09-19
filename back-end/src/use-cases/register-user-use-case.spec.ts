@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryUsersRepository } from "../test/repositories/in-memory-users-repository";
-import { CreateUserUseCase } from "./create-user-use-case";
+import { CreateUserUseCase } from "./register-user-use-case";
 import { UserRole } from "../entities/user";
 import { compare, hash } from "bcryptjs";
 import { FakeHasher } from "../test/cryptography/fake-hasher";

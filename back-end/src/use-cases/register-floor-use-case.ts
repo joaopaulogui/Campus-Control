@@ -2,20 +2,20 @@ import { Floor } from "../entities/floor";
 import type { BuildingsRepository } from "../repositories/buildings-repository";
 import type { FloorsRepository } from "../repositories/floors-repository";
 
-interface CreateFloorUseCaseRequest {
+interface RegisterFloorUseCaseRequest {
     buildingId: string
     name: string
 }
 
-interface CreateFloorUseCaseResponse {}
+interface RegisterFloorUseCaseResponse {}
 
-export class CreateFloorUseCase {
+export class RegisterFloorUseCase {
     constructor(
         private floorsRepository: FloorsRepository,
         private buildingsRepository: BuildingsRepository
     ) {}
     
-    async execute({ buildingId, name }: CreateFloorUseCaseRequest): Promise<CreateFloorUseCaseResponse> {
+    async execute({ buildingId, name }: RegisterFloorUseCaseRequest): Promise<RegisterFloorUseCaseResponse> {
         const building = await this.buildingsRepository.findById(buildingId)
 
         if(!building) {

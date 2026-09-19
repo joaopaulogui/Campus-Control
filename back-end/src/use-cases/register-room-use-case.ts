@@ -2,16 +2,16 @@ import { Room, type RoomType } from "../entities/room";
 import type { FloorsRepository } from "../repositories/floors-repository";
 import type { RoomsRepository } from "../repositories/rooms-repository";
 
-interface CreateRoomUseCaseRequest {
+interface RegisterRoomUseCaseRequest {
     name: string,
     type: RoomType,
     capacity: number,
     floorId: string,
 }
 
-interface CreateRoomUseCaseResponse {}
+interface RegisterRoomUseCaseResponse {}
 
-export class CreateRoomUseCase {
+export class RegisterRoomUseCase {
     constructor(
         private roomsRepository: RoomsRepository,
         private floorsRepository: FloorsRepository,
@@ -22,7 +22,7 @@ export class CreateRoomUseCase {
         type, 
         capacity, 
         floorId, 
-    }: CreateRoomUseCaseRequest): Promise<CreateRoomUseCaseResponse> {
+    }: RegisterRoomUseCaseRequest): Promise<RegisterRoomUseCaseResponse> {
         const floor = await this.floorsRepository.findById(floorId)
 
         if(!floor) {

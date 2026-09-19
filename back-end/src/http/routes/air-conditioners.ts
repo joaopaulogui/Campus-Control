@@ -1,5 +1,5 @@
 import express from "express";
-import { CreateAirConditionerController } from "../controllers/create-air-conditioner-controller";
+import { RegisterAirConditionerController } from "../controllers/register-air-conditioner-controller";
 import { ListAirConditionersController } from "../controllers/list-air-conditioners-controller";
 import { ToggleAirConditionerController } from "../controllers/toggle-air-conditioner-controller";
 import { VerifyJwt } from "../middlewares/verify-jwt";
@@ -8,14 +8,14 @@ import { DeleteAirConditionerController } from "../controllers/delete-air-condit
 
 const router = express.Router()
 
-const createAirConditionerController = new CreateAirConditionerController()
+const registerAirConditionerController = new RegisterAirConditionerController()
 const listAirConditionersController = new ListAirConditionersController()
 const toggleAirConditionerController = new ToggleAirConditionerController()
 const deleteAirConditioner = new DeleteAirConditionerController()
 
 router.use(VerifyJwt)
 
-router.post('/', VerifyUserRole, createAirConditionerController.handle)
+router.post('/', VerifyUserRole, registerAirConditionerController.handle)
 
 router.get('/', listAirConditionersController.handle)
 

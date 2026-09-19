@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { RoomType } from "../../entities/room"
 
-export const createRoomBodySchema = z.object({
+export const registerRoomBodySchema = z.object({
     name: z.string(),
     type: z.enum(RoomType),
     capacity: z.int(),

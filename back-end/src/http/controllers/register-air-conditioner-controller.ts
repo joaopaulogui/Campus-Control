@@ -1,19 +1,19 @@
 import { type Request, type Response } from "express";
 import { PrismaRoomsRepository } from "../../repositories/prisma/prisma-rooms-repository";
 import { PrismaAirConditionersRepository } from "../../repositories/prisma/prisma-air-conditioners-repository";
-import { CreateAirConditionerUseCase } from "../../use-cases/create-air-conditioner-use-case";
-import { createAirConditionerBodySchema } from "../schemas/air-conditioners";
+import { registerAirConditionerBodySchema } from "../schemas/air-conditioners";
+import { RegisterAirConditionerUseCase } from "../../use-cases/register-air-conditioner-use-case";
 
-export class CreateAirConditionerController {
+export class RegisterAirConditionerController {
     async handle(req: Request, res: Response) {
         const roomsRepository = new PrismaRoomsRepository()
         const airConditionersRepository = new PrismaAirConditionersRepository()
 
-        const createAirConditioner = new CreateAirConditionerUseCase(roomsRepository, airConditionersRepository)
+        const registerAirConditioner = new RegisterAirConditionerUseCase(roomsRepository, airConditionersRepository)
 
-        const { roomId } = createAirConditionerBodySchema.parse(req.body)
+        const { roomId } = registerAirConditionerBodySchema.parse(req.body)
 
-        await createAirConditioner.execute({ roomId })
+        await registerAirConditioner.execute({ roomId })
 
         res.status(201).send()
     }
