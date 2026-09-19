@@ -1,18 +1,17 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryBuildingsRepository } from "../test/repositories/in-memory-buildings-repository";
-import { CreateBuildingUseCase } from "./create-building-use-case";
-import { Building } from "../entities/building";
+import { RegisterBuildingUseCase } from "./register-building-use-case";
 
 let buildingsRepository: InMemoryBuildingsRepository
-let sut: CreateBuildingUseCase
+let sut: RegisterBuildingUseCase
 
-describe("Create building", () => {
+describe("Register building", () => {
     beforeEach(() => {
         buildingsRepository = new InMemoryBuildingsRepository()
-        sut = new CreateBuildingUseCase(buildingsRepository)
+        sut = new RegisterBuildingUseCase(buildingsRepository)
     })
 
-    test("It should be able to create building", async () => {
+    test("It should be able to register building", async () => {
         await sut.execute({ name: "Building 1" })
 
         expect(buildingsRepository.items).toHaveLength(1)

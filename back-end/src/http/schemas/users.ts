@@ -10,7 +10,7 @@ export const authenticateUserResponseSchema = z.object({
     accessToken: z.string(),
 })
 
-export const createUserBodySchema = z.object({
+export const registerUserBodySchema = z.object({
     name: z.string(),
     email: z.email(),
     password: z.string(),

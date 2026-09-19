@@ -3,28 +3,28 @@ import { healthResponseSchema, unauthorizedResponseSchema } from "../http/schema
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
-    createUserBodySchema,
+    registerUserBodySchema,
 } from "../http/schemas/users"
 import {
-    createBuildingBodySchema,
+    registerBuildingBodySchema,
     deleteBuildingParamsSchema,
     listBuildingsResponseSchema,
 } from "../http/schemas/buildings"
 import {
-    createFloorBodySchema,
+    registerFloorBodySchema,
     deleteFloorParamsSchema,
     listFloorsQuerySchema,
     listFloorsResponseSchema,
 } from "../http/schemas/floors"
 import {
-    createRoomBodySchema,
+    registerRoomBodySchema,
     deleteRoomParamsSchema,
     listRoomsQuerySchema,
     listRoomsResponseSchema,
     toggleRoomLockParamsSchema,
 } from "../http/schemas/rooms"
 import {
-    createAirConditionerBodySchema,
+    registerAirConditionerBodySchema,
     listAirConditionersQuerySchema,
     listAirConditionersResponseSchema,
     toggleAirConditionerParamsSchema,
@@ -91,15 +91,15 @@ export const openApiDocument = {
         "/api/users": {
             post: {
                 tags: ["Users"],
-                summary: "Create user",
+                summary: "Register user",
                 description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 requestBody: {
                     required: true,
-                    ...jsonContent(createUserBodySchema),
+                    ...jsonContent(registerUserBodySchema),
                 },
                 responses: {
-                    201: { description: "User created" },
+                    201: { description: "User registered" },
                     401: unauthorizedResponse,
                 },
             },
@@ -119,15 +119,15 @@ export const openApiDocument = {
             },
             post: {
                 tags: ["Buildings"],
-                summary: "Create building",
+                summary: "Register building",
                 description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 requestBody: {
                     required: true,
-                    ...jsonContent(createBuildingBodySchema),
+                    ...jsonContent(registerBuildingBodySchema),
                 },
                 responses: {
-                    201: { description: "Building created" },
+                    201: { description: "Building registered" },
                     401: unauthorizedResponse,
                 },
             },
@@ -160,15 +160,15 @@ export const openApiDocument = {
             },
             post: {
                 tags: ["Floors"],
-                summary: "Create floor",
+                summary: "Register floor",
                 description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 requestBody: {
                     required: true,
-                    ...jsonContent(createFloorBodySchema),
+                    ...jsonContent(registerFloorBodySchema),
                 },
                 responses: {
-                    201: { description: "Floor created" },
+                    201: { description: "Floor registered" },
                     401: unauthorizedResponse,
                 },
             },
@@ -201,15 +201,15 @@ export const openApiDocument = {
             },
             post: {
                 tags: ["Rooms"],
-                summary: "Create room",
+                summary: "Register room",
                 description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 requestBody: {
                     required: true,
-                    ...jsonContent(createRoomBodySchema),
+                    ...jsonContent(registerRoomBodySchema),
                 },
                 responses: {
-                    201: { description: "Room created" },
+                    201: { description: "Room registered" },
                     401: unauthorizedResponse,
                 },
             },
@@ -254,15 +254,15 @@ export const openApiDocument = {
             },
             post: {
                 tags: ["Air conditioners"],
-                summary: "Create air conditioner",
+                summary: "Register air conditioner",
                 description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 requestBody: {
                     required: true,
-                    ...jsonContent(createAirConditionerBodySchema),
+                    ...jsonContent(registerAirConditionerBodySchema),
                 },
                 responses: {
-                    201: { description: "Air conditioner created" },
+                    201: { description: "Air conditioner registered" },
                     401: unauthorizedResponse,
                 },
             },

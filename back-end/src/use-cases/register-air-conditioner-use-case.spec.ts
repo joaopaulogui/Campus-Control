@@ -1,22 +1,21 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryAirConditionersRepository } from "../test/repositories/in-memory-air-conditioners-repository";
 import { InMemoryRoomsRepository } from "../test/repositories/in-memory-rooms-repository";
-import { CreateAirConditionerUseCase } from "./create-air-conditioner-use-case";
+import { RegisterAirConditionerUseCase } from "./register-air-conditioner-use-case";
 import { makeRoom } from "../test/factories/make-room";
-import { makeAirConditioner } from "../test/factories/make-air-conditioner";
 
 let roomsRepository: InMemoryRoomsRepository
 let airConditionersRepository: InMemoryAirConditionersRepository
-let sut: CreateAirConditionerUseCase
+let sut: RegisterAirConditionerUseCase
 
-describe("Create Air Conditioner", () => {
+describe("Register Air Conditioner", () => {
     beforeEach(() => {
         roomsRepository = new InMemoryRoomsRepository()
         airConditionersRepository = new InMemoryAirConditionersRepository()
-        sut = new CreateAirConditionerUseCase(roomsRepository, airConditionersRepository)
+        sut = new RegisterAirConditionerUseCase(roomsRepository, airConditionersRepository)
     })
 
-    test("It should be able to create an air conditioner", async () => {
+    test("It should be able to register an air conditioner", async () => {
         const room = makeRoom()
         roomsRepository.create(room)
 
@@ -25,7 +24,7 @@ describe("Create Air Conditioner", () => {
         expect(airConditionersRepository.items).toHaveLength(1)
     })
 
-    test("It should not be able to create an air conditioner in an unexistent room", async () => {
+    test("It should not be able to register an air conditioner in an unexistent room", async () => {
         await expect(async () => (await sut.execute({ roomId: "1", }))).rejects.toThrow()
     })
 })

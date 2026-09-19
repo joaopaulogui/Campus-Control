@@ -2,19 +2,19 @@ import { AirConditioner, AirConditionerStatus } from "../entities/air-conditione
 import type { AirConditionersRepository } from "../repositories/air-conditioners-repository"
 import type { RoomsRepository } from "../repositories/rooms-repository"
 
-interface CreateAirConditionerUseCaseRequest {
+interface RegisterAirConditionerUseCaseRequest {
     roomId: string
 }
 
-interface CreateAirConditionerUseCaseResponse {}
+interface RegisterAirConditionerUseCaseResponse {}
 
-export class CreateAirConditionerUseCase {
+export class RegisterAirConditionerUseCase {
     constructor(
         private roomsRepository: RoomsRepository,
         private airConditionersRepository: AirConditionersRepository
     ) {}
 
-    async execute({ roomId }: CreateAirConditionerUseCaseRequest): Promise<CreateAirConditionerUseCaseResponse> {
+    async execute({ roomId }: RegisterAirConditionerUseCaseRequest): Promise<RegisterAirConditionerUseCaseResponse> {
         const room = await this.roomsRepository.findById(roomId)
 
         if(!room) {

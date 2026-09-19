@@ -1,19 +1,19 @@
 import { type Request, type Response } from 'express'
 import { PrismaFloorsRepository } from '../../repositories/prisma/prisma-floors-repository';
 import { PrismaRoomsRepository } from '../../repositories/prisma/prisma-rooms-repository';
-import { CreateRoomUseCase } from '../../use-cases/create-room-use-case';
-import { createRoomBodySchema } from '../schemas/rooms';
+import { RegisterRoomUseCase } from '../../use-cases/register-room-use-case';
+import { registerRoomBodySchema } from '../schemas/rooms';
 
-export class CreateRoomController {
+export class RegisterRoomController {
     async handle(req: Request, res: Response) {
         const floorsRepository = new PrismaFloorsRepository()
         const roomsRepository = new PrismaRoomsRepository()
 
-        const createRoom = new CreateRoomUseCase(roomsRepository, floorsRepository)
+        const registerRoom = new RegisterRoomUseCase(roomsRepository, floorsRepository)
 
-        const { name, type, capacity, floorId } = createRoomBodySchema.parse(req.body)
+        const { name, type, capacity, floorId } = registerRoomBodySchema.parse(req.body)
 
-        await createRoom.execute({ name, type, capacity, floorId })
+        await registerRoom.execute({ name, type, capacity, floorId })
 
         res.status(201).send()
     }

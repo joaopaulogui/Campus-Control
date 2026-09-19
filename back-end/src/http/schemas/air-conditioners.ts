@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { AirConditionerStatus } from "../../entities/air-conditioner"
 
-export const createAirConditionerBodySchema = z.object({
+export const registerAirConditionerBodySchema = z.object({
     roomId: z.uuid(),
 })
 

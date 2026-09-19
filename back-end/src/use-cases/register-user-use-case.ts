@@ -2,22 +2,22 @@ import { User, type UserRole } from "../entities/user"
 import type { UsersRepository } from "../repositories/users-repositoy"
 import type { HashGenerator } from "../cryptography/hash-generator"
 
-interface CreateUserUseCaseRequest {
+interface RegisterUserUseCaseRequest {
     name: string
     email: string
     password: string
     role: UserRole
 }
 
-interface CreateUserUseCaseResponse {}
+interface RegisterUserUseCaseResponse {}
 
-export class CreateUserUseCase {
+export class RegisterUserUseCase {
     constructor(
         private usersRepository: UsersRepository,
         private hashGenerator: HashGenerator,
     ) {}
 
-    async execute({ name, email, password, role }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+    async execute({ name, email, password, role }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
         const userWithSameEmail = await this.usersRepository.findByEmail(email)
 
         if(userWithSameEmail) {

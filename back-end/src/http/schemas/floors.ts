@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const createFloorBodySchema = z.object({
+export const registerFloorBodySchema = z.object({
     name: z.string(),
     buildingId: z.uuid(),
 })
