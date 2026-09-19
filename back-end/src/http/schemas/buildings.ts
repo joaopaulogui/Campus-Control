@@ -4,6 +4,10 @@ export const createBuildingBodySchema = z.object({
     name: z.string(),
 })
 
+export const deleteBuildingParamsSchema = z.object({
+    buildingId: z.uuid()
+})
+
 export const buildingResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
