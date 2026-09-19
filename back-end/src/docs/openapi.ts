@@ -16,6 +16,7 @@ import {
 } from "../http/schemas/floors"
 import {
     createRoomBodySchema,
+    deleteRoomParamsSchema,
     listRoomsQuerySchema,
     listRoomsResponseSchema,
     toggleRoomLockParamsSchema,
@@ -198,6 +199,18 @@ export const openApiDocument = {
                     401: unauthorizedResponse,
                 },
             },
+        },
+        "/api/rooms/{roomId}": {
+            delete: {
+                tags: ["Rooms"],
+                summary: "Delete room",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteRoomParamsSchema, "path"),
+                responses: {
+                    204: { description: "Room deleted" },
+                    401: unauthorizedResponse
+                }
+            }
         },
         "/api/air-conditioners": {
             get: {
