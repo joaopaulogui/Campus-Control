@@ -17,6 +17,10 @@ export const toggleRoomLockParamsSchema = z.object({
     roomId: z.uuid(),
 })
 
+export const deleteRoomParamsSchema = z.object({
+    roomId: z.uuid()
+})
+
 export const roomResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
