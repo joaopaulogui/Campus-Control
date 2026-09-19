@@ -11,6 +11,7 @@ import {
 } from "../http/schemas/buildings"
 import {
     createFloorBodySchema,
+    deleteFloorParamsSchema,
     listFloorsQuerySchema,
     listFloorsResponseSchema,
 } from "../http/schemas/floors"
@@ -158,6 +159,18 @@ export const openApiDocument = {
                     401: unauthorizedResponse,
                 },
             },
+        },
+        "/api/floors/{floorId}": {
+            delete: {
+                tags: ["Floors"],
+                summary: "Delete floor",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteFloorParamsSchema, "path"),
+                responses: {
+                    204: { description: "Floor deleted" },
+                    401: unauthorizedResponse
+                }
+            }
         },
         "/api/rooms": {
             get: {
