@@ -9,6 +9,10 @@ export const listFloorsQuerySchema = z.object({
     buildingId: z.uuid(),
 })
 
+export const deleteFloorParamsSchema = z.object({
+    floorId: z.uuid()
+})
+
 export const floorResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
