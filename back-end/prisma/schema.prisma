@@ -57,10 +57,24 @@ model User {
   role      UserRole
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
 
-  chats    ChatParticipant[]
-  messages Message[]
-  logs     Log[]
+  chats             ChatParticipant[]
+  messages          Message[]
+  audits            Audit[]
+  buildingEmployees BuildingEmployee[]
+
+  @@map("users")
+}
+
+model BuildingEmployee {
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  building   Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  userId     String
+  buildingId String
+
+  @@id([userId, buildingId])
+  @@map("building_employees")
 }
 
 model Building {
@@ -68,7 +82,10 @@ model Building {
   name      String
   updatedAt DateTime? @updatedAt @map("updated_at")
 
-  floors Floor[]
+  floors       Floor[]
+  userWorksIns BuildingEmployee[]
+
+  @@map("buildings")
 }
 
 model Floor {
@@ -76,9 +93,11 @@ model Floor {
   name       String
   buildingId String    @map("building_id")
   updatedAt  DateTime? @updatedAt @map("updated_at")
-  building   Building  @relation(fields: [buildingId], references: [id])
+  building   Building  @relation(fields: [buildingId], references: [id], onDelete: Cascade)
 
   rooms Room[]
+
+  @@map("floors")
 }
 
 model Room {
@@ -89,11 +108,13 @@ model Room {
   isLocked  Boolean   @default(false) @map("is_locked")
   floorId   String    @map("floor_id")
   updatedAt DateTime? @updatedAt @map("updated_at")
-  floor     Floor     @relation(fields: [floorId], references: [id])
+  floor     Floor     @relation(fields: [floorId], references: [id], onDelete: Cascade)
 
   airConditioners AirConditioner[]
   schedules       Schedule[]
   projectors      Projector[]
+
+  @@map("rooms")
 }
 
 model AirConditioner {
@@ -103,7 +124,9 @@ model AirConditioner {
   isOn        Boolean         @default(false) @map("is_on")
   roomId      String          @map("room_id")
   updatedAt   DateTime?       @updatedAt @map("updated_at")
-  room        Room            @relation(fields: [roomId], references: [id])
+  room        Room            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("air_conditioners")
 }
 
 model Projector {
@@ -111,7 +134,9 @@ model Projector {
   status    EquipmentStatus
   roomId    String          @map("room_id")
   updatedAt DateTime?       @updatedAt @map("updated_at")
-  room      Room            @relation(fields: [roomId], references: [id])
+  room      Room            @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("projectors")
 }
 
 model Schedule {
@@ -122,18 +147,23 @@ model Schedule {
   roomKeeper String    @map("room_keeper")
   roomId     String    @map("room_id")
   updatedAt  DateTime? @updatedAt @map("updated_at")
-  room       Room      @relation(fields: [roomId], references: [id])
+  room       Room      @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("schedules")
 }
 
 model Item {
   id                String    @id @default(uuid())
   name              String
   type              ItemType
-  availableQuantity Int       @map("available_quantity")
   totalQuantity     Int       @map("total_quantity")
+  onHoldQuantity    Int       @map("on_hold_quantity")
+  availableQuantity Int       @map("available_quantity")
   updatedAt         DateTime? @updatedAt @map("updated_at")
 
   loans Loan[]
+
+  @@map("items")
 }
 
 model Loan {
@@ -147,22 +177,27 @@ model Loan {
   itemId                  String     @map("item_id")
   quantity                Int
   item                    Item       @relation(fields: [itemId], references: [id])
+
+  @@map("loans")
 }
 
 model Chat {
   id           String            @id @default(uuid())
   participants ChatParticipant[]
   messages     Message[]
+
+  @@map("chats")
 }
 
 model ChatParticipant {
   unread Int    @default(0)
   chatId String @map("chat_id")
   userId String @map("user_id")
-  chat   Chat   @relation(fields: [chatId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([chatId, userId])
+  @@map("chat_participants")
 }
 
 model Message {
@@ -170,12 +205,14 @@ model Message {
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   chatId    String   @map("chat_id")
-  senderId  String   @map("sender_id")
-  chat      Chat     @relation(fields: [chatId], references: [id])
-  sender    User     @relation(fields: [senderId], references: [id])
+  senderId  String?  @map("sender_id")
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender    User?    @relation(fields: [senderId], references: [id], onDelete: SetNull)
+
+  @@map("messages")
 }
 
-model Log {
+model Audit {
   id          String     @id @default(uuid())
   userId      String?    @map("user_id")
   user        User?      @relation(fields: [userId], references: [id])
@@ -185,4 +222,6 @@ model Log {
   description String
   createdAt   DateTime   @default(now()) @map("created_at")
   metadata    Json
+
+  @@map("audits")
 }
