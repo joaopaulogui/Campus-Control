@@ -7,6 +7,7 @@ import {
 } from "../http/schemas/users"
 import {
     createBuildingBodySchema,
+    deleteBuildingParamsSchema,
     listBuildingsResponseSchema,
 } from "../http/schemas/buildings"
 import {
@@ -130,6 +131,18 @@ export const openApiDocument = {
                     401: unauthorizedResponse,
                 },
             },
+        },
+        "/api/buildings/{buildingId}": {
+            delete: {
+                tags: ["Buildings"],
+                summary: "Delete building",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteBuildingParamsSchema, "path"),
+                responses: {
+                    204: { description: "Building deleted" },
+                    401: unauthorizedResponse
+                }
+            }
         },
         "/api/floors": {
             get: {
