@@ -30,6 +30,7 @@ import {
     toggleAirConditionerParamsSchema,
     deleteAirConditionerParamsSchema,
 } from "../http/schemas/air-conditioners"
+import { RegisterItemBodySchema } from "../http/schemas/items"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -288,6 +289,21 @@ export const openApiDocument = {
                 parameters: toOpenApiParameters(deleteAirConditionerParamsSchema, "path"),
                 responses: {
                     204: { description: "Air conditioner deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/items/": {
+            post: {
+                tags: ["Items"],
+                summary: "Register item",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(RegisterItemBodySchema)
+                },
+                responses: {
+                    204: { description: "Item registered" },
                     401: unauthorizedResponse
                 }
             }

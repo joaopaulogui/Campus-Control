@@ -18,6 +18,7 @@ export interface LogProps {
     eventEntity: EntityType
     entityId: string
     description: string
+    createdAt: Date
     metadata: object
 }
 
@@ -52,6 +53,10 @@ export class Log {
 
     get description() {
         return this.props.description
+    }
+
+    get createdAt() {
+        return this.props.createdAt
     }
 
     get metadata() {

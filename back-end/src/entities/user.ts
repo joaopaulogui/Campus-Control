@@ -12,6 +12,7 @@ export interface UserProps {
     role: UserRole
     createdAt: Date
     updatedAt?: Date | null
+    deletedAt?: Date | null
 }
 
 export class User {
@@ -73,5 +74,14 @@ export class User {
 
     private touch() {
         this.props.updatedAt = new Date()
+    }
+
+    get deletedAt() {
+        return this.props.deletedAt
+    }
+
+    delete() {
+        this.props.deletedAt = new Date()
+        this.touch()
     }
 }
