@@ -1,10 +1,10 @@
 import type { EntityType, Audit } from "../entities/audit";
 
 export interface AuditFilters {
-    eventType: string,
-    eventEntity: EntityType
-    entityId: string
-    description: string
+    eventType?: string | undefined,
+    eventEntity?: EntityType | undefined,
+    entityId?: string | undefined,
+    description?: string | undefined,
 }
 
 export interface AuditsRepository {
