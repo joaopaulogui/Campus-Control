@@ -55,6 +55,10 @@ export class Log {
         return this.props.description
     }
 
+    get createdAt() {
+        return this.props.createdAt
+    }
+
     get metadata() {
         return this.props.metadata
     }
