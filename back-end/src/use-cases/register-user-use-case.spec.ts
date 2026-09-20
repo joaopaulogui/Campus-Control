@@ -1,22 +1,21 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryUsersRepository } from "../test/repositories/in-memory-users-repository";
-import { CreateUserUseCase } from "./register-user-use-case";
+import { RegisterUserUseCase } from "./register-user-use-case";
 import { UserRole } from "../entities/user";
-import { compare, hash } from "bcryptjs";
 import { FakeHasher } from "../test/cryptography/fake-hasher";
 
 let usersRepository: InMemoryUsersRepository
 let fakeHasher: FakeHasher
-let sut: CreateUserUseCase
+let sut: RegisterUserUseCase
 
-describe("Create user", () => {
+describe("Register user", () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository()
         fakeHasher = new FakeHasher()
-        sut = new CreateUserUseCase(usersRepository, fakeHasher)
+        sut = new RegisterUserUseCase(usersRepository, fakeHasher)
     })
 
-    test("It should be able to create an user", async () => {
+    test("It should be able to register an user", async () => {
         await sut.execute({
             name: "Test user",
             email: "email@example.com",
