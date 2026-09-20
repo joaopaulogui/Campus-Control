@@ -75,4 +75,18 @@ export class Item {
     private touch() {
         this.props.updatedAt = new Date()
     }
+
+    loan(quantity: number) {
+        if(quantity <= 0 || !Number.isInteger(quantity)) {
+            throw new Error()
+        }
+
+        if(this.availableQuantity < quantity) {
+            throw new Error()
+        }
+
+        this.availableQuantity -= quantity
+
+        this.touch()
+    }
 }
