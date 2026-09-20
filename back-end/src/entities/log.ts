@@ -18,6 +18,7 @@ export interface LogProps {
     eventEntity: EntityType
     entityId: string
     description: string
+    createdAt: Date
     metadata: object
 }
 
