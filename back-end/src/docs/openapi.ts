@@ -31,6 +31,7 @@ import {
     deleteAirConditionerParamsSchema,
 } from "../http/schemas/air-conditioners"
 import { RegisterItemBodySchema } from "../http/schemas/items"
+import { LoanItemBodySchema } from "../http/schemas/loans"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -305,6 +306,21 @@ export const openApiDocument = {
                 responses: {
                     204: { description: "Item registered" },
                     401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/loans/": {
+            post: {
+                tags: ["Loans"],
+                summary: "Loan item",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(LoanItemBodySchema)
+                },
+                responses: {
+                    204: { description: "Item loaned" },
+                    401: unauthorizedResponse,
                 }
             }
         }

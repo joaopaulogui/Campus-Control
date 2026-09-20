@@ -7,6 +7,7 @@ import roomRoutes from './http/routes/rooms'
 import airConditionerRoutes from './http/routes/air-conditioners'
 import userRoutes from './http/routes/users'
 import itemRoutes from './http/routes/items'
+import loanRoutes from './http/routes/loans'
 
 import { setupSwagger } from './docs/setup-swagger'
 
@@ -27,6 +28,7 @@ app.use('/api/rooms', roomRoutes)
 app.use('/api/air-conditioners', airConditionerRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/items', itemRoutes)
+app.use('/api/loans', loanRoutes)
 
 app.listen(3333, () => {
     console.log('HTTP server running')
