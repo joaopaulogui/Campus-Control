@@ -12,7 +12,7 @@ export enum EntityType {
     USER = "USER"
 }
 
-export interface LogProps {
+export interface AuditProps {
     userId?: string | null
     eventType: string
     eventEntity: EntityType
@@ -22,11 +22,11 @@ export interface LogProps {
     metadata: object
 }
 
-export class Log {
+export class Audit {
     private _id: string
-    private props: LogProps
+    private props: AuditProps
 
-    constructor(props: LogProps, id?: string) {
+    constructor(props: AuditProps, id?: string) {
         this._id = id ?? randomUUID()
         this.props = props
     }
