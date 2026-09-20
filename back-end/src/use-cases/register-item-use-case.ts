@@ -17,7 +17,7 @@ export class RegisterItemUseCase {
             name,
             type,
             totalQuantity,
-            availableQuantity: 0,
+            availableQuantity: totalQuantity,
             onHoldQuantity: 0,
         })
 
