@@ -32,7 +32,7 @@ import {
 } from "../http/schemas/air-conditioners"
 import { RegisterItemBodySchema } from "../http/schemas/items"
 import { LoanItemBodySchema } from "../http/schemas/loans"
-import { registerProjectorBodySchema } from "../http/schemas/projectors"
+import { deleteProjectorParamsSchema, registerProjectorBodySchema } from "../http/schemas/projectors"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -299,13 +299,27 @@ export const openApiDocument = {
             post: {
                 tags: ["Projectors"],
                 summary: "Register projector",
+                description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 requestBody: {
                     required: true,
                     ...jsonContent(registerProjectorBodySchema)
                 },
                 responses: {
-                    204: { description: "projector registered" },
+                    204: { description: "Projector registered" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/projectors/{projectorId}": {
+            delete: {
+                tags: ["Projectors"],
+                summary: "Delete projector",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteProjectorParamsSchema, "path"),
+                responses: {
+                    204: { description: "Projector deleted" },
                     401: unauthorizedResponse
                 }
             }
