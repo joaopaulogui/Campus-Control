@@ -7,7 +7,6 @@ export enum ProjectorStatus {
 }
 
 export interface ProjectorProps {
-    name: string
     roomId: string
     status: ProjectorStatus
     updatedAt?: Date | null
