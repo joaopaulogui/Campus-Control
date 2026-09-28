@@ -2,7 +2,7 @@ import type { BuildingsRepository } from "../repositories/buildings-repository"
 
 interface UpdateBuildingUseCaseRequest {
     buildingId: string
-    name?: string
+    name?: string | undefined
 }
 
 interface UpdateBuildingUseCaseResponse {}

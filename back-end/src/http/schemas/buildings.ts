@@ -9,7 +9,7 @@ export const updateBuildingParamsSchema = z.object({
 })
 
 export const updateBuildingBodySchema = z.object({
-    name: z.string()
+    name: z.string().optional()
 })
 
 export const deleteBuildingParamsSchema = z.object({

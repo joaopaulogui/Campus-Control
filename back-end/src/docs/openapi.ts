@@ -26,6 +26,8 @@ import {
     listRoomsQuerySchema,
     listRoomsResponseSchema,
     toggleRoomLockParamsSchema,
+    updateRoomParamsSchema,
+    updateRoomBodySchema,
 } from "../http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
@@ -264,16 +266,32 @@ export const openApiDocument = {
             },
         },
         "/api/rooms/{roomId}": {
+            patch: {
+                tags: ["Rooms"],
+                summary: "Update room",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateRoomParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateRoomBodySchema)
+                },
+                responses: {
+                    204: { description: "Room updated" },
+                    401: unauthorizedResponse
+                }
+            },
             delete: {
                 tags: ["Rooms"],
                 summary: "Delete room",
+                description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 parameters: toOpenApiParameters(deleteRoomParamsSchema, "path"),
                 responses: {
                     204: { description: "Room deleted" },
                     401: unauthorizedResponse
                 }
-            }
+            },
         },
         "/api/air-conditioners": {
             get: {
