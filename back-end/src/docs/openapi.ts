@@ -17,6 +17,8 @@ import {
     deleteFloorParamsSchema,
     listFloorsQuerySchema,
     listFloorsResponseSchema,
+    updateFloorParamsSchema,
+    updateFloorBodySchema,
 } from "../http/schemas/floors"
 import {
     registerRoomBodySchema,
@@ -195,6 +197,20 @@ export const openApiDocument = {
             },
         },
         "/api/floors/{floorId}": {
+            patch: {
+                tags: ["Floors"],
+                summary: "Update floor",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateFloorParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateFloorBodySchema)
+                },
+                responses: {
+                    204: { description: "Floor updated" },
+                    401: unauthorizedResponse
+                }
+            },
             delete: {
                 tags: ["Floors"],
                 summary: "Delete floor",
@@ -204,7 +220,7 @@ export const openApiDocument = {
                     204: { description: "Floor deleted" },
                     401: unauthorizedResponse
                 }
-            }
+            },
         },
         "/api/rooms": {
             get: {
