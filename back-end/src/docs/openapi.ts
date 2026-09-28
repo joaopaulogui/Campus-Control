@@ -32,6 +32,7 @@ import {
 } from "../http/schemas/air-conditioners"
 import { RegisterItemBodySchema } from "../http/schemas/items"
 import { LoanItemBodySchema } from "../http/schemas/loans"
+import { registerProjectorBodySchema } from "../http/schemas/projectors"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -294,6 +295,21 @@ export const openApiDocument = {
                 }
             }
         },
+        "/api/projectors": {
+            post: {
+                tags: ["Projectors"],
+                summary: "Register projector",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerProjectorBodySchema)
+                },
+                responses: {
+                    204: { description: "projector registered" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
         "/api/items/": {
             post: {
                 tags: ["Items"],
@@ -323,7 +339,7 @@ export const openApiDocument = {
                     401: unauthorizedResponse,
                 }
             }
-        }
+        }, 
     },
     components: {
         securitySchemes: {
