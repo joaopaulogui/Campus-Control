@@ -4,11 +4,13 @@ import { ListBuildingsController } from "../controllers/list-buildings-controlle
 import { VerifyJwt } from "../middlewares/verify-jwt";
 import { VerifyUserRole } from "../middlewares/verify-user-role";
 import { DeleteBuildingController } from "../controllers/delete-building-controller";
+import { UpdateBuildingController } from "../controllers/update-building-controller";
 
 const router = express.Router()
 
 const registerBuildingController = new RegisterBuildingController()
 const listBuildingsController = new ListBuildingsController()
+const updateBuildingController = new UpdateBuildingController()
 const deleteBuildingController = new DeleteBuildingController()
 
 router.use(VerifyJwt)
@@ -16,6 +18,8 @@ router.use(VerifyJwt)
 router.get('/', listBuildingsController.handle)
 
 router.post('/', VerifyUserRole, registerBuildingController.handle)
+
+router.patch('/:buildingId', VerifyUserRole, updateBuildingController.handle)
 
 router.delete('/:buildingId', VerifyUserRole, deleteBuildingController.handle)
 

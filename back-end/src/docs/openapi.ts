@@ -9,6 +9,8 @@ import {
     registerBuildingBodySchema,
     deleteBuildingParamsSchema,
     listBuildingsResponseSchema,
+    updateBuildingParamsSchema,
+    updateBuildingBodySchema,
 } from "../http/schemas/buildings"
 import {
     registerFloorBodySchema,
@@ -136,9 +138,25 @@ export const openApiDocument = {
             },
         },
         "/api/buildings/{buildingId}": {
+            patch: {
+                tags: ["Buildings"],
+                summary: "Update building",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateBuildingParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateBuildingBodySchema)
+                },
+                responses: {
+                    204: { description: "Building updated" },
+                    401: unauthorizedResponse
+                }
+            },
             delete: {
                 tags: ["Buildings"],
                 summary: "Delete building",
+                description: "Requires JWT and ADMIN role.",
                 security: bearerAuth,
                 parameters: toOpenApiParameters(deleteBuildingParamsSchema, "path"),
                 responses: {
