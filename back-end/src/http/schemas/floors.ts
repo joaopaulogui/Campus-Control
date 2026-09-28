@@ -9,6 +9,14 @@ export const listFloorsQuerySchema = z.object({
     buildingId: z.uuid(),
 })
 
+export const updateFloorParamsSchema = z.object({
+    floorId: z.uuid()
+})
+
+export const updateFloorBodySchema = z.object({
+    name: z.string()
+})
+
 export const deleteFloorParamsSchema = z.object({
     floorId: z.uuid()
 })
