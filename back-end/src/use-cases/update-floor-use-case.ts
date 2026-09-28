@@ -2,7 +2,7 @@ import type { FloorsRepository } from "../repositories/floors-repository"
 
 interface UpdateFloorUseCaseRequest {
     floorId: string
-    name?: string
+    name?: string | undefined
 }
 
 interface UpdateFloorUseCaseResponse {}

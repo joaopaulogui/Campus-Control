@@ -14,7 +14,7 @@ export const updateFloorParamsSchema = z.object({
 })
 
 export const updateFloorBodySchema = z.object({
-    name: z.string()
+    name: z.string().optional()
 })
 
 export const deleteFloorParamsSchema = z.object({
