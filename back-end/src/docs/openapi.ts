@@ -38,7 +38,7 @@ import {
 } from "../http/schemas/air-conditioners"
 import { RegisterItemBodySchema } from "../http/schemas/items"
 import { LoanItemBodySchema } from "../http/schemas/loans"
-import { deleteProjectorParamsSchema, registerProjectorBodySchema } from "../http/schemas/projectors"
+import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -359,6 +359,22 @@ export const openApiDocument = {
                 },
                 responses: {
                     204: { description: "Projector registered" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/projectors/{projectorId}/status": {
+            patch: {
+                tags: ["Projectors"],
+                summary: "Update projector status",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateProjectorStatusParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateProjectorStatusBodySchema)
+                },
+                responses: {
+                    204: { description: "Projector status upated" },
                     401: unauthorizedResponse
                 }
             }
