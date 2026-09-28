@@ -14,6 +14,14 @@ export const toggleAirConditionerParamsSchema = z.object({
     airConditionerId: z.uuid(),
 })
 
+export const updateAirConditionerStatusParamsSchema = z.object({
+    airConditionerId: z.uuid(),
+})
+
+export const updateAirConditionerStatusBodySchema = z.object({
+    status: z.enum(AirConditionerStatus),
+})
+
 export const deleteAirConditionerParamsSchema = z.object({
     airConditionerId: z.uuid(),
 })

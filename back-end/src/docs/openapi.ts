@@ -35,6 +35,8 @@ import {
     listAirConditionersResponseSchema,
     toggleAirConditionerParamsSchema,
     deleteAirConditionerParamsSchema,
+    updateAirConditionerStatusParamsSchema,
+    updateAirConditionerStatusBodySchema,
 } from "../http/schemas/air-conditioners"
 import { RegisterItemBodySchema } from "../http/schemas/items"
 import { LoanItemBodySchema } from "../http/schemas/loans"
@@ -330,6 +332,22 @@ export const openApiDocument = {
                 parameters: toOpenApiParameters(toggleAirConditionerParamsSchema, "path"),
                 responses: {
                     204: { description: "Power status toggled" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/air-conditioners/{airConditionerId}/status": {
+            patch: {
+                tags: ["Air conditioners"],
+                summary: "Update air conditioner status",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateAirConditionerStatusParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateAirConditionerStatusBodySchema)
+                },
+                responses: {
+                    204: { description: "Air conditioner status updated" },
                     401: unauthorizedResponse,
                 },
             },
