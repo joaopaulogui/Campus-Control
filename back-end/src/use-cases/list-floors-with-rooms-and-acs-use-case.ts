@@ -29,7 +29,7 @@ export class ListFloorsWithRoomsAndAirConditionersUseCase {
             throw new Error()
         }
 
-        const floors = await this.floorsRepository.findMany({ id: floorId })
+        const floors = await this.floorsRepository.findMany({ buildingId, id: floorId })
 
         const floorIds = floors.map(floor => floor.id)
 
