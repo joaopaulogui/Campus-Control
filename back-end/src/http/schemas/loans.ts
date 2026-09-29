@@ -7,3 +7,7 @@ export const LoanItemBodySchema = z.object({
     quantity: z.int().min(1),
     deadline: z.iso.datetime(),
 })
+
+export const returnItemParamsSchema = z.object({
+    loanId: z.uuid()
+})

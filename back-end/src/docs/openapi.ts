@@ -39,7 +39,7 @@ import {
     updateAirConditionerStatusBodySchema,
 } from "../http/schemas/air-conditioners"
 import { RegisterItemBodySchema } from "../http/schemas/items"
-import { LoanItemBodySchema } from "../http/schemas/loans"
+import { LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
 import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
 
 const unauthorizedResponse = {
@@ -440,6 +440,18 @@ export const openApiDocument = {
                 }
             }
         }, 
+        "/api/loans/{loanId}/return": {
+            patch: {
+                tags: ["Loans"],
+                summary: "Return item",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(returnItemParamsSchema, "path"),
+                responses: {
+                    204: { description: "Item returned" },
+                    401: unauthorizedResponse
+                }
+            }
+        }
     },
     components: {
         securitySchemes: {
