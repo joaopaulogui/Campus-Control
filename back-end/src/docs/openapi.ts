@@ -40,7 +40,7 @@ import {
     updateAirConditionerStatusParamsSchema,
     updateAirConditionerStatusBodySchema,
 } from "../http/schemas/air-conditioners"
-import { deleteItemParamsSchema, RegisterItemBodySchema } from "../http/schemas/items"
+import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema } from "../http/schemas/items"
 import { LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
 import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
 
@@ -425,7 +425,20 @@ export const openApiDocument = {
                 }
             }
         },
-        "/api/items/": {
+        "/api/items": {
+            get: {
+                tags: ["Items"],
+                summary: "List Items",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listItemsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Item list",
+                        ...jsonContent(listItemsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
             post: {
                 tags: ["Items"],
                 summary: "Register item",
@@ -452,7 +465,7 @@ export const openApiDocument = {
                 }
             }
         },
-        "/api/loans/": {
+        "/api/loans": {
             post: {
                 tags: ["Loans"],
                 summary: "Loan item",
