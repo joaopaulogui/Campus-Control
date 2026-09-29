@@ -27,6 +27,6 @@ export class LoanItemController {
             deadline: new Date(deadline)
         })
 
-        res.status(204).send()
+        res.status(201).send()
     }
 }

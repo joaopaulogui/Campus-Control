@@ -13,6 +13,6 @@ export class RegisterItemController {
 
         await registerItem.execute({ name, type, totalQuantity })
 
-        res.status(204).send()
+        res.status(201).send()
     }
 }

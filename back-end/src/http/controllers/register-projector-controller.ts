@@ -15,6 +15,6 @@ export class RegisterProjectorController {
 
         await registerProjector.execute({ roomId, })
 
-        res.status(204).send()
+        res.status(201).send()
     }
 }

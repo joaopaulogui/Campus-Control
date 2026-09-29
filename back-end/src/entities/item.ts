@@ -94,7 +94,11 @@ export class Item {
         if(quantity <= 0 || !Number.isInteger(quantity)) {
             throw new Error()
         }
-
+        
+        if(this.totalQuantity === 0) {
+            return
+        }
+        
         if(this.availableQuantity + quantity > this.totalQuantity) {
             throw new Error()
         }
