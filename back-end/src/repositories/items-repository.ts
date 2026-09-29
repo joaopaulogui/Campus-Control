@@ -1,7 +1,8 @@
-import { Item } from "../entities/item.js";
+import { Item, ItemType } from "../entities/item.js";
 
 export interface ItemFilter {
-    name?: string | undefined
+    name?: string | undefined,
+    type?: ItemType | undefined,
 }
 
 export interface ItemsRepository {
