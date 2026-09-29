@@ -8,6 +8,7 @@ export interface LoanFilters {
 
 export interface LoansRepository {
     create(loan: Loan): Promise<void>
+    findById(id: string): Promise<Loan | null>
     findMany(filters?: LoanFilters): Promise<Loan[]>
     save(loan: Loan): Promise<void>
     delete(loan: Loan): Promise<void>
