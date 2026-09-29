@@ -38,7 +38,7 @@ import {
     updateAirConditionerStatusParamsSchema,
     updateAirConditionerStatusBodySchema,
 } from "../http/schemas/air-conditioners"
-import { RegisterItemBodySchema } from "../http/schemas/items"
+import { deleteItemParamsSchema, RegisterItemBodySchema } from "../http/schemas/items"
 import { LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
 import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
 
@@ -421,6 +421,18 @@ export const openApiDocument = {
                 },
                 responses: {
                     201: { description: "Item registered" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/items/{itemId}": {
+            delete: {
+                tags: ["Items"],
+                summary: "Delete item",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteItemParamsSchema, "path"),
+                responses: {
+                    204: { description: "item deleted" },
                     401: unauthorizedResponse
                 }
             }

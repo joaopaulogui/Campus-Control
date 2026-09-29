@@ -6,3 +6,7 @@ export const RegisterItemBodySchema = z.object({
     type: z.enum(ItemType),
     totalQuantity: z.int()
 })
+
+export const deleteItemParamsSchema = z.object({
+    itemId: z.uuid()
+})
