@@ -376,7 +376,7 @@ export const openApiDocument = {
                     ...jsonContent(registerProjectorBodySchema)
                 },
                 responses: {
-                    204: { description: "Projector registered" },
+                    201: { description: "Projector registered" },
                     401: unauthorizedResponse
                 }
             }
@@ -420,7 +420,7 @@ export const openApiDocument = {
                     ...jsonContent(RegisterItemBodySchema)
                 },
                 responses: {
-                    204: { description: "Item registered" },
+                    201: { description: "Item registered" },
                     401: unauthorizedResponse
                 }
             }
@@ -435,7 +435,7 @@ export const openApiDocument = {
                     ...jsonContent(LoanItemBodySchema)
                 },
                 responses: {
-                    204: { description: "Item loaned" },
+                    201: { description: "Item loaned" },
                     401: unauthorizedResponse,
                 }
             }
