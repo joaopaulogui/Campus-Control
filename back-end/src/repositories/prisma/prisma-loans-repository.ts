@@ -11,6 +11,16 @@ export class PrismaLoansRepository implements LoansRepository {
         await prisma.loan.create({ data, })
     }
 
+    async findById(id: string): Promise<Loan | null> {
+        const loan = await prisma.loan.findUnique({ where: { id, } })
+
+        if(!loan) {
+            return null
+        }
+
+        return PrismaLoanMapper.toDomain(loan)
+    }
+
     async findMany(filters?: LoanFilters): Promise<Loan[]> {
         const where: LoanWhereInput = {}
 

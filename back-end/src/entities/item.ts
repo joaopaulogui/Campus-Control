@@ -89,4 +89,18 @@ export class Item {
 
         this.touch()
     }
+
+    return(quantity: number) {
+        if(quantity <= 0 || !Number.isInteger(quantity)) {
+            throw new Error()
+        }
+
+        if(this.availableQuantity + quantity > this.totalQuantity) {
+            throw new Error()
+        }
+
+        this.availableQuantity += quantity
+
+        this.touch()
+    }
 }
