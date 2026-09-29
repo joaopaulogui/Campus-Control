@@ -1,9 +1,11 @@
 import type { AirConditionerStatus } from "../entities/air-conditioner.js"
 import type { AirConditionersRepository } from "../repositories/air-conditioners-repository.js"
+import type { BuildingsRepository } from "../repositories/buildings-repository.js"
 import type { FloorsRepository, FloorWithRoomsAndAirConditioners } from "../repositories/floors-repository.js"
 import type { RoomsRepository } from "../repositories/rooms-repository.js"
 
 interface ListFloorsWithRoomsAndAirConditionersUseCaseRequest {
+    buildingId: string
     floorId?: string | undefined
     status?: AirConditionerStatus | undefined
 }
@@ -17,10 +19,16 @@ export class ListFloorsWithRoomsAndAirConditionersUseCase {
         private airConditionersRepository: AirConditionersRepository,
         private roomsRepository: RoomsRepository,
         private floorsRepository: FloorsRepository,
+        private buildingsRepository: BuildingsRepository,
     ) {}
 
-    async execute({ floorId, status }: ListFloorsWithRoomsAndAirConditionersUseCaseRequest): Promise<ListFloorsWithRoomsAndAirConditionersUseCaseResponse> {
-        
+    async execute({ buildingId, floorId, status }: ListFloorsWithRoomsAndAirConditionersUseCaseRequest): Promise<ListFloorsWithRoomsAndAirConditionersUseCaseResponse> {
+        const building = await this.buildingsRepository.findById(buildingId)
+
+        if(!building) {
+            throw new Error()
+        }
+
         const floors = await this.floorsRepository.findMany({ id: floorId })
 
         const floorIds = floors.map(floor => floor.id)
