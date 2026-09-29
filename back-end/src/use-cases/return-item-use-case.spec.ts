@@ -4,6 +4,7 @@ import { InMemoryLoansRepository } from "../test/repositories/in-memory-loans-re
 import { ReturnItemUseCase } from "./return-item-use-case";
 import { makeItem } from "../test/factories/make-item";
 import { makeLoan } from "../test/factories/make-loan";
+import { LoanStatus } from "../entities/loan";
 
 let loansRepository: InMemoryLoansRepository
 let itemsRepository: InMemoryItemsRepository
@@ -21,7 +22,7 @@ describe("Return item", () => {
 
         itemsRepository.create(item)
 
-        const loan = makeLoan({ itemId: item.id, quantity: 5 })
+        const loan = makeLoan({ itemId: item.id, quantity: 5, status: LoanStatus.IN_USE})
 
         loansRepository.create(loan)
 
