@@ -28,6 +28,8 @@ import {
     toggleRoomLockParamsSchema,
     updateRoomParamsSchema,
     updateRoomBodySchema,
+    getRoomDetailsParamsSchema,
+    roomDetailsResponseSchema,
 } from "../http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
@@ -268,6 +270,19 @@ export const openApiDocument = {
             },
         },
         "/api/rooms/{roomId}": {
+            get: {
+                tags: ["Rooms"],
+                summary: "Get room details",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(getRoomDetailsParamsSchema, "path"),
+                responses: {
+                    200: {
+                        description: "Room details",
+                        ...jsonContent(roomDetailsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
             patch: {
                 tags: ["Rooms"],
                 summary: "Update room",
