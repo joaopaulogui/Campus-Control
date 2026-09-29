@@ -21,7 +21,12 @@ describe("List floor with rooms and ACs", () => {
         roomsRepository = new InMemoryRoomsRepository()
         floorsRepository = new InMemoryFloorsRepository()
         buildingsRepository = new InMemoryBuildingsRepository()
-        sut = new ListFloorsWithRoomsAndAirConditionersUseCase(airConditionersRepository, roomsRepository, floorsRepository)
+        sut = new ListFloorsWithRoomsAndAirConditionersUseCase(
+            airConditionersRepository, 
+            roomsRepository, 
+            floorsRepository, 
+            buildingsRepository
+        )
     })
 
     test("It should be able to list all floors with rooms and acs", async () => {
@@ -49,7 +54,7 @@ describe("List floor with rooms and ACs", () => {
         const airConditioner2 = makeAirConditioner({ roomId: room3.id })
         airConditionersRepository.create(airConditioner2)
 
-        const { floorsWithRoomsAndAirConditioners } = await sut.execute({})
+        const { floorsWithRoomsAndAirConditioners } = await sut.execute({ buildingId: building.id })
 
         expect(floorsWithRoomsAndAirConditioners).toHaveLength(2)
 

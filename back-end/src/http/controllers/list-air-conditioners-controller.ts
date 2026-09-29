@@ -5,18 +5,25 @@ import { PrismaFloorsRepository } from "../../repositories/prisma/prisma-floors-
 import { ListFloorsWithRoomsAndAirConditionersUseCase } from "../../use-cases/list-floors-with-rooms-and-acs-use-case";
 import { AirConditionerPresenter } from "../presenters/air-conditioners-presenter";
 import { listAirConditionersQuerySchema } from "../schemas/air-conditioners";
+import { PrismaBuildingsRepository } from "../../repositories/prisma/prisma-buildings-repository";
 
 export class ListAirConditionersController {
     async handle(req: Request, res: Response) {
         const airConditionersRepository = new PrismaAirConditionersRepository()
         const roomsRepository = new PrismaRoomsRepository()
         const floorsRepository = new PrismaFloorsRepository()
+        const buildingsRepository = new PrismaBuildingsRepository()
 
-        const listFloorsWithRoomsAndAirConditionersUseCase = new ListFloorsWithRoomsAndAirConditionersUseCase(airConditionersRepository, roomsRepository, floorsRepository)
+        const listFloorsWithRoomsAndAirConditionersUseCase = new ListFloorsWithRoomsAndAirConditionersUseCase(
+            airConditionersRepository, 
+            roomsRepository, 
+            floorsRepository, 
+            buildingsRepository
+        )
 
-        const { floorId, status } = listAirConditionersQuerySchema.parse(req.query)
+        const { buildingId, floorId, status } = listAirConditionersQuerySchema.parse(req.query)
 
-        const { floorsWithRoomsAndAirConditioners } = await listFloorsWithRoomsAndAirConditionersUseCase.execute({ floorId, status })
+        const { floorsWithRoomsAndAirConditioners } = await listFloorsWithRoomsAndAirConditionersUseCase.execute({ buildingId, floorId, status })
 
         res.status(200).json(floorsWithRoomsAndAirConditioners.map(AirConditionerPresenter.toHTTPGrouped))
     }
