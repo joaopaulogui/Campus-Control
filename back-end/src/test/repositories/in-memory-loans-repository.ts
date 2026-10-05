@@ -23,7 +23,7 @@ export class InMemoryLoansRepository implements LoansRepository {
             if(filters?.responsibleName && !item.responsibleName.includes(filters.responsibleName)){
                 return false
             }
-            if(filters?.itemIds && !filters.itemIds.includes(item.id)){
+            if(filters?.itemIds && !filters.itemIds.includes(item.itemId)){
                 return false
             }
             if(filters?.status && item.status !== filters.status){
