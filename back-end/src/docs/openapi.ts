@@ -41,7 +41,7 @@ import {
     updateAirConditionerStatusBodySchema,
 } from "../http/schemas/air-conditioners"
 import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema } from "../http/schemas/items"
-import { LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
+import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
 import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
 
 const unauthorizedResponse = {
@@ -466,6 +466,19 @@ export const openApiDocument = {
             }
         },
         "/api/loans": {
+            get: {
+                tags: ["Loans"],
+                summary: "List Loans",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listLoansQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "Loan list",
+                        ...jsonContent(listLoansResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
             post: {
                 tags: ["Loans"],
                 summary: "Loan item",

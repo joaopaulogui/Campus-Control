@@ -35,7 +35,7 @@ export class Loan {
     }
 
     get responsibleRegistration() {
-        return this.props.responsibleName
+        return this.props.responsibleRegistration
     }
 
     get itemId() {

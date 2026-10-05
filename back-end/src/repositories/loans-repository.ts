@@ -1,4 +1,10 @@
+import type { Item } from "../entities/item.js";
 import { Loan, LoanStatus } from "../entities/loan.js";
+
+export type LoanWithItem = {
+    loan: Loan
+    item: Item
+}
 
 export interface LoanFilters {
     responsibleName?: string | undefined,
