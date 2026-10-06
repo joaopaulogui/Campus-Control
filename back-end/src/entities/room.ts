@@ -1,28 +1,32 @@
+import { randomUUID } from "node:crypto"
+
 export enum RoomType {
-    CLASSROOM,
-    LAB,
-    MEETING_ROOM,
-    AUDITORIUM
+    CLASSROOM = "CLASSROOM",
+    LAB = "LAB",
+    MEETING_ROOM = "MEETING_ROOM",
+    AUDITORIUM = "AUDITORIUM",
 }
 
 export interface RoomProps {
-    id: string
     name: string
     type: RoomType
     capacity: number
     isLocked: boolean
     floorId: string
+    updatedAt?: Date | null
 }
 
 export class Room {
+    private _id: string
     private props: RoomProps
 
-    constructor(props: RoomProps) {
+    constructor(props: RoomProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get name() {
@@ -31,6 +35,7 @@ export class Room {
 
     set name(name: string) {
         this.props.name = name
+        this.touch()
     }
 
     get type() {
@@ -39,6 +44,7 @@ export class Room {
 
     set type(type: RoomType) {
         this.props.type = type
+        this.touch()
     }
 
     get capacity() {
@@ -47,6 +53,7 @@ export class Room {
 
     set capacity(capacity: number) {
         this.props.capacity = capacity
+        this.touch()
     }
 
     get isLocked() {
@@ -55,6 +62,7 @@ export class Room {
 
     set isLocked(isLocked: boolean) {
         this.props.isLocked = isLocked
+        this.touch()
     }
 
     get floorId() {
@@ -63,5 +71,14 @@ export class Room {
 
     set floorId(floorId: string) {
         this.props.floorId = floorId
+        this.touch()
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
     }
 }

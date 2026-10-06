@@ -4,12 +4,15 @@ node_modules
 # Build
 dist
 
-# Environment
+# Environment and secrets
 .env
 .env.local
 .env.*.local
+*.pem
+*.key
 
-/src/generated/prisma
+# Prisma generated client
+src/generated/
 
 # Logs
 logs

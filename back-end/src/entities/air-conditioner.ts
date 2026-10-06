@@ -1,26 +1,30 @@
+import { randomUUID } from "node:crypto"
+
 export enum AirConditionerStatus {
-    WORKING,
-    WARNING,
-    BROKEN
+    WORKING = "WORKING",
+    WARNING = "WARNING",
+    BROKEN = "BROKEN",
 }
 
 export interface AirConditionerProps {
-    id: string
     status: AirConditionerStatus
     temperature: number
     isOn: boolean
     roomId: string
+    updatedAt?: Date | null
 }
 
 export class AirConditioner {
+    private _id: string
     private props: AirConditionerProps
 
-    constructor(props: AirConditionerProps) {
+    constructor(props: AirConditionerProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get status() {
@@ -29,6 +33,7 @@ export class AirConditioner {
 
     set status(status: AirConditionerStatus) {
         this.props.status = status
+        this.touch()
     }
 
     get temperature() {
@@ -37,6 +42,7 @@ export class AirConditioner {
 
     set temperature(temperature: number) {
         this.props.temperature = temperature
+        this.touch()
     }
 
     get isOn() {
@@ -45,6 +51,7 @@ export class AirConditioner {
 
     set isOn(isOn: boolean) {
         this.props.isOn = isOn
+        this.touch()
     }
 
     get roomId() {
@@ -53,5 +60,14 @@ export class AirConditioner {
 
     set roomId(roomId: string) {
         this.props.roomId = roomId
+        this.touch()
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
     }
 }

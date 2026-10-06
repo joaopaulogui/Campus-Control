@@ -18,7 +18,7 @@ export class ToggleAirConditionerUseCase {
 
         airConditioner.isOn = !airConditioner.isOn
 
-        this.airConditionersRepository.save(airConditioner)
+        await this.airConditionersRepository.save(airConditioner)
         
         return {}
     }

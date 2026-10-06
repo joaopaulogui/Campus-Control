@@ -1,64 +1,61 @@
+import { randomUUID } from "node:crypto"
+
 export enum LoanStatus {
-    IN_USE,
-    LATE,
-    RETURNED
+    IN_USE = "IN_USE",
+    LATE = "LATE",
+    RETURNED = "RETURNED",
 }
 
 export interface LoanProps {
-    id: string
     responsibleName: string
     responsibleRegistration: string
     itemId: string
+    quantity: number
     createdAt: Date
-    returnDate: Date
+    returnedAt?: Date | null
+    deadline: Date
     status: LoanStatus
 }
 
 export class Loan {
+    private _id: string
     private props: LoanProps
 
-    constructor(props: LoanProps) {
+    constructor(props: LoanProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get responsibleName() {
         return this.props.responsibleName
     }
 
-    set responsibleName(responsibleName: string) {
-        this.props.responsibleName = responsibleName
-    }
-
     get responsibleRegistration() {
-        return this.props.responsibleName
-    }
-
-    set responsibleRegistration(responsibleRegistration: string) {
-        this.props.responsibleRegistration = responsibleRegistration
+        return this.props.responsibleRegistration
     }
 
     get itemId() {
         return this.props.itemId
     }
 
-    set itemId(itemId: string) {
-        this.props.itemId = itemId
+    get quantity() {
+        return this.props.quantity
     }
 
     get createdAt() {
         return this.props.createdAt
     }
 
-    get returnDate() {
-        return this.props.returnDate
+    get returnedAt() {
+        return this.props.returnedAt
     }
 
-    set returnDate(returnDate: Date) {
-        this.props.returnDate = returnDate
+    get deadline() {
+        return this.props.deadline
     }
 
     get status() {
@@ -67,5 +64,14 @@ export class Loan {
 
     set status(status: LoanStatus) {
         this.props.status = status
+    }
+
+    markAsReturned(returnedAt: Date = new Date()) {
+        if(this.props.status === LoanStatus.RETURNED) {
+            throw new Error(`Loan ${this._id} was already returned`)
+        }
+
+        this.props.returnedAt = returnedAt
+        this.props.status = LoanStatus.RETURNED
     }
 }

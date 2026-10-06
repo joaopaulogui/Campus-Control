@@ -1,0 +1,43 @@
+import { z } from "zod"
+import { AirConditionerStatus } from "../../entities/air-conditioner"
+
+export const registerAirConditionerBodySchema = z.object({
+    roomId: z.uuid(),
+})
+
+export const listAirConditionersQuerySchema = z.object({
+    buildingId: z.uuid(),
+    floorId: z.uuid().optional(),
+    status: z.enum(AirConditionerStatus).optional(),
+})
+
+export const toggleAirConditionerParamsSchema = z.object({
+    airConditionerId: z.uuid(),
+})
+
+export const updateAirConditionerStatusParamsSchema = z.object({
+    airConditionerId: z.uuid(),
+})
+
+export const updateAirConditionerStatusBodySchema = z.object({
+    status: z.enum(AirConditionerStatus),
+})
+
+export const deleteAirConditionerParamsSchema = z.object({
+    airConditionerId: z.uuid(),
+})
+
+export const groupedAirConditionerResponseSchema = z.object({
+    floorName: z.string(),
+    rooms: z.array(z.object({
+        name: z.string(),
+        airConditioners: z.array(z.object({
+            id: z.uuid(),
+            status: z.enum(AirConditionerStatus),
+            temperature: z.number(),
+            isOn: z.boolean(),
+        })),
+    })),
+})
+
+export const listAirConditionersResponseSchema = z.array(groupedAirConditionerResponseSchema)

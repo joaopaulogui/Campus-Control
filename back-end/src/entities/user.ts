@@ -1,19 +1,31 @@
+import { randomUUID } from "node:crypto"
+
+export enum UserRole {
+    ADMIN = "ADMIN",
+    MEMBER = "MEMBER",
+}
+
 export interface UserProps {
-    id: string
     name: string  
     email: string
     password: string
+    role: UserRole
+    createdAt: Date
+    updatedAt?: Date | null
+    deletedAt?: Date | null
 }
 
 export class User {
+    private _id: string
     private props: UserProps
 
-    constructor(props: UserProps) {
+    constructor(props: UserProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get name() {
@@ -22,6 +34,7 @@ export class User {
 
     set name(name: string) {
         this.props.name = name
+        this.touch()
     }
 
     get email() {
@@ -30,6 +43,7 @@ export class User {
 
     set email(email: string) {
         this.props.email = email
+        this.touch()
     }
 
     get password() {
@@ -38,5 +52,36 @@ export class User {
 
     set password(password: string) {
         this.props.password = password
+        this.touch()
+    }
+
+    get role() {
+        return this.props.role
+    }
+
+    set role(role: UserRole) {
+        this.props.role = role
+        this.touch()
+    }
+
+    get createdAt() {
+        return this.props.createdAt
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
+    }
+
+    get deletedAt() {
+        return this.props.deletedAt
+    }
+
+    delete() {
+        this.props.deletedAt = new Date()
+        this.touch()
     }
 }

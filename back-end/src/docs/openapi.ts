@@ -1,0 +1,519 @@
+import { jsonContent, toOpenApiParameters } from "./json-schema"
+import { healthResponseSchema, unauthorizedResponseSchema } from "../http/schemas/common"
+import {
+    authenticateUserBodySchema,
+    authenticateUserResponseSchema,
+    registerUserBodySchema,
+} from "../http/schemas/users"
+import {
+    registerBuildingBodySchema,
+    deleteBuildingParamsSchema,
+    listBuildingsResponseSchema,
+    updateBuildingParamsSchema,
+    updateBuildingBodySchema,
+} from "../http/schemas/buildings"
+import {
+    registerFloorBodySchema,
+    deleteFloorParamsSchema,
+    listFloorsQuerySchema,
+    listFloorsResponseSchema,
+    updateFloorParamsSchema,
+    updateFloorBodySchema,
+} from "../http/schemas/floors"
+import {
+    registerRoomBodySchema,
+    deleteRoomParamsSchema,
+    listRoomsQuerySchema,
+    listRoomsResponseSchema,
+    toggleRoomLockParamsSchema,
+    updateRoomParamsSchema,
+    updateRoomBodySchema,
+    getRoomDetailsParamsSchema,
+    roomDetailsResponseSchema,
+} from "../http/schemas/rooms"
+import {
+    registerAirConditionerBodySchema,
+    listAirConditionersQuerySchema,
+    listAirConditionersResponseSchema,
+    toggleAirConditionerParamsSchema,
+    deleteAirConditionerParamsSchema,
+    updateAirConditionerStatusParamsSchema,
+    updateAirConditionerStatusBodySchema,
+} from "../http/schemas/air-conditioners"
+import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema } from "../http/schemas/items"
+import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
+import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
+
+const unauthorizedResponse = {
+    description: "Missing or invalid JWT",
+    ...jsonContent(unauthorizedResponseSchema),
+}
+
+const bearerAuth = [{ bearerAuth: [] }]
+
+export const openApiDocument = {
+    openapi: "3.0.3",
+    info: {
+        title: "Campus Control API",
+        version: "1.0.0",
+        description: "HTTP API for campus buildings, rooms, users and air conditioners. Schemas are generated from the same Zod validators used by the controllers.",
+    },
+    servers: [
+        {
+            url: "http://localhost:3333",
+            description: "Local development",
+        },
+    ],
+    tags: [
+        { name: "Health" },
+        { name: "Users" },
+        { name: "Buildings" },
+        { name: "Floors" },
+        { name: "Rooms" },
+        { name: "Air conditioners" },
+    ],
+    paths: {
+        "/": {
+            get: {
+                tags: ["Health"],
+                summary: "Health check",
+                responses: {
+                    200: {
+                        description: "API is up",
+                        ...jsonContent(healthResponseSchema),
+                    },
+                },
+            },
+        },
+        "/api/users/login": {
+            post: {
+                tags: ["Users"],
+                summary: "Authenticate user",
+                requestBody: {
+                    required: true,
+                    ...jsonContent(authenticateUserBodySchema),
+                },
+                responses: {
+                    200: {
+                        description: "JWT issued",
+                        ...jsonContent(authenticateUserResponseSchema),
+                    },
+                },
+            },
+        },
+        "/api/users": {
+            post: {
+                tags: ["Users"],
+                summary: "Register user",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerUserBodySchema),
+                },
+                responses: {
+                    201: { description: "User registered" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/buildings": {
+            get: {
+                tags: ["Buildings"],
+                summary: "List buildings",
+                security: bearerAuth,
+                responses: {
+                    200: {
+                        description: "Building list",
+                        ...jsonContent(listBuildingsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
+            },
+            post: {
+                tags: ["Buildings"],
+                summary: "Register building",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerBuildingBodySchema),
+                },
+                responses: {
+                    201: { description: "Building registered" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/buildings/{buildingId}": {
+            patch: {
+                tags: ["Buildings"],
+                summary: "Update building",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateBuildingParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateBuildingBodySchema)
+                },
+                responses: {
+                    204: { description: "Building updated" },
+                    401: unauthorizedResponse
+                }
+            },
+            delete: {
+                tags: ["Buildings"],
+                summary: "Delete building",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteBuildingParamsSchema, "path"),
+                responses: {
+                    204: { description: "Building deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/floors": {
+            get: {
+                tags: ["Floors"],
+                summary: "List floors by building",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listFloorsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Floor list",
+                        ...jsonContent(listFloorsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
+            },
+            post: {
+                tags: ["Floors"],
+                summary: "Register floor",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerFloorBodySchema),
+                },
+                responses: {
+                    201: { description: "Floor registered" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/floors/{floorId}": {
+            patch: {
+                tags: ["Floors"],
+                summary: "Update floor",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateFloorParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateFloorBodySchema)
+                },
+                responses: {
+                    204: { description: "Floor updated" },
+                    401: unauthorizedResponse
+                }
+            },
+            delete: {
+                tags: ["Floors"],
+                summary: "Delete floor",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteFloorParamsSchema, "path"),
+                responses: {
+                    204: { description: "Floor deleted" },
+                    401: unauthorizedResponse
+                }
+            },
+        },
+        "/api/rooms": {
+            get: {
+                tags: ["Rooms"],
+                summary: "List rooms",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listRoomsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Room list",
+                        ...jsonContent(listRoomsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
+            },
+            post: {
+                tags: ["Rooms"],
+                summary: "Register room",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerRoomBodySchema),
+                },
+                responses: {
+                    201: { description: "Room registered" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/rooms/{roomId}/lock": {
+            patch: {
+                tags: ["Rooms"],
+                summary: "Toggle room lock",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(toggleRoomLockParamsSchema, "path"),
+                responses: {
+                    204: { description: "Lock status toggled" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/rooms/{roomId}": {
+            get: {
+                tags: ["Rooms"],
+                summary: "Get room details",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(getRoomDetailsParamsSchema, "path"),
+                responses: {
+                    200: {
+                        description: "Room details",
+                        ...jsonContent(roomDetailsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
+            patch: {
+                tags: ["Rooms"],
+                summary: "Update room",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateRoomParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateRoomBodySchema)
+                },
+                responses: {
+                    204: { description: "Room updated" },
+                    401: unauthorizedResponse
+                }
+            },
+            delete: {
+                tags: ["Rooms"],
+                summary: "Delete room",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteRoomParamsSchema, "path"),
+                responses: {
+                    204: { description: "Room deleted" },
+                    401: unauthorizedResponse
+                }
+            },
+        },
+        "/api/air-conditioners": {
+            get: {
+                tags: ["Air conditioners"],
+                summary: "List air conditioners grouped by floor and room",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listAirConditionersQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Air conditioners grouped by floor",
+                        ...jsonContent(listAirConditionersResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
+            },
+            post: {
+                tags: ["Air conditioners"],
+                summary: "Register air conditioner",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerAirConditionerBodySchema),
+                },
+                responses: {
+                    201: { description: "Air conditioner registered" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/air-conditioners/{airConditionerId}/toggle": {
+            patch: {
+                tags: ["Air conditioners"],
+                summary: "Toggle air conditioner power",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(toggleAirConditionerParamsSchema, "path"),
+                responses: {
+                    204: { description: "Power status toggled" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/air-conditioners/{airConditionerId}/status": {
+            patch: {
+                tags: ["Air conditioners"],
+                summary: "Update air conditioner status",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateAirConditionerStatusParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateAirConditionerStatusBodySchema)
+                },
+                responses: {
+                    204: { description: "Air conditioner status updated" },
+                    401: unauthorizedResponse,
+                },
+            },
+        },
+        "/api/air-conditioners/{airConditionerId}": {
+            delete: {
+                tags: ["Air conditioners"],
+                summary: "Delete air conditioner",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteAirConditionerParamsSchema, "path"),
+                responses: {
+                    204: { description: "Air conditioner deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/projectors": {
+            post: {
+                tags: ["Projectors"],
+                summary: "Register projector",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(registerProjectorBodySchema)
+                },
+                responses: {
+                    201: { description: "Projector registered" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/projectors/{projectorId}/status": {
+            patch: {
+                tags: ["Projectors"],
+                summary: "Update projector status",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateProjectorStatusParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateProjectorStatusBodySchema)
+                },
+                responses: {
+                    204: { description: "Projector status upated" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/projectors/{projectorId}": {
+            delete: {
+                tags: ["Projectors"],
+                summary: "Delete projector",
+                description: "Requires JWT and ADMIN role.",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteProjectorParamsSchema, "path"),
+                responses: {
+                    204: { description: "Projector deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/items": {
+            get: {
+                tags: ["Items"],
+                summary: "List Items",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listItemsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Item list",
+                        ...jsonContent(listItemsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
+            post: {
+                tags: ["Items"],
+                summary: "Register item",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(RegisterItemBodySchema)
+                },
+                responses: {
+                    201: { description: "Item registered" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/items/{itemId}": {
+            delete: {
+                tags: ["Items"],
+                summary: "Delete item",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteItemParamsSchema, "path"),
+                responses: {
+                    204: { description: "item deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/loans": {
+            get: {
+                tags: ["Loans"],
+                summary: "List Loans",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listLoansQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "Loan list",
+                        ...jsonContent(listLoansResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
+            post: {
+                tags: ["Loans"],
+                summary: "Loan item",
+                security: bearerAuth,
+                requestBody: {
+                    required: true,
+                    ...jsonContent(LoanItemBodySchema)
+                },
+                responses: {
+                    201: { description: "Item loaned" },
+                    401: unauthorizedResponse,
+                }
+            }
+        }, 
+        "/api/loans/{loanId}/return": {
+            patch: {
+                tags: ["Loans"],
+                summary: "Return item",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(returnItemParamsSchema, "path"),
+                responses: {
+                    204: { description: "Item returned" },
+                    401: unauthorizedResponse
+                }
+            }
+        }
+    },
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: "http",
+                scheme: "bearer",
+                bearerFormat: "JWT",
+                description: "Access token returned by POST /api/users/login",
+            },
+        },
+    },
+}

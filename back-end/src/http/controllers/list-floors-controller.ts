@@ -1,0 +1,19 @@
+import { type Request, type Response } from "express"
+import { PrismaFloorsRepository } from "../../repositories/prisma/prisma-floors-repository"
+import { ListFloorsUseCase } from "../../use-cases/list-floors-use-case"
+import { FloorPresenter } from "../presenters/floor-presenter"
+import { listFloorsQuerySchema } from "../schemas/floors"
+
+export class ListFloorsController {
+    async handle(req: Request, res: Response) {
+        const floorsRepository = new PrismaFloorsRepository()
+
+        const listAllFloors = new ListFloorsUseCase(floorsRepository)
+
+        const { buildingId } = listFloorsQuerySchema.parse(req.query)
+
+        const { floors } = await listAllFloors.execute({ buildingId, })
+
+        res.status(200).json(floors.map(FloorPresenter.toHTTP))
+    }
+}

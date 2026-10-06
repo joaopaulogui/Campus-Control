@@ -1,5 +1,6 @@
+import { randomUUID } from "node:crypto"
+
 export interface MessageProps {
-    id: string
     chatId: string
     senderId: string
     content: string
@@ -7,14 +8,16 @@ export interface MessageProps {
 }
 
 export class Message {
+    private _id: string
     private props: MessageProps
 
-    constructor(props: MessageProps) {
+    constructor(props: MessageProps, id?: string) {
+        this._id = id ?? randomUUID()
         this.props = props
     }
 
     get id() {
-        return this.props.id
+        return this._id
     }
 
     get chatId() {
