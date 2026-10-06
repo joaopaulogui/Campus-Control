@@ -8,12 +8,22 @@ export class InMemoryLoansRepository implements LoansRepository {
         this.items.push(loan)
     }
 
+    async findById(id: string): Promise<Loan | null> {
+        const loan = this.items.find(item => item.id === id)
+
+        if(!loan) {
+            return null
+        }
+
+        return loan
+    }
+
     async findMany(filters?: LoanFilters): Promise<Loan[]> {
         const loans = this.items.filter(item => {
             if(filters?.responsibleName && !item.responsibleName.includes(filters.responsibleName)){
                 return false
             }
-            if(filters?.itemIds && !filters.itemIds.includes(item.id)){
+            if(filters?.itemIds && !filters.itemIds.includes(item.itemId)){
                 return false
             }
             if(filters?.status && item.status !== filters.status){

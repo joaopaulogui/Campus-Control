@@ -23,6 +23,9 @@ export class InMemoryItemsRepository implements ItemsRepository {
             if(filters?.name && !i.name.includes(filters.name)) {
                 return false
             }
+            if(filters?.type && i.type !== filters.type) {
+                return false
+            }
             return true
         })
 

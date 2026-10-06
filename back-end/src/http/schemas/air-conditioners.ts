@@ -6,12 +6,21 @@ export const registerAirConditionerBodySchema = z.object({
 })
 
 export const listAirConditionersQuerySchema = z.object({
+    buildingId: z.uuid(),
     floorId: z.uuid().optional(),
     status: z.enum(AirConditionerStatus).optional(),
 })
 
 export const toggleAirConditionerParamsSchema = z.object({
     airConditionerId: z.uuid(),
+})
+
+export const updateAirConditionerStatusParamsSchema = z.object({
+    airConditionerId: z.uuid(),
+})
+
+export const updateAirConditionerStatusBodySchema = z.object({
+    status: z.enum(AirConditionerStatus),
 })
 
 export const deleteAirConditionerParamsSchema = z.object({

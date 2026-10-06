@@ -28,6 +28,10 @@ export class PrismaItemsRepository implements ItemsRepository {
             where.name = { contains: filters.name }
         }
 
+        if(filters?.type) {
+            where.type = filters.type
+        }
+
         const items = await prisma.item.findMany({ where, })
 
         return items.map(PrismaItemMapper.toDomain)
