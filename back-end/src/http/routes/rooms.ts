@@ -7,11 +7,13 @@ import { VerifyUserRole } from "../middlewares/verify-user-role"
 import { DeleteRoomController } from "../controllers/delete-room-controller"
 import { UpdateRoomController } from "../controllers/update-room-controller"
 import { GetRoomDetailsController } from "../controllers/get-room-details-controller"
+import { SelectRoomsController } from "../controllers/select-rooms-controller"
 
 const router = express.Router()
 
 const registerRoomController = new RegisterRoomController()
-const listFloorRoomsController = new ListRoomsController()
+const listRoomsController = new ListRoomsController()
+const selectRoomsController = new SelectRoomsController()
 const getRoomDetailsController = new GetRoomDetailsController()
 const updateRoomController = new UpdateRoomController()
 const toggleRoomLockController = new ToggleRoomLockController()
@@ -21,7 +23,9 @@ router.use(VerifyJwt)
 
 router.post('/', VerifyUserRole, registerRoomController.handle)
 
-router.get('/', listFloorRoomsController.handle)
+router.get('/', listRoomsController.handle)
+
+router.get('/select', selectRoomsController.handle)
 
 router.get('/:roomId', getRoomDetailsController.handle)
 

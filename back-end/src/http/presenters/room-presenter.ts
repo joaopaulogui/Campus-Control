@@ -34,4 +34,11 @@ export class RoomsPresenter {
             }),
         }
     }
+
+    static toSelect(room: Room) {
+        return {
+            id: room.id,
+            name: room.name
+        }
+    }
 }
