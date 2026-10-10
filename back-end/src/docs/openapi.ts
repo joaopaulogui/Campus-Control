@@ -33,6 +33,7 @@ import {
     updateRoomBodySchema,
     getRoomDetailsParamsSchema,
     roomDetailsResponseSchema,
+    selectRoomsResponseSchema,
 } from "../http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
@@ -342,6 +343,21 @@ export const openApiDocument = {
                     204: { description: "Room deleted" },
                     401: unauthorizedResponse
                 }
+            },
+        },
+        "/api/rooms/select": {
+            get: {
+                tags: ["Rooms"],
+                summary: "Select rooms",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listRoomsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Room list",
+                        ...jsonContent(selectRoomsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
             },
         },
         "/api/air-conditioners": {
