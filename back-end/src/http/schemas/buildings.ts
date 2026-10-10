@@ -4,6 +4,12 @@ export const registerBuildingBodySchema = z.object({
     name: z.string(),
 })
 
+export const listBuildingsQuerySchema = z.object({
+    name: z.string().optional(),
+    page: z.int().optional(),
+    perPage: z.int().optional(),
+})
+
 export const updateBuildingParamsSchema = z.object({
     buildingId: z.uuid()
 })
@@ -17,6 +23,11 @@ export const deleteBuildingParamsSchema = z.object({
 })
 
 export const buildingResponseSchema = z.object({
+    id: z.uuid(),
+    name: z.string(),
+})
+
+export const selectBuildingResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
 })
