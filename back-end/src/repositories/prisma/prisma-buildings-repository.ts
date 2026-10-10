@@ -32,11 +32,38 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
             where.id = filters.id
         }
 
+        if(filters?.name) {
+            where.name = { contains: filters.name }
+        }
+
         const buildings = await prisma.building.findMany({ 
             where, 
             orderBy: {
                 name: "asc"
             }
+        })
+
+        return buildings.map(PrismaBuildingMapper.toDomain)
+    }
+
+    async findManyPaginated(page: number = 1, perPage: number = 30, filters?: BuildingFilters): Promise<Building[]> {
+        const where: Prisma.BuildingWhereInput = {}
+
+        if(filters?.id) {
+            where.id = filters.id
+        }
+        
+        if(filters?.name) {
+            where.name = { contains: filters.name }
+        }
+
+        const buildings = await prisma.building.findMany({ 
+            where, 
+            orderBy: {
+                name: "asc"
+            },
+            take: perPage,
+            skip: (page-1) * perPage
         })
 
         return buildings.map(PrismaBuildingMapper.toDomain)
