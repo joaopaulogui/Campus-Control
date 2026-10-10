@@ -10,9 +10,9 @@ export class ListFloorsController {
 
         const listAllFloors = new ListFloorsUseCase(floorsRepository)
 
-        const { buildingId } = listFloorsQuerySchema.parse(req.query)
+        const { buildingId, name, page, perPage } = listFloorsQuerySchema.parse(req.query)
 
-        const { floors } = await listAllFloors.execute({ buildingId, })
+        const { floors } = await listAllFloors.execute({ buildingId, name, page, perPage })
 
         res.status(200).json(floors.map(FloorPresenter.toHTTP))
     }
