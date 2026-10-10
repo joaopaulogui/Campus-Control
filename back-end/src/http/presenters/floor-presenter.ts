@@ -7,4 +7,11 @@ export class FloorPresenter {
             name: floor.name,
         }
     }
+
+    static toSelect(floor: Floor) {
+        return {
+            id: floor.id,
+            name: floor.name,
+        }
+    }
 }
