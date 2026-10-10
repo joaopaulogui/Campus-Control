@@ -6,8 +6,8 @@ export const registerBuildingBodySchema = z.object({
 
 export const listBuildingsQuerySchema = z.object({
     name: z.string().optional(),
-    page: z.int().optional(),
-    perPage: z.int().optional(),
+    page: z.coerce.number().int().optional(),
+    perPage: z.coerce.number().int().optional(),
 })
 
 export const updateBuildingParamsSchema = z.object({
