@@ -34,7 +34,10 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
         }
 
         if(filters?.name) {
-            where.name = { contains: filters.name }
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
         }
 
         const buildings = await prisma.building.findMany({ 
@@ -56,7 +59,10 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
         }
         
         if(filters?.name) {
-            where.name = { contains: filters.name }
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
         }
 
         const buildings = await prisma.building.findMany({ 

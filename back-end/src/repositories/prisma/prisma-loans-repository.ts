@@ -25,7 +25,10 @@ export class PrismaLoansRepository implements LoansRepository {
         const where: LoanWhereInput = {}
 
         if(filters?.responsibleName) {
-            where.responsibleName = { contains: filters.responsibleName }
+            where.responsibleName = {
+                contains: filters.responsibleName,
+                mode: "insensitive"
+            }
         }
 
         if(filters?.itemIds) {
