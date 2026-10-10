@@ -11,4 +11,11 @@ export class ItemPresenter {
             onHoldQuantity: item.onHoldQuantity,
         }
     }
+
+    static toSelect(item: Item) {
+        return {
+            id: item.id,
+            name: item.name,
+        }
+    }
 }
