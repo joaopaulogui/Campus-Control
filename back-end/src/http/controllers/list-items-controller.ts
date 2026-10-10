@@ -10,9 +10,9 @@ export class ListItemsController {
 
         const listItems = new ListItemsUseCase(itemsRepository)
 
-        const { name, type } = listItemsQuerySchema.parse(req.query)
+        const { name, type, page, perPage } = listItemsQuerySchema.parse(req.query)
 
-        const { items } = await listItems.execute({ name, type })
+        const { items } = await listItems.execute({ name, type, page, perPage })
 
         res.status(200).json(items.map(ItemPresenter.toHTTP))
     }
