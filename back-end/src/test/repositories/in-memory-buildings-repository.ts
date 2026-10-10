@@ -23,8 +23,25 @@ export class InMemoryBuildingsRepository implements BuildingsRepository {
             if(filters?.id && item.id !== filters.id) {
                 return false
             }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
             return true
         })
+
+        return buildings
+    }
+
+    async findManyPaginated(page: number = 1, perPage: number = 30, filters?: BuildingFilters): Promise<Building[]> {
+        const buildings = this.items.filter(item => {
+            if(filters?.id && item.id !== filters.id) {
+                return false
+            }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
+            return true
+        }).slice((page-1) * perPage, page * perPage)
 
         return buildings
     }

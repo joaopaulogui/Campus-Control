@@ -11,6 +11,8 @@ import {
     listBuildingsResponseSchema,
     updateBuildingParamsSchema,
     updateBuildingBodySchema,
+    listBuildingsQuerySchema,
+    selectBuildingResponseSchema,
 } from "../http/schemas/buildings"
 import {
     registerFloorBodySchema,
@@ -122,6 +124,7 @@ export const openApiDocument = {
                 tags: ["Buildings"],
                 summary: "List buildings",
                 security: bearerAuth,
+                parameters: toOpenApiParameters(listBuildingsQuerySchema, "query"),
                 responses: {
                     200: {
                         description: "Building list",
@@ -171,6 +174,21 @@ export const openApiDocument = {
                     204: { description: "Building deleted" },
                     401: unauthorizedResponse
                 }
+            }
+        },
+        "/api/buildings/select": {
+            get: {
+                tags: ["Buildings"],
+                summary: "Select buildings",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listBuildingsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Building list",
+                        ...jsonContent(selectBuildingResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
             }
         },
         "/api/floors": {

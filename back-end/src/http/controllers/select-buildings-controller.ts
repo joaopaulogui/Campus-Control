@@ -4,7 +4,7 @@ import { ListBuildingsUseCase } from "../../use-cases/list-buildings-use-case";
 import { BuildingPresenter } from "../presenters/building-presenter";
 import { listBuildingsQuerySchema } from "../schemas/buildings";
 
-export class ListBuildingsController {
+export class SelectBuildingsController {
     async handle(req: Request, res: Response) {
         const buildingsRepository = new PrismaBuildingsRepository()
 
@@ -14,6 +14,6 @@ export class ListBuildingsController {
 
         const { buildings } = await listBuildings.execute({ name, page, perPage })
 
-        res.status(200).json(buildings.map(BuildingPresenter.toHTTP))
+        res.status(200).json(buildings.map(BuildingPresenter.toSelect))
     }
 }

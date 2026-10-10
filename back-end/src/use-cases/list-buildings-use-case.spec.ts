@@ -16,7 +16,7 @@ describe("List buildings", () => {
         buildingsRepository.create(makeBuilding())
         buildingsRepository.create(makeBuilding())
 
-        const { buildings } = await sut.execute()
+        const { buildings } = await sut.execute({})
 
         expect(buildings).toHaveLength(2)
     })
