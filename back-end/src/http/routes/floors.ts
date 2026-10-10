@@ -5,10 +5,12 @@ import { VerifyJwt } from "../middlewares/verify-jwt"
 import { VerifyUserRole } from "../middlewares/verify-user-role"
 import { DeleteFloorController } from "../controllers/delete-floor-controller"
 import { UpdateFloorController } from "../controllers/update-floor-controller"
+import { SelectFloorsController } from "../controllers/select-floors-controller"
 
 const router = express.Router()
 
 const listFloorsController = new ListFloorsController()
+const selectFloorsController = new SelectFloorsController()
 const registerFloorController = new RegisterFloorController()
 const deleteFloorController = new DeleteFloorController()
 const updateFloorController = new UpdateFloorController()
@@ -16,6 +18,8 @@ const updateFloorController = new UpdateFloorController()
 router.use(VerifyJwt)
 
 router.get('/', listFloorsController.handle)
+
+router.get('/select', listFloorsController.handle)
 
 router.post('/', VerifyUserRole, registerFloorController.handle)
 
