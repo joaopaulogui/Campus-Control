@@ -1,7 +1,8 @@
 import type { AirConditionerStatus } from "../entities/air-conditioner.js"
+import type { FloorWithRoomsAndAirConditioners } from "../entities/value-objects/floor-with-rooms-and-air-conditioners.js"
 import type { AirConditionersRepository } from "../repositories/air-conditioners-repository.js"
 import type { BuildingsRepository } from "../repositories/buildings-repository.js"
-import type { FloorsRepository, FloorWithRoomsAndAirConditioners } from "../repositories/floors-repository.js"
+import type { FloorsRepository } from "../repositories/floors-repository.js"
 import type { RoomsRepository } from "../repositories/rooms-repository.js"
 
 interface ListFloorsWithRoomsAndAirConditionersUseCaseRequest {

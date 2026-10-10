@@ -1,4 +1,5 @@
 import type { Building } from "../../entities/building";
+import type { PaginationParams } from "../../entities/value-objects/pagination-params";
 import type { Prisma } from "../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { PrismaBuildingMapper } from "../../mappers/prisma-building-mapper";
@@ -46,7 +47,8 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
         return buildings.map(PrismaBuildingMapper.toDomain)
     }
 
-    async findManyPaginated(page: number = 1, perPage: number = 30, filters?: BuildingFilters): Promise<Building[]> {
+    async findManyPaginated(filters?: BuildingFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Building[]> {
+
         const where: Prisma.BuildingWhereInput = {}
 
         if(filters?.id) {
@@ -62,8 +64,8 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
             orderBy: {
                 name: "asc"
             },
-            take: perPage,
-            skip: (page-1) * perPage
+            take: params.perPage,
+            skip: (params.page-1) * params.perPage
         })
 
         return buildings.map(PrismaBuildingMapper.toDomain)

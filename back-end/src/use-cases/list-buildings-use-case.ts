@@ -19,7 +19,7 @@ export class ListBuildingsUseCase {
 
         if(!perPage) { perPage = 30 }
 
-        const buildings = await this.buildingsRepository.findManyPaginated(page, perPage, { name, })
+        const buildings = await this.buildingsRepository.findManyPaginated({ name, }, { page, perPage })
 
         return { buildings }
     }
