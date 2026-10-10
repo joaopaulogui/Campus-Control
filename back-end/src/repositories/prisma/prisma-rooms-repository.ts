@@ -44,6 +44,9 @@ export class PrismaRoomsRepository implements RoomsRepository {
 
         const rooms = await prisma.room.findMany({
             where,
+            orderBy: {
+                name: "asc"
+            }
         })
 
         return rooms.map(PrismaRoomMapper.toDomain)
@@ -73,6 +76,9 @@ export class PrismaRoomsRepository implements RoomsRepository {
 
         const rooms = await prisma.room.findMany({
             where,
+            orderBy: {
+                name: "asc"
+            },
             take: params.perPage,
             skip: (params.page - 1) * params.perPage
         })
