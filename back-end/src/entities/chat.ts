@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 interface ChatParticipant {
     userId: string
@@ -10,17 +10,9 @@ export interface ChatProps {
     participants: ChatParticipant[]
 }
 
-export class Chat {
-    private _id: string
-    private props: ChatProps
-
+export class Chat extends Entity<ChatProps> {
     constructor(props: ChatProps, id?: string) {
-        this._id = id ?? randomUUID()
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get participantIds() {

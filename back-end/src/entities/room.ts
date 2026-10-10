@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 export enum RoomType {
     CLASSROOM = "CLASSROOM",
@@ -16,17 +16,9 @@ export interface RoomProps {
     updatedAt?: Date | null
 }
 
-export class Room {
-    private _id: string
-    private props: RoomProps
-
+export class Room extends Entity<RoomProps> {
     constructor(props: RoomProps, id?: string) {
-        this._id = id ?? randomUUID()
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get name() {

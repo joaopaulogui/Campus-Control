@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 export enum LoanStatus {
     IN_USE = "IN_USE",
@@ -17,17 +17,9 @@ export interface LoanProps {
     status: LoanStatus
 }
 
-export class Loan {
-    private _id: string
-    private props: LoanProps
-
+export class Loan extends Entity<LoanProps> {
     constructor(props: LoanProps, id?: string) {
-        this._id = id ?? randomUUID()
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get responsibleName() {
@@ -68,7 +60,7 @@ export class Loan {
 
     markAsReturned(returnedAt: Date = new Date()) {
         if(this.props.status === LoanStatus.RETURNED) {
-            throw new Error(`Loan ${this._id} was already returned`)
+            throw new Error(`Loan ${this.id} was already returned`)
         }
 
         this.props.returnedAt = returnedAt

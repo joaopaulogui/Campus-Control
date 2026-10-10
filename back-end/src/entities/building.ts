@@ -1,21 +1,13 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 export interface BuildingProps {
     name: string
     updatedAt?: Date | null
 }
 
-export class Building {
-    private _id: string
-    private props: BuildingProps
-
+export class Building extends Entity<BuildingProps> {
     constructor(props: BuildingProps, id?: string) {
-        this._id = id ?? randomUUID()
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get name() {
