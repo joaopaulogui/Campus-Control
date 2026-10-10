@@ -3,6 +3,7 @@ import { PrismaFloorMapper } from "../../mappers/prisma-floor-mapper";
 import type { FloorFilters, FloorsRepository } from "../floors-repository";
 import { prisma } from "../../lib/prisma";
 import type { Prisma } from "../../generated/prisma/client";
+import type { PaginationParams } from "../../entities/value-objects/pagination-params";
 
 export class PrismaFloorsRepository implements FloorsRepository {
     async create(floor: Floor): Promise<void> {
@@ -33,11 +34,47 @@ export class PrismaFloorsRepository implements FloorsRepository {
         }
 
         if(filters?.name) {
-            where.name = { contains: filters.name }
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
         }
 
         const floors = await prisma.floor.findMany({
             where,
+            orderBy: {
+                name: "asc"
+            },
+        })
+
+        return floors.map(PrismaFloorMapper.toDomain)
+    }
+
+    async findManyPaginated(filters: FloorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Floor[]> {
+        const where: Prisma.FloorWhereInput = {}
+
+        if(filters?.id) {
+            where.id = filters.id
+        }
+
+        if(filters?.buildingId) {
+            where.buildingId = filters.buildingId
+        }
+
+        if(filters?.name) {
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
+        }
+
+        const floors = await prisma.floor.findMany({
+            where,
+            orderBy: {
+                name: "asc"
+            },
+            take: params.perPage,
+            skip: (params.page-1) * params.perPage
         })
 
         return floors.map(PrismaFloorMapper.toDomain)

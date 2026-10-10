@@ -21,6 +21,7 @@ import {
     listFloorsResponseSchema,
     updateFloorParamsSchema,
     updateFloorBodySchema,
+    selectFloorsResponseSchema,
 } from "../http/schemas/floors"
 import {
     registerRoomBodySchema,
@@ -245,6 +246,21 @@ export const openApiDocument = {
                     401: unauthorizedResponse
                 }
             },
+        },
+        "/api/floors/select": {
+            get: {
+                tags: ["Floors"],
+                summary: "Select floors",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listFloorsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Floor list",
+                        ...jsonContent(selectFloorsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
+            }
         },
         "/api/rooms": {
             get: {

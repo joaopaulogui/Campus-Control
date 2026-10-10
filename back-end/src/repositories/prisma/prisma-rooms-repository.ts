@@ -35,7 +35,10 @@ export class PrismaRoomsRepository implements RoomsRepository {
         }
 
         if(filters?.name) {
-            where.name = { contains: filters.name }
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
         }
 
         const rooms = await prisma.room.findMany({

@@ -1,4 +1,5 @@
 import type { Floor } from "../../entities/floor";
+import type { PaginationParams } from "../../entities/value-objects/pagination-params";
 import type { FloorFilters, FloorsRepository } from "../../repositories/floors-repository";
 
 export class InMemoryFloorsRepository implements FloorsRepository {
@@ -31,6 +32,23 @@ export class InMemoryFloorsRepository implements FloorsRepository {
             }
             return true
         })
+
+        return floors
+    }
+
+    async findManyPaginated(filters: FloorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Floor[]> {
+        const floors = this.items.filter(item => {
+            if(filters?.id && item.id !== filters.id) {
+                return false
+            }
+            if(filters?.buildingId && item.buildingId !== filters.buildingId) {
+                return false
+            }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
+            return true
+        }).slice((params.page-1) * params.perPage, params.page * params.perPage)
 
         return floors
     }

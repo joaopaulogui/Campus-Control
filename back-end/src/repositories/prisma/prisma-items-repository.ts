@@ -25,7 +25,10 @@ export class PrismaItemsRepository implements ItemsRepository {
         let where: ItemWhereInput = {}
 
         if(filters?.name) {
-            where.name = { contains: filters.name }
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
         }
 
         if(filters?.type) {
