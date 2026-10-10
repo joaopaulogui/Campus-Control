@@ -1,7 +1,7 @@
-import type { Item } from "../entities/item"
-import type { Loan, LoanStatus } from "../entities/loan"
+import type { LoanStatus } from "../entities/loan"
+import type { LoanWithItem } from "../entities/value-objects/loan-with-item"
 import type { ItemsRepository } from "../repositories/items-repository"
-import type { LoansRepository, LoanWithItem } from "../repositories/loans-repository"
+import type { LoansRepository } from "../repositories/loans-repository"
 
 interface ListLoansUseCaseRequest {
     responsibleName?: string | undefined
