@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 export enum AirConditionerStatus {
     WORKING = "WORKING",
@@ -14,17 +14,9 @@ export interface AirConditionerProps {
     updatedAt?: Date | null
 }
 
-export class AirConditioner {
-    private _id: string
-    private props: AirConditionerProps
-
+export class AirConditioner extends Entity<AirConditionerProps> {
     constructor(props: AirConditionerProps, id?: string) {
-        this._id = id ?? randomUUID()
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get status() {

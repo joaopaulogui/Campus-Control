@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 export enum ProjectorStatus {
     WORKING = "WORKING",
@@ -12,17 +12,9 @@ export interface ProjectorProps {
     updatedAt?: Date | null
 }
 
-export class Projector {
-    private _id: string
-    private props: ProjectorProps
-
+export class Projector extends Entity<ProjectorProps> {
     constructor(props: ProjectorProps, id?: string) {
-        this._id = id ?? randomUUID() 
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get roomId() {

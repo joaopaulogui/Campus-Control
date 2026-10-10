@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "./entity"
 
 export interface ScheduleProps {
     roomId: string
@@ -9,17 +9,9 @@ export interface ScheduleProps {
     updatedAt?: Date | null
 }
 
-export class Schedule {
-    private _id: string
-    private props: ScheduleProps
-
+export class Schedule extends Entity<ScheduleProps> {
     constructor(props: ScheduleProps, id?: string) {
-        this._id = id ?? randomUUID()
-        this.props = props
-    }
-
-    get id() {
-        return this._id
+        super(props, id)
     }
 
     get roomId() {
