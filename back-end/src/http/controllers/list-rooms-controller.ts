@@ -12,9 +12,9 @@ export class ListRoomsController {
 
         const listRooms = new ListRoomsUseCase(floorsRepository, roomsRepository)
 
-        const { buildingId, floorId } = listRoomsQuerySchema.parse(req.query)
+        const { buildingId, floorId, name, type, isLocked, page, perPage } = listRoomsQuerySchema.parse(req.query)
         
-        const result = await listRooms.execute({ buildingId, floorId, })
+        const result = await listRooms.execute({ buildingId, floorId, name, type, isLocked, page, perPage })
 
         res.status(200).json(result.rooms.map(RoomsPresenter.toHTTP))
     }

@@ -1,4 +1,5 @@
 import type { Room } from "../../entities/room";
+import type { PaginationParams } from "../../entities/value-objects/pagination-params";
 import type { RoomFilters, RoomsRepository } from "../../repositories/rooms-repository";
 
 export class InMemoryRoomsRepository implements RoomsRepository {
@@ -28,6 +29,26 @@ export class InMemoryRoomsRepository implements RoomsRepository {
             }
             return true
         })
+
+        return rooms
+    }
+
+    async findManyPaginated(filters: RoomFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Room[]> {
+        const rooms = this.items.filter(item => {
+            if(filters?.floorIds && !filters.floorIds.includes(item.floorId)) {
+                return false
+            }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
+            if(filters?.type && item.type !== filters.type) {
+                return false
+            }
+            if(filters?.isLocked && item.isLocked !== filters.isLocked) {
+                return false
+            }
+            return true
+        }).splice((params.page - 1) * params.perPage, params.page * params.perPage)
 
         return rooms
     }
