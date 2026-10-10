@@ -1,4 +1,5 @@
 import type { Building } from "../../entities/building";
+import type { PaginationParams } from "../../entities/value-objects/pagination-params";
 import type { BuildingFilters, BuildingsRepository } from "../../repositories/buildings-repository";
 
 export class InMemoryBuildingsRepository implements BuildingsRepository {
@@ -32,7 +33,7 @@ export class InMemoryBuildingsRepository implements BuildingsRepository {
         return buildings
     }
 
-    async findManyPaginated(page: number = 1, perPage: number = 30, filters?: BuildingFilters): Promise<Building[]> {
+    async findManyPaginated(filters?: BuildingFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Building[]> {
         const buildings = this.items.filter(item => {
             if(filters?.id && item.id !== filters.id) {
                 return false
@@ -41,7 +42,7 @@ export class InMemoryBuildingsRepository implements BuildingsRepository {
                 return false
             }
             return true
-        }).slice((page-1) * perPage, page * perPage)
+        }).slice((params.page-1) * params.perPage, params.page * params.perPage)
 
         return buildings
     }
