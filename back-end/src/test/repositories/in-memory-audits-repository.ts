@@ -1,5 +1,5 @@
-import type { Audit } from "../../entities/audit";
-import type { AuditFilters, AuditsRepository } from "../../repositories/audits-repository";
+import type { Audit } from "@domain/entities/audit";
+import type { AuditFilters, AuditsRepository } from "@domain/repositories/audits-repository";
 
 export class InMemoryAuditsRepository implements AuditsRepository {
     public items: Audit[] = []

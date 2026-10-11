@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Audit, EntityType, type AuditProps } from "../../entities/audit";
+import { Audit, EntityType, type AuditProps } from "@domain/entities/audit";
 import { randomUUID } from "node:crypto";
 
 export function makeAudit(override: Partial<AuditProps> = {}, id?: string): Audit {

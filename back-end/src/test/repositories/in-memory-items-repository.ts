@@ -1,6 +1,6 @@
-import type { Item } from "../../entities/item";
-import type { PaginationParams } from "../../entities/value-objects/pagination-params";
-import type { ItemFilter, ItemsRepository } from "../../repositories/items-repository";
+import type { Item } from "@domain/entities/item";
+import type { PaginationParams } from "@core/repositories/pagination-params";
+import type { ItemFilter, ItemsRepository } from "@domain/repositories/items-repository";
 
 export class InMemoryItemsRepository implements ItemsRepository {
     public items: Item[] = []

@@ -4,13 +4,21 @@
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@core/*": ["./src/core/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@generated/*": ["./src/generated/*"],
+      "@test/*": ["./src/test/*"],
+    },
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "esnext",
     "moduleResolution": "bundler",
     "target": "ES2022",
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     // For nodejs:
     "lib": ["esnext"],
     // "types": ["node"],

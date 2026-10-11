@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Loan, LoanStatus, type LoanProps } from "../../entities/loan";
+import { Loan, LoanStatus, type LoanProps } from "@domain/entities/loan";
 import { randomUUID } from "node:crypto";
 
 export function makeLoan(override: Partial<LoanProps> = {}, id?: string): Loan {

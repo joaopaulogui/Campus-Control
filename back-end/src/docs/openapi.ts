@@ -1,10 +1,10 @@
 import { jsonContent, toOpenApiParameters } from "./json-schema"
-import { healthResponseSchema, unauthorizedResponseSchema } from "../http/schemas/common"
+import { healthResponseSchema, unauthorizedResponseSchema } from "@infra/http/schemas/common"
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
     registerUserBodySchema,
-} from "../http/schemas/users"
+} from "../infra/http/schemas/users"
 import {
     registerBuildingBodySchema,
     deleteBuildingParamsSchema,
@@ -13,7 +13,7 @@ import {
     updateBuildingBodySchema,
     listBuildingsQuerySchema,
     selectBuildingResponseSchema,
-} from "../http/schemas/buildings"
+} from "../infra/http/schemas/buildings"
 import {
     registerFloorBodySchema,
     deleteFloorParamsSchema,
@@ -22,7 +22,7 @@ import {
     updateFloorParamsSchema,
     updateFloorBodySchema,
     selectFloorsResponseSchema,
-} from "../http/schemas/floors"
+} from "../infra/http/schemas/floors"
 import {
     registerRoomBodySchema,
     deleteRoomParamsSchema,
@@ -34,7 +34,7 @@ import {
     getRoomDetailsParamsSchema,
     roomDetailsResponseSchema,
     selectRoomsResponseSchema,
-} from "../http/schemas/rooms"
+} from "../infra/http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
     listAirConditionersQuerySchema,
@@ -43,10 +43,10 @@ import {
     deleteAirConditionerParamsSchema,
     updateAirConditionerStatusParamsSchema,
     updateAirConditionerStatusBodySchema,
-} from "../http/schemas/air-conditioners"
-import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../http/schemas/items"
-import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
-import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
+} from "../infra/http/schemas/air-conditioners"
+import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
+import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
+import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",

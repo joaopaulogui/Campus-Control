@@ -1,6 +1,6 @@
-import type { Floor } from "../../entities/floor";
-import type { PaginationParams } from "../../entities/value-objects/pagination-params";
-import type { FloorFilters, FloorsRepository } from "../../repositories/floors-repository";
+import type { Floor } from "@domain/entities/floor";
+import type { PaginationParams } from "@core/repositories/pagination-params";
+import type { FloorFilters, FloorsRepository } from "@domain/repositories/floors-repository";
 
 export class InMemoryFloorsRepository implements FloorsRepository {
     public items: Floor[] = []
