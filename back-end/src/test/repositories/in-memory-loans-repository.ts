@@ -1,5 +1,5 @@
-import type { Loan } from "../../entities/loan";
-import type { LoanFilters, LoansRepository } from "../../repositories/loans-repository";
+import type { Loan } from "@domain/entities/loan";
+import type { LoanFilters, LoansRepository } from "@domain/repositories/loans-repository";
 
 export class InMemoryLoansRepository implements LoansRepository {
     public items: Loan[] = []

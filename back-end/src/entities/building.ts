@@ -1,4 +1,4 @@
-import { AggregateRoot } from "./aggregate-root"
+import { AggregateRoot } from "@core/entities/aggregate-root" 
 
 export interface BuildingProps {
     name: string

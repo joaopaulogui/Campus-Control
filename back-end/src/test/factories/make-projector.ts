@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { Projector, ProjectorStatus, type ProjectorProps } from "../../entities/projector";
+import { Projector, ProjectorStatus, type ProjectorProps } from "@domain/entities/projector";
 import { faker } from "@faker-js/faker";
 
 export function makeProjector(override: Partial<ProjectorProps> = {}, id?: string) {

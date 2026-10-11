@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Item, ItemType, type ItemProps } from "../../entities/item";
+import { Item, ItemType, type ItemProps } from "@domain/entities/item";
 
 export function makeItem(override: Partial<ItemProps> = {}, id?: string): Item {
     return new Item({

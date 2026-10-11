@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { RoomType, Room, type RoomProps } from "../../entities/room";
+import { RoomType, Room, type RoomProps } from "@domain/entities/room";
 import { randomUUID } from "node:crypto";
 
 export function makeRoom(override: Partial<RoomProps> = {}, id?: string): Room {

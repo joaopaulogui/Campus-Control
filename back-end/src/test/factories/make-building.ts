@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Building, type BuildingProps } from "../../entities/building";
+import { Building, type BuildingProps } from "@domain/entities/building";
 
 export function makeBuilding(override: Partial<BuildingProps> = {}, id?: string): Building {
     const building = new Building({

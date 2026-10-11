@@ -1,5 +1,5 @@
-import type { AirConditioner } from "../../entities/air-conditioner";
-import type { AirConditionerFilters, AirConditionersRepository } from "../../repositories/air-conditioners-repository";
+import type { AirConditioner } from "@domain/entities/air-conditioner";
+import type { AirConditionerFilters, AirConditionersRepository } from "@domain/repositories/air-conditioners-repository";
 
 export class InMemoryAirConditionersRepository implements AirConditionersRepository {
     public items: AirConditioner[] = []

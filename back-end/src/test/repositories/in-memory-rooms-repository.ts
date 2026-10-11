@@ -1,6 +1,6 @@
-import type { Room } from "../../entities/room";
-import type { PaginationParams } from "../../entities/value-objects/pagination-params";
-import type { RoomFilters, RoomsRepository } from "../../repositories/rooms-repository";
+import type { Room } from "@domain/entities/room";
+import type { PaginationParams } from "@core/repositories/pagination-params";
+import type { RoomFilters, RoomsRepository } from "@domain/repositories/rooms-repository";
 
 export class InMemoryRoomsRepository implements RoomsRepository {
     public items: Room[] = []

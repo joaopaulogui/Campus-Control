@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { Floor, type FloorProps } from "../../entities/floor";
+import { Floor, type FloorProps } from "@domain/entities/floor";
 import { faker } from "@faker-js/faker"
 
 export function makeFloor(override: Partial<FloorProps> = {}, id?: string): Floor {

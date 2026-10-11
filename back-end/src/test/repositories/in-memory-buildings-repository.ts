@@ -1,6 +1,6 @@
-import type { Building } from "../../entities/building";
-import type { PaginationParams } from "../../entities/value-objects/pagination-params";
-import type { BuildingFilters, BuildingsRepository } from "../../repositories/buildings-repository";
+import type { Building } from "@domain/entities/building";
+import type { PaginationParams } from "@core/repositories/pagination-params";
+import type { BuildingFilters, BuildingsRepository } from "@domain/repositories/buildings-repository";
 
 export class InMemoryBuildingsRepository implements BuildingsRepository {
     public items: Building[] = []
