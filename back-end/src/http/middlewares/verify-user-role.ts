@@ -7,16 +7,13 @@ interface UserJwtPayload extends jwt.JwtPayload {
     role: string
 }
 
-export async function VerifyUserRole(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers.authorization;
-    const token = authHeader!.split(' ')[1];
+export function VerifyUserRole(req: Request, res: Response, next: NextFunction) {
+    if(!req.user) {
+        return res.status(401).send({ message: "Unauthorized" })
+    }
 
-    const bufferPublicKey = Buffer.from(process.env.JWT_PUBLIC_KEY!, "base64")
-    
-    const decoded = jwt.verify(token!, bufferPublicKey, { algorithms: ["RS256"] },) as UserJwtPayload
-
-    if(!decoded.role || decoded.role !== "ADMIN") {
-        throw new Error()
+    if(req.user.role !== "ADMIN") {
+        return res.status(403).send({ message: "Forbidden" })
     }
 
     next()
