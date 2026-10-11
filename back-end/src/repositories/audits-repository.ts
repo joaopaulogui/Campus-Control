@@ -1,6 +1,7 @@
 import type { EntityType, Audit } from "../entities/audit";
 
 export interface AuditFilters {
+    userId?: string | null | undefined
     eventType?: string | undefined,
     eventEntity?: EntityType | undefined,
     entityId?: string | undefined,
