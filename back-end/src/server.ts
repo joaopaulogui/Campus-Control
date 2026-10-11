@@ -11,6 +11,7 @@ import loanRoutes from './http/routes/loans'
 import projectorRoutes from './http/routes/projectors'
 
 import { setupSwagger } from './docs/setup-swagger'
+import { registerEventSubscribers } from './events/register-event-subscriber'
 
 const app = express()
 
@@ -31,6 +32,8 @@ app.use('/api/users', userRoutes)
 app.use('/api/items', itemRoutes)
 app.use('/api/loans', loanRoutes)
 app.use('/api/projectors', projectorRoutes)
+
+registerEventSubscribers()
 
 app.listen(3333, () => {
     console.log('HTTP server running')
