@@ -38,7 +38,7 @@ enum ItemType {
 }
 
 enum EntityType {
-  BUILING
+  BUILDING
   FLOOR
   ROOM
   AIR_CONDITIONER
@@ -216,8 +216,8 @@ model Audit {
   id          String     @id @default(uuid())
   userId      String?    @map("user_id")
   user        User?      @relation(fields: [userId], references: [id])
-  eventType   EntityType @map("event_type")
-  eventEntity String     @map("event_entity")
+  eventType   String     @map("event_type")
+  eventEntity EntityType @map("event_entity")
   entityId    String     @map("entity_id")
   description String
   createdAt   DateTime   @default(now()) @map("created_at")
