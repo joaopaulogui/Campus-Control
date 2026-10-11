@@ -1,5 +1,6 @@
 import type { Building } from "../../entities/building";
 import type { PaginationParams } from "../../entities/value-objects/pagination-params";
+import { DomainEvents } from "../../events/domain-events";
 import type { Prisma } from "../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { PrismaBuildingMapper } from "../../mappers/prisma-building-mapper";
@@ -10,6 +11,8 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
         const data = PrismaBuildingMapper.toPrisma(building)
 
         await prisma.building.create({ data, })
+
+        DomainEvents.dispatchEventsForAggregate(building.id)
     }
 
     async findById(id: string): Promise<Building | null> {
@@ -84,11 +87,15 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
             where: { id: data.id! },
             data,
         })
+
+        DomainEvents.dispatchEventsForAggregate(building.id)
     }
 
     async delete(building: Building): Promise<void> {
         await prisma.building.delete({
             where: { id: building.id },
         })
+
+        DomainEvents.dispatchEventsForAggregate(building.id)
     }
 }

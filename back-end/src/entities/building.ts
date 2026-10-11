@@ -1,11 +1,11 @@
-import { Entity } from "./entity"
+import { AggregateRoot } from "./aggregate-root"
 
 export interface BuildingProps {
     name: string
     updatedAt?: Date | null
 }
 
-export class Building extends Entity<BuildingProps> {
+export class Building extends AggregateRoot<BuildingProps> {
     constructor(props: BuildingProps, id?: string) {
         super(props, id)
     }

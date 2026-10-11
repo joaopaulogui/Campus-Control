@@ -11,7 +11,7 @@ export class RegisterBuildingController {
 
         const { name } = registerBuildingBodySchema.parse(req.body)
 
-        await registerBuilding.execute({ name, })
+        await registerBuilding.execute({ userId: req.user!.sub, name, })
 
         res.status(201).send()
     }
