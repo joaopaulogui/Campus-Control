@@ -3,6 +3,7 @@ import { healthResponseSchema, unauthorizedResponseSchema } from "@infra/http/sc
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
+    getUserProfileResponseSchema,
     registerUserBodySchema,
 } from "../infra/http/schemas/users"
 import {
@@ -47,6 +48,7 @@ import {
 import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
 import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
 import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
+import { json } from "zod"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -120,6 +122,20 @@ export const openApiDocument = {
                     401: unauthorizedResponse,
                 },
             },
+        },
+        "/api/users/me": {
+            get: {
+                tags: ["Users"],
+                summary: "Get user profile",
+                security: bearerAuth,
+                responses: {
+                    200: {
+                        description: "User profile",
+                        ...jsonContent(getUserProfileResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                },
+            }
         },
         "/api/buildings": {
             get: {
