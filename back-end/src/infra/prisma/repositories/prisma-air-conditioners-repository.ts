@@ -3,12 +3,15 @@ import { prisma } from "../lib/prisma";
 import { Prisma } from "@generated/prisma/client"
 import { PrismaAirConditionerMapper } from "../mappers/prisma-air-conditioner-mapper";
 import type { AirConditionerFilters, AirConditionersRepository } from "@domain/repositories/air-conditioners-repository";
+import { DomainEvents } from "@/core/events/domain-events";
 
 export class PrismaAirConditionersRepository implements AirConditionersRepository {
     async create(airConditioner: AirConditioner): Promise<void> {
         const data = PrismaAirConditionerMapper.toPrisma(airConditioner)
 
         await prisma.airConditioner.create({ data, })
+
+        DomainEvents.dispatchEventsForAggregate(airConditioner.id)
     }
 
     async findById(id: string): Promise<AirConditioner | null> {
@@ -49,11 +52,15 @@ export class PrismaAirConditionersRepository implements AirConditionersRepositor
             where: { id: data.id! },
             data,
         })
+
+        DomainEvents.dispatchEventsForAggregate(airConditioner.id)
     }
 
     async delete(airConditioner: AirConditioner): Promise<void> {
         await prisma.airConditioner.delete({
             where: { id: airConditioner.id },
         })
+
+        DomainEvents.dispatchEventsForAggregate(airConditioner.id)
     }
 }

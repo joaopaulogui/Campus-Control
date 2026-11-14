@@ -4,6 +4,7 @@ import type { Prisma } from "@generated/prisma/client";
 import { prisma } from "../lib/prisma";
 import { PrismaRoomMapper } from "../mappers/prisma-room-mapper";
 import type { RoomFilters, RoomsRepository } from "@domain/repositories/rooms-repository";
+import { DomainEvents } from "@/core/events/domain-events";
 
 export class PrismaRoomsRepository implements RoomsRepository {
     async create(room: Room): Promise<void> {
@@ -12,6 +13,8 @@ export class PrismaRoomsRepository implements RoomsRepository {
         await prisma.room.create({
             data, 
         })
+
+        DomainEvents.dispatchEventsForAggregate(room.id)
     }
 
     async findById(id: string): Promise<Room | null> {
@@ -93,11 +96,15 @@ export class PrismaRoomsRepository implements RoomsRepository {
             where: { id: data.id!, },
             data,
         })
+
+        DomainEvents.dispatchEventsForAggregate(room.id)
     }
 
     async delete(room: Room): Promise<void> {
         await prisma.room.delete({
             where: { id: room.id, },
         })
+
+        DomainEvents.dispatchEventsForAggregate(room.id)
     }
 }

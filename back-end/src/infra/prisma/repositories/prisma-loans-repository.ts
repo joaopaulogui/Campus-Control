@@ -3,12 +3,15 @@ import type { LoanWhereInput } from "@generated/prisma/models";
 import { prisma } from "../lib/prisma";
 import { PrismaLoanMapper } from "../mappers/prisma-loan-mapper";
 import type { LoanFilters, LoansRepository } from "@domain/repositories/loans-repository";
+import { DomainEvents } from "@/core/events/domain-events";
 
 export class PrismaLoansRepository implements LoansRepository {
     async create(loan: Loan): Promise<void> {
         const data = PrismaLoanMapper.toPrisma(loan)
 
         await prisma.loan.create({ data, })
+
+        DomainEvents.dispatchEventsForAggregate(loan.id)
     }
 
     async findById(id: string): Promise<Loan | null> {
@@ -51,11 +54,15 @@ export class PrismaLoansRepository implements LoansRepository {
             where: { id: loan.id },
             data,
         })
+
+        DomainEvents.dispatchEventsForAggregate(loan.id)
     }
 
     async delete(loan: Loan): Promise<void> {
         await prisma.loan.delete({
             where: { id: loan.id }
         })
+
+        DomainEvents.dispatchEventsForAggregate(loan.id)
     }
 }
