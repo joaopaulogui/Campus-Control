@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import { Entity } from "@core/entities/entity"
 
 export enum AirConditionerStatus {
@@ -14,7 +15,7 @@ export interface AirConditionerProps {
     updatedAt?: Date | null
 }
 
-export class AirConditioner extends Entity<AirConditionerProps> {
+export class AirConditioner extends AggregateRoot<AirConditionerProps> {
     constructor(props: AirConditionerProps, id?: string) {
         super(props, id)
     }

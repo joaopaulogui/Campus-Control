@@ -1,8 +1,10 @@
 import { Projector, ProjectorStatus } from "../entities/projector"
+import { ProjectorRegisteredEvent } from "../events/projector-registered-event"
 import type { ProjectorsRepository } from "../repositories/projectors-repository"
 import type { RoomsRepository } from "../repositories/rooms-repository"
 
 interface RegisterProjectorUseCaseRequest {
+    userId: string
     roomId: string
 }
 
@@ -14,7 +16,7 @@ export class RegisterProjectorUseCase {
         private roomsRepository: RoomsRepository
     ) {}
 
-    async execute({ roomId }: RegisterProjectorUseCaseRequest): Promise<RegisterProjectorUseCaseResponse> {
+    async execute({ userId, roomId }: RegisterProjectorUseCaseRequest): Promise<RegisterProjectorUseCaseResponse> {
         const room = await this.roomsRepository.findById(roomId)
 
         if(!room) {
@@ -25,6 +27,8 @@ export class RegisterProjectorUseCase {
             roomId,
             status: ProjectorStatus.WORKING,
         })
+
+        projector.addDomainEvent(new ProjectorRegisteredEvent(projector, userId))
 
         await this.projectorsRepository.create(projector)
 

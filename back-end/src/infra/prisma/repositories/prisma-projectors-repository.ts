@@ -3,12 +3,15 @@ import type { ProjectorWhereInput } from "@generated/prisma/models"
 import { prisma } from "../lib/prisma"
 import { PrismaProjectorMapper } from "../mappers/prisma-projector-mapper"
 import type { ProjectorFilters, ProjectorsRepository } from "@domain/repositories/projectors-repository"
+import { DomainEvents } from "@/core/events/domain-events"
 
 export class PrismaProjectorsRepository implements ProjectorsRepository {
     async create(projector: Projector): Promise<void> {
         const data = PrismaProjectorMapper.toPrisma(projector)
 
         await prisma.projector.create({ data, })
+
+        DomainEvents.dispatchEventsForAggregate(projector.id)
     }
 
     async findById(id: string): Promise<Projector | null> {
@@ -44,11 +47,15 @@ export class PrismaProjectorsRepository implements ProjectorsRepository {
             where: { id: projector.id },
             data,
         })
+
+        DomainEvents.dispatchEventsForAggregate(projector.id)
     }
 
     async delete(projector: Projector): Promise<void> {
         await prisma.projector.delete({
             where: { id: projector.id },
         })
+
+        DomainEvents.dispatchEventsForAggregate(projector.id)
     }
 }

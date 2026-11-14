@@ -3,6 +3,7 @@ import { InMemoryProjectorsRepository } from "@test/repositories/in-memory-proje
 import { InMemoryRoomsRepository } from "@test/repositories/in-memory-rooms-repository";
 import { RegisterProjectorUseCase } from "./register-projector-use-case";
 import { makeRoom } from "@test/factories/make-room";
+import { makeUser } from "@/test/factories/make-user";
 
 let projectorsRepository: InMemoryProjectorsRepository
 let roomsRepository: InMemoryRoomsRepository
@@ -16,11 +17,13 @@ describe("Register projector", () => {
     })
 
     test("It should be able to register a projector", async () => {
+        const user = makeUser()
+
         const room = makeRoom()
 
         roomsRepository.create(room)
 
-        await sut.execute({ roomId: room.id })
+        await sut.execute({ roomId: room.id, userId: user.id })
 
         expect(projectorsRepository.items).toHaveLength(1)
         expect(projectorsRepository.items[0]).toEqual(expect.objectContaining({ roomId: room.id }))

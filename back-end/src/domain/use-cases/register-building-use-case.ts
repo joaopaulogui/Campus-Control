@@ -1,5 +1,5 @@
 import { Building } from "../entities/building";
-import { BuildingRegisteredEvent } from "../events/building-registered";
+import { BuildingRegisteredEvent } from "../events/building-registered-event";
 import type { BuildingsRepository } from "../repositories/buildings-repository";
 
 interface RegisterBuildingUseCaseRequest {
