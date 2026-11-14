@@ -1,5 +1,6 @@
-import type { Item } from "../../entities/item";
-import type { ItemFilter, ItemsRepository } from "../../repositories/items-repository";
+import type { Item } from "@domain/entities/item";
+import type { PaginationParams } from "@core/repositories/pagination-params";
+import type { ItemFilter, ItemsRepository } from "@domain/repositories/items-repository";
 
 export class InMemoryItemsRepository implements ItemsRepository {
     public items: Item[] = []
@@ -28,6 +29,20 @@ export class InMemoryItemsRepository implements ItemsRepository {
             }
             return true
         })
+
+        return items
+    }
+
+    async findManyPaginated(filters?: ItemFilter, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Item[]> {
+        const items = this.items.filter(i => {
+            if(filters?.name && !i.name.includes(filters.name)) {
+                return false
+            }
+            if(filters?.type && i.type !== filters.type) {
+                return false
+            }
+            return true
+        }).splice((params.page - 1) * params.perPage, params.page * params.perPage)
 
         return items
     }

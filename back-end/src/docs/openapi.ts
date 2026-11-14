@@ -1,17 +1,19 @@
 import { jsonContent, toOpenApiParameters } from "./json-schema"
-import { healthResponseSchema, unauthorizedResponseSchema } from "../http/schemas/common"
+import { healthResponseSchema, unauthorizedResponseSchema } from "@infra/http/schemas/common"
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
     registerUserBodySchema,
-} from "../http/schemas/users"
+} from "../infra/http/schemas/users"
 import {
     registerBuildingBodySchema,
     deleteBuildingParamsSchema,
     listBuildingsResponseSchema,
     updateBuildingParamsSchema,
     updateBuildingBodySchema,
-} from "../http/schemas/buildings"
+    listBuildingsQuerySchema,
+    selectBuildingResponseSchema,
+} from "../infra/http/schemas/buildings"
 import {
     registerFloorBodySchema,
     deleteFloorParamsSchema,
@@ -19,7 +21,8 @@ import {
     listFloorsResponseSchema,
     updateFloorParamsSchema,
     updateFloorBodySchema,
-} from "../http/schemas/floors"
+    selectFloorsResponseSchema,
+} from "../infra/http/schemas/floors"
 import {
     registerRoomBodySchema,
     deleteRoomParamsSchema,
@@ -30,7 +33,8 @@ import {
     updateRoomBodySchema,
     getRoomDetailsParamsSchema,
     roomDetailsResponseSchema,
-} from "../http/schemas/rooms"
+    selectRoomsResponseSchema,
+} from "../infra/http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
     listAirConditionersQuerySchema,
@@ -39,10 +43,10 @@ import {
     deleteAirConditionerParamsSchema,
     updateAirConditionerStatusParamsSchema,
     updateAirConditionerStatusBodySchema,
-} from "../http/schemas/air-conditioners"
-import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema } from "../http/schemas/items"
-import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../http/schemas/loans"
-import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../http/schemas/projectors"
+} from "../infra/http/schemas/air-conditioners"
+import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
+import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
+import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -122,6 +126,7 @@ export const openApiDocument = {
                 tags: ["Buildings"],
                 summary: "List buildings",
                 security: bearerAuth,
+                parameters: toOpenApiParameters(listBuildingsQuerySchema, "query"),
                 responses: {
                     200: {
                         description: "Building list",
@@ -171,6 +176,21 @@ export const openApiDocument = {
                     204: { description: "Building deleted" },
                     401: unauthorizedResponse
                 }
+            }
+        },
+        "/api/buildings/select": {
+            get: {
+                tags: ["Buildings"],
+                summary: "Select buildings",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listBuildingsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Building list",
+                        ...jsonContent(selectBuildingResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
             }
         },
         "/api/floors": {
@@ -227,6 +247,21 @@ export const openApiDocument = {
                     401: unauthorizedResponse
                 }
             },
+        },
+        "/api/floors/select": {
+            get: {
+                tags: ["Floors"],
+                summary: "Select floors",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listFloorsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Floor list",
+                        ...jsonContent(selectFloorsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
+            }
         },
         "/api/rooms": {
             get: {
@@ -308,6 +343,21 @@ export const openApiDocument = {
                     204: { description: "Room deleted" },
                     401: unauthorizedResponse
                 }
+            },
+        },
+        "/api/rooms/select": {
+            get: {
+                tags: ["Rooms"],
+                summary: "Select rooms",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listRoomsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Room list",
+                        ...jsonContent(selectRoomsResponseSchema),
+                    },
+                    401: unauthorizedResponse,
+                },
             },
         },
         "/api/air-conditioners": {
@@ -464,6 +514,21 @@ export const openApiDocument = {
                     401: unauthorizedResponse
                 }
             }
+        },
+        "/api/items/select": {
+            get: {
+                tags: ["Items"],
+                summary: "Select Items",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listItemsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Item list",
+                        ...jsonContent(selectItemsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
         },
         "/api/loans": {
             get: {

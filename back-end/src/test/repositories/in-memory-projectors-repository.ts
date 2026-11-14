@@ -1,5 +1,5 @@
-import type { Projector } from "../../entities/projector";
-import type { ProjectorFilters, ProjectorsRepository } from "../../repositories/projectors-repository";
+import type { Projector } from "@domain/entities/projector";
+import type { ProjectorFilters, ProjectorsRepository } from "@domain/repositories/projectors-repository";
 
 export class InMemoryProjectorsRepository implements ProjectorsRepository {
     public items: Projector[] = []

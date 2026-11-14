@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { User, UserRole, type UserProps } from "../../entities/user";
+import { User, UserRole, type UserProps } from "@domain/entities/user";
 
 export function makeUser(overload: Partial<UserProps> = {}, id?: string): User {
     const user = new User({

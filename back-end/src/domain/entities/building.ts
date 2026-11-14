@@ -1,0 +1,29 @@
+import { AggregateRoot } from "@core/entities/aggregate-root" 
+
+export interface BuildingProps {
+    name: string
+    updatedAt?: Date | null
+}
+
+export class Building extends AggregateRoot<BuildingProps> {
+    constructor(props: BuildingProps, id?: string) {
+        super(props, id)
+    }
+
+    get name() {
+        return this.props.name
+    }
+
+    set name(name: string) {
+        this.props.name = name
+        this.touch()
+    }
+
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
+    private touch() {
+        this.props.updatedAt = new Date()
+    }
+}
