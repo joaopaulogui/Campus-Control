@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import { Entity } from "@core/entities/entity"
 
 export enum RoomType {
@@ -16,7 +17,7 @@ export interface RoomProps {
     updatedAt?: Date | null
 }
 
-export class Room extends Entity<RoomProps> {
+export class Room extends AggregateRoot<RoomProps> {
     constructor(props: RoomProps, id?: string) {
         super(props, id)
     }

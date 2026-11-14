@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import { Entity } from "@core/entities/entity"
 
 export enum ProjectorStatus {
@@ -12,7 +13,7 @@ export interface ProjectorProps {
     updatedAt?: Date | null
 }
 
-export class Projector extends Entity<ProjectorProps> {
+export class Projector extends AggregateRoot<ProjectorProps> {
     constructor(props: ProjectorProps, id?: string) {
         super(props, id)
     }

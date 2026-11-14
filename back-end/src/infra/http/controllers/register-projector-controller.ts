@@ -13,7 +13,7 @@ export class RegisterProjectorController {
 
         const { roomId } = registerProjectorBodySchema.parse(req.body)
 
-        await registerProjector.execute({ roomId, })
+        await registerProjector.execute({ userId: req.user!.sub, roomId, })
 
         res.status(201).send()
     }

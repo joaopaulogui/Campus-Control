@@ -11,7 +11,7 @@ export class RegisterItemController {
 
         const { name, type, totalQuantity } = RegisterItemBodySchema.parse(req.body)
 
-        await registerItem.execute({ name, type, totalQuantity })
+        await registerItem.execute({ userId: req.user!.sub, name, type, totalQuantity })
 
         res.status(201).send()
     }

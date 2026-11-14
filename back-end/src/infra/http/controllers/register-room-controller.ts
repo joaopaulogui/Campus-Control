@@ -13,7 +13,7 @@ export class RegisterRoomController {
 
         const { name, type, capacity, floorId } = registerRoomBodySchema.parse(req.body)
 
-        await registerRoom.execute({ name, type, capacity, floorId })
+        await registerRoom.execute({ userId: req.user!.sub, name, type, capacity, floorId })
 
         res.status(201).send()
     }

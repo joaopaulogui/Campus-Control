@@ -4,12 +4,15 @@ import type { FloorFilters, FloorsRepository } from "@domain/repositories/floors
 import { prisma } from "../lib/prisma";
 import type { Prisma } from "@generated/prisma/client";
 import type { PaginationParams } from "@core/repositories/pagination-params";
+import { DomainEvents } from "@/core/events/domain-events";
 
 export class PrismaFloorsRepository implements FloorsRepository {
     async create(floor: Floor): Promise<void> {
         const data = PrismaFloorMapper.toPrisma(floor)
 
         await prisma.floor.create({ data, })
+
+        DomainEvents.dispatchEventsForAggregate(floor.id)
     }
 
     async findById(id: string): Promise<Floor | null> {
@@ -87,11 +90,15 @@ export class PrismaFloorsRepository implements FloorsRepository {
             where: { id: data.id! }, 
             data, 
         })
+
+        DomainEvents.dispatchEventsForAggregate(floor.id)
     }
 
     async delete(floor: Floor): Promise<void> {
         await prisma.floor.delete({ 
             where: { id: floor.id }, 
         })
+
+        DomainEvents.dispatchEventsForAggregate(floor.id)
     }
 }

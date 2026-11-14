@@ -13,7 +13,7 @@ export class RegisterAirConditionerController {
 
         const { roomId } = registerAirConditionerBodySchema.parse(req.body)
 
-        await registerAirConditioner.execute({ roomId })
+        await registerAirConditioner.execute({ userId: req.user!.sub, roomId })
 
         res.status(201).send()
     }

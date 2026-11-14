@@ -13,7 +13,7 @@ export class RegisterFloorController {
 
         const { name, buildingId } = registerFloorBodySchema.parse(req.body)
 
-        await registerFloor.execute({ name, buildingId })
+        await registerFloor.execute({ userId: req.user!.sub, name, buildingId })
 
         res.status(201).send()
     }

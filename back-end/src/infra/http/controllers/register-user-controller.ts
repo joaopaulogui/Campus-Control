@@ -13,7 +13,7 @@ export class RegisterUserController {
 
         const { name, email, password, role } = registerUserBodySchema.parse(req.body)
 
-        await registerUser.execute({ name, email, password, role })
+        await registerUser.execute({ adminId: req.user!.sub, name, email, password, role })
 
         res.status(201).send()
     }

@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import { Entity } from "@core/entities/entity"
 
 export enum LoanStatus {
@@ -17,7 +18,7 @@ export interface LoanProps {
     status: LoanStatus
 }
 
-export class Loan extends Entity<LoanProps> {
+export class Loan extends AggregateRoot<LoanProps> {
     constructor(props: LoanProps, id?: string) {
         super(props, id)
     }

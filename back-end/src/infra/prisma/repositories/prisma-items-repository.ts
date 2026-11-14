@@ -4,12 +4,15 @@ import type { ItemWhereInput } from "@generated/prisma/models";
 import { prisma } from "../lib/prisma";
 import { PrismaItemMapper } from "../mappers/prisma-item-mapper";
 import type { ItemFilter, ItemsRepository } from "@domain/repositories/items-repository";
+import { DomainEvents } from "@/core/events/domain-events";
 
 export class PrismaItemsRepository implements ItemsRepository {
     async create(item: Item): Promise<void> {
         const data = PrismaItemMapper.toPrisma(item)
 
         await prisma.item.create({ data, })
+
+        DomainEvents.dispatchEventsForAggregate(item.id)
     }
 
     async findById(id: string): Promise<Item | null> {
@@ -79,11 +82,15 @@ export class PrismaItemsRepository implements ItemsRepository {
             where: { id: item.id },
             data, 
         })
+
+        DomainEvents.dispatchEventsForAggregate(item.id)
     }
 
     async delete(item: Item): Promise<void> {
         await prisma.item.delete({
             where: { id: item.id } 
         })
+
+        DomainEvents.dispatchEventsForAggregate(item.id)
     }
 }

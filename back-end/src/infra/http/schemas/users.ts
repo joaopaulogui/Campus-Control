@@ -16,3 +16,14 @@ export const registerUserBodySchema = z.object({
     password: z.string(),
     role: z.enum(UserRole),
 })
+
+export const getUserProfileResponseSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.email(),
+    role: z.enum(UserRole),
+    buildings: z.array(z.object({
+        id: z.string(),
+        name: z.string()
+    }))
+})

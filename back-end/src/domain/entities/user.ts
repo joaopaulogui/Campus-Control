@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import { Entity } from "@core/entities/entity"
 
 export enum UserRole {
@@ -15,7 +16,7 @@ export interface UserProps {
     deletedAt?: Date | null
 }
 
-export class User extends Entity<UserProps> {
+export class User extends AggregateRoot<UserProps> {
     constructor(props: UserProps, id?: string) {
         super(props, id)
     }

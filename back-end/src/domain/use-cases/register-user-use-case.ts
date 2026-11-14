@@ -1,8 +1,10 @@
 import { User, type UserRole } from "../entities/user"
 import type { UsersRepository } from "../repositories/users-repositoy"
 import type { HashGenerator } from "../cryptography/hash-generator"
+import { UserRegisteredEvent } from "../events/user-registered-event"
 
 interface RegisterUserUseCaseRequest {
+    adminId: string
     name: string
     email: string
     password: string
@@ -17,7 +19,7 @@ export class RegisterUserUseCase {
         private hashGenerator: HashGenerator,
     ) {}
 
-    async execute({ name, email, password, role }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
+    async execute({ adminId, name, email, password, role }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
         const userWithSameEmail = await this.usersRepository.findByEmail(email)
 
         if(userWithSameEmail) {
@@ -33,6 +35,8 @@ export class RegisterUserUseCase {
             role,
             createdAt: new Date()
         })
+
+        user.addDomainEvent(new UserRegisteredEvent(user, adminId))
 
         await this.usersRepository.create(user)
 

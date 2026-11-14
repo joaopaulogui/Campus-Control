@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryItemsRepository } from "@test/repositories/in-memory-items-repository";
 import { RegisterItemUseCase } from "./register-item-use-case";
 import { ItemType } from "../entities/item";
+import { makeUser } from "@/test/factories/make-user";
 
 let itemsRepository: InMemoryItemsRepository
 let sut: RegisterItemUseCase
@@ -13,7 +14,10 @@ describe("Register item", () => {
     })
 
     test("It should be able to register an item", async () => {
+        const user = makeUser()
+
         await sut.execute({
+            userId: user.id,
             name: "Test item",
             type: ItemType.EQUIPMENT,
             totalQuantity: 30
