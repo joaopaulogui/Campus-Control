@@ -1,11 +1,11 @@
 import { EntityType } from "../entities/audit";
-import { BuildingRegisteredEvent } from "../events/building-registered";
+import { BuildingRegisteredEvent } from "../events/building-registered-event";
 import { DomainEvents } from "@core/events/domain-events";
 import type { EventHandler } from "@core/events/event-handler";
 import type { UsersRepository } from "../repositories/users-repositoy";
 import type { CreateAuditUseCase } from "../use-cases/create-audit-use-case";
 
-export class onBuildingRegistered implements EventHandler {
+export class OnBuildingRegistered implements EventHandler {
     constructor(
         private usersRepository: UsersRepository,
         private createAuditUseCase: CreateAuditUseCase
@@ -20,11 +20,11 @@ export class onBuildingRegistered implements EventHandler {
 
         if(user) {
             await this.createAuditUseCase.execute({
-                userId: user.id,
+                userId,
                 eventEntity: EntityType.BUILDING,
                 entityId: building.id,
                 eventType: "building.registered",
-                description: `Bloco ${building.name} criado`,
+                description: `Bloco "${building.name}" registrado`,
                 metadata: { name: building.name }
         })}
     }
