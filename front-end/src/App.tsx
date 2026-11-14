@@ -1,17 +1,25 @@
+import './App.css'
 import { ThemeProvider } from './components/theme-provider'
 import { SidebarProvider } from './components/ui/sidebar'
-import './App.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './routes/router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { AuthProvider } from './contexts/auth-context'
+
+const queryClient = new QueryClient()
 
 function App() {
 
   return (
-    <ThemeProvider defaultTheme='system' storageKey='ui-theme'>
-      <SidebarProvider>
-        <RouterProvider router={router} />
-      </SidebarProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme='system' storageKey='ui-theme'>
+        <AuthProvider>
+          <SidebarProvider>
+            <RouterProvider router={router} />
+          </SidebarProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
 
