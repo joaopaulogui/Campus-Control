@@ -1,11 +1,18 @@
-import axios from "axios"
-import type { LoginDTO, LoginResponse } from "@/types/user"
+import type { LoginDTO, LoginResponse, User } from "@/types/user"
+import { getAxiosInstance } from "@/axios/axios-config"
 
 const url = `${import.meta.env.VITE_API_URL}users/`
 
+const api = getAxiosInstance()
+
 export const user = {
-    async login(data: LoginDTO) {
-        const response = await axios.post(`${url}login`, data)
-        return response.data as LoginResponse
+    async login(payload: LoginDTO): Promise<LoginResponse> {
+        const { data } = await api.post<LoginResponse>(`${url}login`, payload)
+        return data
+    },
+
+    async getMe(): Promise<User> {
+        const { data } = await api.get<User>(`${url}me`)
+        return data
     }
 }

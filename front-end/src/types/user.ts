@@ -15,3 +15,16 @@ export type CreateUserDTO = z.infer<typeof createUserSchema>
 export type LoginResponse = {
     accessToken: string
 }
+
+export type UserBuilding = {
+    id: string
+    name: string
+}
+
+export type User = {
+    id: string
+    name: string
+    email: string
+    role: UserRole
+    buildings?: UserBuilding[]
+}

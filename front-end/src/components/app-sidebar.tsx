@@ -1,102 +1,77 @@
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  useSidebar,
-} from "@/components/ui/sidebar"
-import { BuildingComplex, House, Wind, DoorClosed, Package } from "lucide-react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+  import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
+  } from "@/components/ui/sidebar"
+  import { Separator } from "@/components/ui/separator"
+  import { Building2 } from "lucide-react"
+  import { Link, useLocation } from "react-router-dom"
+  import { cn } from "cn"
+  import { getAuthorizedNavItems } from "@/config/navigation"
 
-const menu = [
-  {
-    title: "Menu",
-    icon: null,
-    collapsed: true,
-    items: [
-      {
-        title: "Dashboard",
-        url: "/",
-        icon: House,
-        nivel_acesso: ["Administrador", "Funcionario"]
-      },
-      {
-        title: "Ar-Condicionado",
-        url: "/ar-condicionado",
-        icon: Wind,
-        nivel_acesso: ["Administrador", "Funcionario"]
-      },
-      {
-        title: "Controle de Salas",
-        url: "/controle-de-salas",
-        icon: DoorClosed,
-        nivel_acesso: ["Administrador", "Funcionario"]
-      },
-      {
-        title: "Empréstimos",
-        url: "/emprestimos",
-        icon: Package,
-        nivel_acesso: ["Administrador", "Funcionario"]
-      },
-    ]
-  }
-]
+  export function AppSidebar() {
+    const { pathname } = useLocation()
+    const authorizedItems = getAuthorizedNavItems("ADMIN")
 
-export function AppSidebar() {
+    /*
+    function isActive(url: string) {
+      return url.split("/")[1] === pathname.split("/")[1]
+    }
+    */
 
-  const navigate = useNavigate()
-  //const { user, setUser, setToken } = useAuth()
-  const { isMobile } = useSidebar()
-  const { pathname } = useLocation()
-
-  function isActive(url: string) {
-    return url.split("/")[1] === pathname.split("/")[1]
-  }
-
-  return (
-    <Sidebar>
-      <SidebarHeader>
-        <div className="flex flex-row gap-3 items-center my-4 mx-2">
-          <div className="h-12 w-12 shrink-0 rounded-md bg-sidebar-accent flex items-center justify-center">
-            <BuildingComplex className="text-white h-7 w-7" />
+    return (
+      <Sidebar>
+        <SidebarHeader>
+          <div className="my-4 mx-2 flex flex-row items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
+              <Building2 className="h-6 w-6" />
+            </div>
+            <div>
+              <p className="text-lg font-semibold leading-tight text-sidebar-foreground">
+                Campus Control
+              </p>
+              <p className="text-xs text-navy-muted">Sistema Operacional</p>
+            </div>
           </div>
-          <div>
-            <p className="text-xl font-semibold text-sidebar-primary-foreground">Campus Control</p>
-            <p className="text-xs text-sidebar-accent-foreground">Sistema Operacional</p>
-          </div>
-        </div>
-      </SidebarHeader>
-      <hr className="border border-sidebar-border" />
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu className="gap-3 my-3">
-            {menu.map((item) => (
-              item.items?.map((subItem) => {
-                const Icon = subItem.icon
+        </SidebarHeader>
+
+        <Separator className="bg-sidebar-border" />
+
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarMenu className="my-3 gap-2">
+              {authorizedItems.map((item) => {
+                const Icon = item.icon
+                const active = pathname.startsWith(item.to)
+
                 return (
-                  //subItem.nivel_acesso.includes(user?.tipo_acesso || "") ? 
-                  <SidebarMenuSubItem key={subItem.title}>
+                  <SidebarMenuSubItem key={item.to}>
                     <SidebarMenuSubButton
-                      className={`rounded-sm text-sidebar-accent-foreground hover:text-white hover:bg-sidebar-accent/70 p-6 mx-2 ${isActive(subItem.url) ? "text-white bg-sidebar-accent" : ""}`}>
-                      <Link to={subItem.url} className="flex flex-row gap-2">
-                        <Icon />
-                        <span className="font-semibold text-[16px]">{subItem.title}</span>
+                      className={cn(
+                        "mx-2 rounded-lg p-5 transition-colors",
+                        active
+                          ? "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground"
+                          : "text-navy-muted hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                      )}
+                    >
+                      <Link to={item.to} className="flex flex-row items-center gap-3">
+                        <Icon className="h-4 w-4" />
+                        <span className="text-sm font-medium">{item.label}</span>
                       </Link>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
-                  // : <></>
                 )
-              })
-            ))
-            }
-          </SidebarMenu >
-        </SidebarGroup >
-      </SidebarContent >
-      <SidebarFooter />
-    </Sidebar >
-  )
-}
+              })}
+            </SidebarMenu>
+          </SidebarGroup>
+        </SidebarContent>
+
+        <SidebarFooter />
+      </Sidebar>
+    )
+  }
