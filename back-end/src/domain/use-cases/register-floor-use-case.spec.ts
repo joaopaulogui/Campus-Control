@@ -3,6 +3,7 @@ import { InMemoryFloorsRepository } from "@test/repositories/in-memory-floors-re
 import { RegisterFloorUseCase } from "./register-floor-use-case";
 import { InMemoryBuildingsRepository } from "@test/repositories/in-memory-buildings-repository";
 import { makeBuilding } from "@test/factories/make-building";
+import { makeUser } from "@/test/factories/make-user";
 
 let floorsRepository: InMemoryFloorsRepository
 let buildingsRepository: InMemoryBuildingsRepository
@@ -16,11 +17,13 @@ describe("Register Floor", () => {
     })
 
     test("It should be able to register a floor", async () => {
+        const user = makeUser()
+
         const building = makeBuilding()
 
         buildingsRepository.create(building)
         
-        await sut.execute({ name: "Floor 1", buildingId: building.id })
+        await sut.execute({ userId: user.id, name: "Floor 1", buildingId: building.id })
 
         expect(floorsRepository.items).toHaveLength(1)
     })

@@ -3,6 +3,7 @@ import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repo
 import { RegisterUserUseCase } from "./register-user-use-case";
 import { UserRole } from "../entities/user";
 import { FakeHasher } from "@test/cryptography/fake-hasher";
+import { makeUser } from "@/test/factories/make-user";
 
 let usersRepository: InMemoryUsersRepository
 let fakeHasher: FakeHasher
@@ -16,7 +17,10 @@ describe("Register user", () => {
     })
 
     test("It should be able to register an user", async () => {
+        const admin = makeUser({ role: UserRole.ADMIN })
+
         await sut.execute({
+            adminId: admin.id,
             name: "Test user",
             email: "email@example.com",
             password: "123456",

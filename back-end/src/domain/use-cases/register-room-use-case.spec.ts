@@ -4,6 +4,7 @@ import { InMemoryRoomsRepository } from "@test/repositories/in-memory-rooms-repo
 import { RegisterRoomUseCase } from "./register-room-use-case";
 import { makeFloor } from "@test/factories/make-floor";
 import { RoomType } from "../entities/room";
+import { makeUser } from "@/test/factories/make-user";
 
 let floorsRepository: InMemoryFloorsRepository
 let roomsRepository: InMemoryRoomsRepository
@@ -17,11 +18,14 @@ describe("Register Room", () => {
     })
 
     test("It should be able to register a room", async () => {
+        const user = makeUser()
+
         const floor = makeFloor()
 
         floorsRepository.create(floor)
 
         await sut.execute({
+            userId: user.id,
             name: "Floor 1",
             type: RoomType.CLASSROOM,
             capacity: 30,
@@ -32,7 +36,10 @@ describe("Register Room", () => {
     })
 
     test("It should not be able to register a room in an unexistent floor", async () => {
+        const user = makeUser()
+
         await expect(async() => await sut.execute({
+            userId: user.id,
             name: "Floor 1",
             type: RoomType.CLASSROOM,
             capacity: 30,

@@ -3,6 +3,7 @@ import { InMemoryAirConditionersRepository } from "@test/repositories/in-memory-
 import { InMemoryRoomsRepository } from "@test/repositories/in-memory-rooms-repository";
 import { RegisterAirConditionerUseCase } from "./register-air-conditioner-use-case";
 import { makeRoom } from "@test/factories/make-room";
+import { makeUser } from "@/test/factories/make-user";
 
 let roomsRepository: InMemoryRoomsRepository
 let airConditionersRepository: InMemoryAirConditionersRepository
@@ -16,15 +17,19 @@ describe("Register Air Conditioner", () => {
     })
 
     test("It should be able to register an air conditioner", async () => {
+        const user = makeUser()
+
         const room = makeRoom()
         roomsRepository.create(room)
 
-        await sut.execute({ roomId: room.id, })
+        await sut.execute({ userId: user.id, roomId: room.id, })
 
         expect(airConditionersRepository.items).toHaveLength(1)
     })
 
     test("It should not be able to register an air conditioner in an unexistent room", async () => {
-        await expect(async () => (await sut.execute({ roomId: "1", }))).rejects.toThrow()
+        const user = makeUser()
+
+        await expect(async () => (await sut.execute({ userId: user.id, roomId: "1", }))).rejects.toThrow()
     })
 })
