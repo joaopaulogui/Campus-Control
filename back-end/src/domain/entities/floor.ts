@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/core/entities/aggregate-root"
 import { Entity } from "@core/entities/entity"
 
 export interface FloorProps {
@@ -6,7 +7,7 @@ export interface FloorProps {
     updatedAt?: Date | null
 }
 
-export class Floor extends Entity<FloorProps> {
+export class Floor extends AggregateRoot<FloorProps> {
     constructor(props: FloorProps, id?: string) {
         super(props, id)
     }
