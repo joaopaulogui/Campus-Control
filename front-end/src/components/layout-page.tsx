@@ -5,19 +5,20 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useBreakpoints } from "@/hooks/use-breakpoint"
 import { Outlet } from "react-router-dom"
 
 export default function LayoutPage() {
+
+  const { isMobile } = useBreakpoints()
+
   return (
     <SidebarProvider defaultOpen={false}>
-      <AppSidebar />
+      {isMobile ? <AppSidebar /> : <></>}
       <SidebarInset className="min-w-0 bg-background">
-        <div className="flex items-center gap-2">
-          <SidebarTrigger className="ml-4 mt-4 md:hidden" />
-          <HeaderBar />
-        </div>
+        {isMobile ? <SidebarTrigger className="ml-4 mt-4 md:hidden" /> : <HeaderBar />}
 
-        <main className="flex flex-1 flex-col gap-6 p-6 w-full max-w-7xl mx-auto">
+        <main className="flex flex-1 flex-col gap-6 p-6 w-full">
           <Outlet />
         </main>
       </SidebarInset>
