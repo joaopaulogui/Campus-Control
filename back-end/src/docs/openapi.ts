@@ -51,7 +51,7 @@ import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listI
 import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
 import { deleteProjectorParamsSchema, listProjectorsQuerySchema, listProjectorsResponseSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 import { json } from "zod"
-import { listAuditsQuerySchema, listAuditsResponseSchema } from "@/infra/http/schemas/audits"
+import { listAuditsQuerySchema, listAuditsResponseSchema, listRecentActivitiesQuerySchema } from "@/infra/http/schemas/audits"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -624,6 +624,21 @@ export const openApiDocument = {
                 summary: "List audits",
                 security: bearerAuth,
                 parameters: toOpenApiParameters(listAuditsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Audit list",
+                        ...jsonContent(listAuditsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/audits/recent-activities": {
+            get: {
+                tags: ["Audits"],
+                summary: "List recent activities",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listRecentActivitiesQuerySchema, "query"),
                 responses: {
                     200: {
                         description: "Audit list",

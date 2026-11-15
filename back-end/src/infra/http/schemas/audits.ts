@@ -1,5 +1,5 @@
 import { EntityType } from "@/domain/entities/audit";
-import { xid, z } from "zod";
+import { z } from "zod";
 
 export const listAuditsQuerySchema = z.object({
     userId: z.uuid().optional(),
@@ -7,6 +7,11 @@ export const listAuditsQuerySchema = z.object({
     eventEntity: z.enum(EntityType).optional(),
     entityId: z.uuid().optional(),
     description: z.string().optional(),
+    page: z.coerce.number().int().positive().optional(),
+    perPage: z.coerce.number().int().nonnegative().optional()
+})
+
+export const listRecentActivitiesQuerySchema = z.object({
     page: z.coerce.number().int().positive().optional(),
     perPage: z.coerce.number().int().nonnegative().optional()
 })
