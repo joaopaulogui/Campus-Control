@@ -1,3 +1,4 @@
+import type { PaginationParams } from "@/core/repositories/pagination-params";
 import type { EntityType, Audit } from "../entities/audit";
 
 export interface AuditFilters {
@@ -11,4 +12,5 @@ export interface AuditFilters {
 export interface AuditsRepository {
     create(audit: Audit): Promise<void>
     findMany(filters?: AuditFilters): Promise<Audit[]>
+    findManyPaginated(filters?: AuditFilters, params?: PaginationParams): Promise<Audit[]>
 }
