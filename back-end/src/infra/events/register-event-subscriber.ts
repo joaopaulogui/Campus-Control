@@ -11,6 +11,9 @@ import { PrismaRoomsRepository } from "../prisma/repositories/prisma-rooms-repos
 import { OnProjectorRegistered } from "@/domain/subscribers/on-projector-registered";
 import { OnUserRegistered } from "@/domain/subscribers/on-user-registered";
 import { OnItemRegistered } from "@/domain/subscribers/on-item-registered";
+import { PrismaItemsRepository } from "../prisma/repositories/prisma-items-repository";
+import { OnItemLoaned } from "@/domain/subscribers/on-item-loaned";
+import { OnItemReturned } from "@/domain/subscribers/on-item-returned";
 
 export function registerEventSubscribers() {
     const auditsRepository = new PrismaAuditsRepository()
@@ -18,6 +21,7 @@ export function registerEventSubscribers() {
     const buildingsRepository = new PrismaBuildingsRepository()
     const floorsRepository = new PrismaFloorsRepository()
     const roomsRepository = new PrismaRoomsRepository() 
+    const itemsRepository = new PrismaItemsRepository()
 
     const createAuditUseCase = new CreateAuditUseCase(auditsRepository)
 
@@ -28,4 +32,6 @@ export function registerEventSubscribers() {
     new OnProjectorRegistered(usersRepository, roomsRepository, createAuditUseCase)
     new OnUserRegistered(usersRepository, createAuditUseCase)
     new OnItemRegistered(usersRepository, createAuditUseCase)
+    new OnItemLoaned(usersRepository, itemsRepository, createAuditUseCase)
+    new OnItemReturned(usersRepository, itemsRepository, createAuditUseCase)
 }

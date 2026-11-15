@@ -13,7 +13,7 @@ export class ReturnItemController {
 
         const { loanId } = returnItemParamsSchema.parse(req.params)
 
-        await returnItem.execute({ loanId })
+        await returnItem.execute({ userId: req.user!.sub, loanId })
 
         res.status(204).send()
     }
