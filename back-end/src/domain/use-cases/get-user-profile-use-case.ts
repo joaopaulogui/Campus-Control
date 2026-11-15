@@ -24,10 +24,12 @@ export class GetUserProfileUseCase {
         if(!user) {
             throw new Error()
         }
+
+        const buildings = await this.buildingsRepository.findMany({ ids: user.buildingIds })
         
         return {
             user,
-            buildings: []
+            buildings
         }
     }
 }

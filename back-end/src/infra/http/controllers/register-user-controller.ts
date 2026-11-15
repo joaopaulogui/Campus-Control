@@ -11,9 +11,9 @@ export class RegisterUserController {
 
         const registerUser = new RegisterUserUseCase(usersRepository, hasher)
 
-        const { name, email, password, role } = registerUserBodySchema.parse(req.body)
+        const { name, email, password, role, buildingIds } = registerUserBodySchema.parse(req.body)
 
-        await registerUser.execute({ adminId: req.user!.sub, name, email, password, role })
+        await registerUser.execute({ adminId: req.user!.sub, name, email, password, role, buildingIds })
 
         res.status(201).send()
     }

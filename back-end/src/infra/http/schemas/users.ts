@@ -15,6 +15,7 @@ export const registerUserBodySchema = z.object({
     email: z.email(),
     password: z.string(),
     role: z.enum(UserRole),
+    buildingIds: z.array(z.string()).optional()
 })
 
 export const getUserProfileResponseSchema = z.object({
