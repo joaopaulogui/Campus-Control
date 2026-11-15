@@ -397,12 +397,12 @@ export const openApiDocument = {
         "/api/air-conditioners": {
             get: {
                 tags: ["Air conditioners"],
-                summary: "List air conditioners grouped by floor and room",
+                summary: "List air conditioners",
                 security: bearerAuth,
                 parameters: toOpenApiParameters(listAirConditionersQuerySchema, "query"),
                 responses: {
                     200: {
-                        description: "Air conditioners grouped by floor",
+                        description: "List of air conditioners",
                         ...jsonContent(listAirConditionersResponseSchema),
                     },
                     401: unauthorizedResponse,
