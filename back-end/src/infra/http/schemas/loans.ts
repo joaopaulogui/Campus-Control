@@ -12,7 +12,9 @@ export const LoanItemBodySchema = z.object({
 export const listLoansQuerySchema = z.object({
     responsibleName: z.string().optional(),
     itemName: z.string().optional(),
-    status: z.enum(LoanStatus).optional()
+    status: z.enum(LoanStatus).optional(),
+    page: z.coerce.number().int().positive().optional(),
+    perPage: z.coerce.number().int().nonnegative().optional(),
 })
 
 export const returnItemParamsSchema = z.object({

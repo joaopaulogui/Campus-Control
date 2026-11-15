@@ -5,6 +5,8 @@ import {
     authenticateUserResponseSchema,
     getUserProfileResponseSchema,
     registerUserBodySchema,
+    updateUserBodySchema,
+    updateUserParamsSchema,
 } from "../infra/http/schemas/users"
 import {
     registerBuildingBodySchema,
@@ -47,8 +49,9 @@ import {
 } from "../infra/http/schemas/air-conditioners"
 import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
 import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
-import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
+import { deleteProjectorParamsSchema, listProjectorsQuerySchema, listProjectorsResponseSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 import { json } from "zod"
+import { listAuditsQuerySchema, listAuditsResponseSchema, listRecentActivitiesQuerySchema } from "@/infra/http/schemas/audits"
 
 const unauthorizedResponse = {
     description: "Missing or invalid JWT",
@@ -135,6 +138,22 @@ export const openApiDocument = {
                     },
                     401: unauthorizedResponse
                 },
+            }
+        },
+        "/api/users/{userId}": {
+            patch: {
+                tags: ["Users"],
+                summary: "Update user",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateUserParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateUserBodySchema)
+                },
+                responses: {
+                    204: { description: "User updated" },
+                    401: unauthorizedResponse
+                }
             }
         },
         "/api/buildings": {
@@ -379,12 +398,12 @@ export const openApiDocument = {
         "/api/air-conditioners": {
             get: {
                 tags: ["Air conditioners"],
-                summary: "List air conditioners grouped by floor and room",
+                summary: "List air conditioners",
                 security: bearerAuth,
                 parameters: toOpenApiParameters(listAirConditionersQuerySchema, "query"),
                 responses: {
                     200: {
-                        description: "Air conditioners grouped by floor",
+                        description: "List of air conditioners",
                         ...jsonContent(listAirConditionersResponseSchema),
                     },
                     401: unauthorizedResponse,
@@ -447,6 +466,19 @@ export const openApiDocument = {
             }
         },
         "/api/projectors": {
+            get: {
+                tags: ["Projectors"],
+                summary: "List projectors",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listProjectorsQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "Projector list",
+                        ...jsonContent(listProjectorsResponseSchema)
+                     },
+                    401: unauthorizedResponse
+                }
+            },
             post: {
                 tags: ["Projectors"],
                 summary: "Register projector",
@@ -460,7 +492,7 @@ export const openApiDocument = {
                     201: { description: "Projector registered" },
                     401: unauthorizedResponse
                 }
-            }
+            },
         },
         "/api/projectors/{projectorId}/status": {
             patch: {
@@ -582,6 +614,36 @@ export const openApiDocument = {
                 parameters: toOpenApiParameters(returnItemParamsSchema, "path"),
                 responses: {
                     204: { description: "Item returned" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/audits": {
+            get: {
+                tags: ["Audits"],
+                summary: "List audits",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listAuditsQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Audit list",
+                        ...jsonContent(listAuditsResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/audits/recent-activities": {
+            get: {
+                tags: ["Audits"],
+                summary: "List recent activities",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listRecentActivitiesQuerySchema, "query"),
+                responses: {
+                    200: {
+                        description: "Audit list",
+                        ...jsonContent(listAuditsResponseSchema)
+                    },
                     401: unauthorizedResponse
                 }
             }

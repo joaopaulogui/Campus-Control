@@ -7,6 +7,8 @@ interface ListLoansUseCaseRequest {
     responsibleName?: string | undefined
     itemName?: string | undefined
     status?: LoanStatus | undefined
+    page?: number | undefined
+    perPage?: number | undefined
 }
 
 interface ListLoansUseCaseResponse {
@@ -19,13 +21,16 @@ export class ListLoansUseCase {
         private loansRepository: LoansRepository,
     ) {}
 
-    async execute({ responsibleName, itemName, status }: ListLoansUseCaseRequest): Promise<ListLoansUseCaseResponse> {
+    async execute({ responsibleName, itemName, status, page, perPage }: ListLoansUseCaseRequest): Promise<ListLoansUseCaseResponse> {
+        if(!page) { page = 1 }
+
+        if(!perPage) { perPage = 30 }
 
         const items = await this.itemsRepository.findMany({ name: itemName, })
 
         const itemIds = items.map(item => item.id)
 
-        const loans = await this.loansRepository.findMany({ itemIds, status, responsibleName })
+        const loans = await this.loansRepository.findManyPaginated({ itemIds, status, responsibleName }, { page, perPage })
         
         const loansWithItems = loans.map(loan => ({
             loan,

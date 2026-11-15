@@ -21,7 +21,7 @@ export const listRoomsQuerySchema = z.object({
     type: z.enum(RoomType).optional(),
     isLocked: z.stringbool().optional(),
     page: z.coerce.number().int().positive().optional(),
-    perPage: z.coerce.number().int().positive().optional(),
+    perPage: z.coerce.number().int().nonnegative().optional(),
 })
 
 export const updateRoomParamsSchema = z.object({

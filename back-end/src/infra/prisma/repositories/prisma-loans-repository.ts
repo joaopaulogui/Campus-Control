@@ -4,6 +4,7 @@ import { prisma } from "../lib/prisma";
 import { PrismaLoanMapper } from "../mappers/prisma-loan-mapper";
 import type { LoanFilters, LoansRepository } from "@domain/repositories/loans-repository";
 import { DomainEvents } from "@/core/events/domain-events";
+import type { PaginationParams } from "@/core/repositories/pagination-params";
 
 export class PrismaLoansRepository implements LoansRepository {
     async create(loan: Loan): Promise<void> {
@@ -42,7 +43,42 @@ export class PrismaLoansRepository implements LoansRepository {
             where.status = filters.status
         }
 
-        const loans = await prisma.loan.findMany({ where, })
+        const loans = await prisma.loan.findMany({ 
+            where, 
+            orderBy: {
+                createdAt: "asc"
+            },
+        })
+
+        return loans.map(PrismaLoanMapper.toDomain)
+    }
+
+    async findManyPaginated(filters?: LoanFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Loan[]> {
+        const where: LoanWhereInput = {}
+
+        if(filters?.responsibleName) {
+            where.responsibleName = {
+                contains: filters.responsibleName,
+                mode: "insensitive"
+            }
+        }
+
+        if(filters?.itemIds) {
+            where.itemId = { in: filters.itemIds }
+        }
+
+        if(filters?.status) {
+            where.status = filters.status
+        }
+
+        const loans = await prisma.loan.findMany({ 
+            where, 
+            orderBy: {
+                createdAt: "asc"
+            },
+            take: params.perPage,
+            skip: (params.page - 1) * params.perPage
+        })
 
         return loans.map(PrismaLoanMapper.toDomain)
     }

@@ -20,16 +20,28 @@ export class PrismaUserMapper {
         const mappedRole = PrismaUserRole[user.role as keyof typeof PrismaUserRole]
         
         return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            password: user.password,
-            role: mappedRole,
+            ...this.baseFields(user),
             buildingEmployees: {
                 create: user.buildingIds.map((buildingId) => ({
                     buildingId
                 }))
             },
+        }
+    }
+
+    static toPrismaUpdate(user: User): Prisma.UserUncheckedCreateInput {
+        return this.baseFields(user)
+    }
+
+    private static baseFields(user: User) {
+        const mappedRole = PrismaUserRole[user.role as keyof typeof PrismaUserRole]
+        
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            role: mappedRole,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt ?? null
         }
