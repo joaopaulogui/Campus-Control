@@ -14,7 +14,7 @@ export const listLoansQuerySchema = z.object({
     itemName: z.string().optional(),
     status: z.enum(LoanStatus).optional(),
     page: z.coerce.number().int().positive().optional(),
-    perPage: z.coerce.number().int().positive().optional(),
+    perPage: z.coerce.number().int().nonnegative().optional(),
 })
 
 export const returnItemParamsSchema = z.object({

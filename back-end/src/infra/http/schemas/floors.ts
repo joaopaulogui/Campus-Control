@@ -9,7 +9,7 @@ export const listFloorsQuerySchema = z.object({
     buildingId: z.uuid(),
     name: z.string().optional(),
     page: z.coerce.number().int().positive().optional(),
-    perPage: z.coerce.number().int().positive().optional()
+    perPage: z.coerce.number().int().nonnegative().optional()
 })
 
 export const updateFloorParamsSchema = z.object({
