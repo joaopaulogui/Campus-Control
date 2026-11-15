@@ -45,6 +45,35 @@ export class PrismaUsersRepository implements UsersRepository {
         return PrismaUserMapper.toDomain(user)
     }
 
+    async save(user: User): Promise<void> {
+        const data = PrismaUserMapper.toPrismaUpdate(user)
+
+        const currentlyWorksOn = await prisma.buildingEmployee.findMany({
+            where: { userId: user.id },
+            select: { buildingId: true },
+        })
+
+        const currentIds = currentlyWorksOn.map((building) => building.buildingId)
+
+        const toAdd = user.buildingIds.filter((id) => !currentIds.includes(id))
+        const toRemove = currentIds.filter((id) => !user.buildingIds.includes(id))
+
+        await prisma.$transaction([
+            prisma.user.update({ 
+                where: { id: user.id },
+                data
+            }),
+            prisma.buildingEmployee.createMany({
+                data: toAdd.map((buildingId) => ({ userId: user.id, buildingId }))
+            }),
+            prisma.buildingEmployee.deleteMany({
+                where: { userId: user.id, buildingId: { in: toRemove } }
+            })
+        ])
+
+        DomainEvents.dispatchEventsForAggregate(user.id)
+    }
+
     async delete(user: User): Promise<void> {
         await prisma.user.delete({ 
             where: { id: user.id } 
