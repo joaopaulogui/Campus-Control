@@ -18,13 +18,25 @@ export const registerUserBodySchema = z.object({
     buildingIds: z.array(z.string()).optional()
 })
 
+export const updateUserParamsSchema = z.object({
+    userId: z.uuid()
+})
+
+export const updateUserBodySchema = z.object({
+    name: z.string().optional(),
+    email: z.email().optional(),
+    password: z.string().optional(),
+    role: z.enum(UserRole).optional(),
+    buildingIds: z.array(z.string()).optional()
+})
+
 export const getUserProfileResponseSchema = z.object({
-    id: z.string(),
+    id: z.uuid(),
     name: z.string(),
     email: z.email(),
     role: z.enum(UserRole),
     buildings: z.array(z.object({
-        id: z.string(),
+        id: z.uuid(),
         name: z.string()
     }))
 })
