@@ -14,13 +14,25 @@ export class PrismaUsersRepository implements UsersRepository {
     }
 
     async findById(id: string): Promise<User | null> {
-        const user = await prisma.user.findUnique({ where: { id, } })
+        const user = await prisma.user.findUnique({
+            where: { id, },
+            include: {
+                buildingEmployees: {
+                    select: {
+                        buildingId: true
+                    }
+                }
+            }
+        })
 
         if(!user) {
             return null
         }
 
-        return PrismaUserMapper.toDomain(user)
+        return PrismaUserMapper.toDomain(
+            user, 
+            user.buildingEmployees.map((be) => be.buildingId)
+        )
     }
 
     async findByEmail(email: string): Promise<User | null> {

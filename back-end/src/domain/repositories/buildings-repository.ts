@@ -2,8 +2,8 @@ import type { Building } from "../entities/building";
 import type { PaginationParams } from "@core/repositories/pagination-params";
 
 export interface BuildingFilters {
-    id?: string | undefined,
-    name: string | undefined,
+    ids?: string[] | undefined,
+    name?: string | undefined,
 }
 
 export interface BuildingsRepository {

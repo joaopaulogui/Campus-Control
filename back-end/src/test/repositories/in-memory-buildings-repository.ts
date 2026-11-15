@@ -21,7 +21,7 @@ export class InMemoryBuildingsRepository implements BuildingsRepository {
 
     async findMany(filters?: BuildingFilters): Promise<Building[]> {
         const buildings = this.items.filter(item => {
-            if(filters?.id && item.id !== filters.id) {
+            if(filters?.ids && !filters.ids.includes(item.id)) {
                 return false
             }
             if(filters?.name && !item.name.includes(filters.name)) {
@@ -35,7 +35,7 @@ export class InMemoryBuildingsRepository implements BuildingsRepository {
 
     async findManyPaginated(filters?: BuildingFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Building[]> {
         const buildings = this.items.filter(item => {
-            if(filters?.id && item.id !== filters.id) {
+            if(filters?.ids && !filters.ids.includes(item.id)) {
                 return false
             }
             if(filters?.name && !item.name.includes(filters.name)) {

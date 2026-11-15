@@ -1,5 +1,4 @@
 import { AggregateRoot } from "@/core/entities/aggregate-root"
-import { Entity } from "@core/entities/entity"
 
 export enum UserRole {
     ADMIN = "ADMIN",
@@ -11,6 +10,7 @@ export interface UserProps {
     email: string
     password: string
     role: UserRole
+    buildingIds: string[]
     createdAt: Date
     updatedAt?: Date | null
     deletedAt?: Date | null
@@ -54,6 +54,15 @@ export class User extends AggregateRoot<UserProps> {
 
     set role(role: UserRole) {
         this.props.role = role
+        this.touch()
+    }
+
+    get buildingIds() {
+        return this.props.buildingIds
+    }
+
+    set buildingIds(buildingIds: string[]) {
+        this.props.buildingIds = buildingIds
         this.touch()
     }
 
