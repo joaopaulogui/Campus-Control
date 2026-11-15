@@ -1,8 +1,10 @@
 import { Loan, LoanStatus } from "../entities/loan";
+import { ItemLoanedEvent } from "../events/item-loaned-event";
 import type { ItemsRepository } from "../repositories/items-repository";
 import type { LoansRepository } from "../repositories/loans-repository";
 
 interface LoanItemUseCaseRequest {
+    userId: string,
     responsibleName: string,
     responsibleRegistration: string,
     itemId: string,
@@ -19,6 +21,7 @@ export class LoanItemUseCase {
     ) {}
 
     async execute({ 
+        userId,
         responsibleName, 
         responsibleRegistration,
         itemId,
@@ -42,6 +45,8 @@ export class LoanItemUseCase {
         })
 
         item.loan(quantity)
+
+        loan.addDomainEvent(new ItemLoanedEvent(loan, userId))
 
         await this.loansRepository.create(loan)
 
