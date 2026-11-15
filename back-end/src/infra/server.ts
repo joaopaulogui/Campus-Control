@@ -9,6 +9,7 @@ import userRoutes from './http/routes/users'
 import itemRoutes from './http/routes/items'
 import loanRoutes from './http/routes/loans'
 import projectorRoutes from './http/routes/projectors'
+import auditRoutes from './http/routes/audits'
 
 import { setupSwagger } from '../docs/setup-swagger'
 import { registerEventSubscribers } from '@/infra/events/register-event-subscriber'
@@ -32,6 +33,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/items', itemRoutes)
 app.use('/api/loans', loanRoutes)
 app.use('/api/projectors', projectorRoutes)
+app.use('/api/audits', auditRoutes)
 
 registerEventSubscribers()
 
