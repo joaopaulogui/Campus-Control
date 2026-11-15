@@ -1,3 +1,4 @@
+import type { PaginationParams } from "@/core/repositories/pagination-params.js";
 import { Loan, LoanStatus } from "../entities/loan.js";
 
 export interface LoanFilters {
@@ -10,6 +11,7 @@ export interface LoansRepository {
     create(loan: Loan): Promise<void>
     findById(id: string): Promise<Loan | null>
     findMany(filters?: LoanFilters): Promise<Loan[]>
+    findManyPaginated(filters?: LoanFilters, params?: PaginationParams): Promise<Loan[]>
     save(loan: Loan): Promise<void>
     delete(loan: Loan): Promise<void>
 }

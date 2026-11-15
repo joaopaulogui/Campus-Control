@@ -1,3 +1,4 @@
+import type { PaginationParams } from "@/core/repositories/pagination-params";
 import type { Loan } from "@domain/entities/loan";
 import type { LoanFilters, LoansRepository } from "@domain/repositories/loans-repository";
 
@@ -31,6 +32,23 @@ export class InMemoryLoansRepository implements LoansRepository {
             }
             return true
         })
+
+        return loans
+    }
+
+    async findManyPaginated(filters?: LoanFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Loan[]> {
+        const loans = this.items.filter(item => {
+            if(filters?.responsibleName && !item.responsibleName.includes(filters.responsibleName)){
+                return false
+            }
+            if(filters?.itemIds && !filters.itemIds.includes(item.itemId)){
+                return false
+            }
+            if(filters?.status && item.status !== filters.status){
+                return false
+            }
+            return true
+        }).splice((params.page - 1) * params.perPage, params.page * params.perPage)
 
         return loans
     }

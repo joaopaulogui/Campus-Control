@@ -12,9 +12,9 @@ export class ListLoansController {
 
         const listLoans = new ListLoansUseCase(itemsRepository, loansRepository)
 
-        const { itemName, responsibleName, status } = listLoansQuerySchema.parse(req.query) 
+        const { itemName, responsibleName, status, page, perPage } = listLoansQuerySchema.parse(req.query) 
 
-        const { loans } = await listLoans.execute({ responsibleName, itemName, status })
+        const { loans } = await listLoans.execute({ responsibleName, itemName, status, page, perPage })
 
         res.status(200).json(loans.map(LoanPresenter.toHTTPWithItem))
     }
