@@ -32,8 +32,8 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
     async findMany(filters?: BuildingFilters): Promise<Building[]> {
         const where: Prisma.BuildingWhereInput = {}
 
-        if(filters?.id) {
-            where.id = filters.id
+        if(filters?.ids) {
+            where.id = { in: filters.ids }
         }
 
         if(filters?.name) {
@@ -57,8 +57,8 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
 
         const where: Prisma.BuildingWhereInput = {}
 
-        if(filters?.id) {
-            where.id = filters.id
+        if(filters?.ids) {
+            where.id = { in: filters.ids }
         }
         
         if(filters?.name) {
