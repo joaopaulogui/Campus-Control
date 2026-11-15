@@ -49,7 +49,7 @@ import {
 } from "../infra/http/schemas/air-conditioners"
 import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
 import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
-import { deleteProjectorParamsSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
+import { deleteProjectorParamsSchema, listProjectorsQuerySchema, listProjectorsResponseSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 import { json } from "zod"
 
 const unauthorizedResponse = {
@@ -465,6 +465,19 @@ export const openApiDocument = {
             }
         },
         "/api/projectors": {
+            get: {
+                tags: ["Projectors"],
+                summary: "List projectors",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listProjectorsQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "Projector list",
+                        ...jsonContent(listProjectorsResponseSchema)
+                     },
+                    401: unauthorizedResponse
+                }
+            },
             post: {
                 tags: ["Projectors"],
                 summary: "Register projector",
@@ -478,7 +491,7 @@ export const openApiDocument = {
                     201: { description: "Projector registered" },
                     401: unauthorizedResponse
                 }
-            }
+            },
         },
         "/api/projectors/{projectorId}/status": {
             patch: {
