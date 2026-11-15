@@ -3,6 +3,7 @@ import { InMemoryItemsRepository } from "@test/repositories/in-memory-items-repo
 import { InMemoryLoansRepository } from "@test/repositories/in-memory-loans-repository";
 import { LoanItemUseCase } from "./loan-item-use-case";
 import { makeItem } from "@test/factories/make-item";
+import { makeUser } from "@/test/factories/make-user";
 
 let itemsRepository: InMemoryItemsRepository
 let loansRepository: InMemoryLoansRepository
@@ -16,11 +17,14 @@ describe("Loan item", () => {
     })
 
     test("It should be able to loan an item", async () => {
+        const user = makeUser()
+
         const item = makeItem({ availableQuantity: 10 })
 
         itemsRepository.create(item)
 
         await sut.execute({
+            userId: user.id,
             responsibleName: "John Doe",
             responsibleRegistration: "123456",
             itemId: item.id,

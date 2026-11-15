@@ -1,7 +1,9 @@
+import { ItemReturnedEvent } from "../events/item-returned-event";
 import type { ItemsRepository } from "../repositories/items-repository";
 import type { LoansRepository } from "../repositories/loans-repository";
 
 interface ReturnItemUseCaseRequest {
+    userId: string
     loanId: string
 }
 
@@ -13,7 +15,7 @@ export class ReturnItemUseCase {
         private itemsRepository: ItemsRepository,
     ) {}
 
-    async execute({ loanId }: ReturnItemUseCaseRequest): Promise<ReturnItemUseCaseResponse> {
+    async execute({ userId, loanId }: ReturnItemUseCaseRequest): Promise<ReturnItemUseCaseResponse> {
         const loan = await this.loansRepository.findById(loanId)
     
         if(!loan) {
@@ -29,6 +31,8 @@ export class ReturnItemUseCase {
         item.return(loan.quantity)
 
         loan.markAsReturned()
+
+        loan.addDomainEvent(new ItemReturnedEvent(loan, userId))
 
         this.itemsRepository.save(item)
         this.loansRepository.save(loan)

@@ -5,6 +5,7 @@ import { ReturnItemUseCase } from "./return-item-use-case";
 import { makeItem } from "@test/factories/make-item";
 import { makeLoan } from "@test/factories/make-loan";
 import { LoanStatus } from "../entities/loan";
+import { makeUser } from "@/test/factories/make-user";
 
 let loansRepository: InMemoryLoansRepository
 let itemsRepository: InMemoryItemsRepository
@@ -18,6 +19,8 @@ describe("Return item", () => {
     })
 
     test("It should be able to return an item", async () => {
+        const user = makeUser()
+
         const item = makeItem({ totalQuantity: 30, availableQuantity: 20 })
 
         itemsRepository.create(item)
@@ -26,7 +29,7 @@ describe("Return item", () => {
 
         loansRepository.create(loan)
 
-        await sut.execute({ loanId: loan.id })
+        await sut.execute({ userId: user.id, loanId: loan.id })
 
         expect(itemsRepository.items[0]).toEqual(expect.objectContaining({ availableQuantity: 25 }))
         expect(loansRepository.items[0]).toEqual(expect.objectContaining({ returnedAt: expect.any(Date) }))

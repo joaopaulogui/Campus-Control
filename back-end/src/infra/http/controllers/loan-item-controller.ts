@@ -20,6 +20,7 @@ export class LoanItemController {
         } = LoanItemBodySchema.parse(req.body)
 
         await loanItem.execute({
+            userId: req.user!.sub,
             responsibleName,
             responsibleRegistration,
             itemId,
