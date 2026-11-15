@@ -5,6 +5,8 @@ import {
     authenticateUserResponseSchema,
     getUserProfileResponseSchema,
     registerUserBodySchema,
+    updateUserBodySchema,
+    updateUserParamsSchema,
 } from "../infra/http/schemas/users"
 import {
     registerBuildingBodySchema,
@@ -135,6 +137,22 @@ export const openApiDocument = {
                     },
                     401: unauthorizedResponse
                 },
+            }
+        },
+        "/api/users/{userId}": {
+            patch: {
+                tags: ["Users"],
+                summary: "Update user",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(updateUserParamsSchema, "path"),
+                requestBody: {
+                    required: true,
+                    ...jsonContent(updateUserBodySchema)
+                },
+                responses: {
+                    204: { description: "User updated" },
+                    401: unauthorizedResponse
+                }
             }
         },
         "/api/buildings": {
