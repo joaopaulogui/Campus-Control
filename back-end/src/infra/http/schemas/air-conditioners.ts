@@ -27,17 +27,12 @@ export const deleteAirConditionerParamsSchema = z.object({
     airConditionerId: z.uuid(),
 })
 
-export const groupedAirConditionerResponseSchema = z.object({
-    floorName: z.string(),
-    rooms: z.array(z.object({
-        name: z.string(),
-        airConditioners: z.array(z.object({
-            id: z.uuid(),
-            status: z.enum(AirConditionerStatus),
-            temperature: z.number(),
-            isOn: z.boolean(),
-        })),
-    })),
+export const airConditionerResponseSchema = z.object({ 
+    id: z.uuid(),
+    status: z.enum(AirConditionerStatus),
+    temperature: z.number(),
+    isOn: z.boolean(),
+    roomId: z.uuid()
 })
 
-export const listAirConditionersResponseSchema = z.array(groupedAirConditionerResponseSchema)
+export const listAirConditionersResponseSchema = z.array(airConditionerResponseSchema)
