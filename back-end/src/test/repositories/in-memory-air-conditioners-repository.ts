@@ -1,3 +1,4 @@
+import type { PaginationParams } from "@/core/repositories/pagination-params";
 import type { AirConditioner } from "@domain/entities/air-conditioner";
 import type { AirConditionerFilters, AirConditionersRepository } from "@domain/repositories/air-conditioners-repository";
 
@@ -28,6 +29,20 @@ export class InMemoryAirConditionersRepository implements AirConditionersReposit
             }
             return true
         })
+
+        return airConditioner
+    }
+
+    async findManyPaginated(filter?: AirConditionerFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<AirConditioner[]> {
+        const airConditioner = this.items.filter(item => {
+            if(filter?.roomIds && !filter.roomIds.includes(item.roomId)) {
+                return false
+            }
+            if(filter?.status && item.status !== filter.status) {
+                return false
+            }
+            return true
+        }).slice((params.page-1) * params.perPage, params.page * params.perPage)
 
         return airConditioner
     }

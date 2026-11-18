@@ -4,6 +4,7 @@ import { Prisma } from "@generated/prisma/client"
 import { PrismaAirConditionerMapper } from "../mappers/prisma-air-conditioner-mapper";
 import type { AirConditionerFilters, AirConditionersRepository } from "@domain/repositories/air-conditioners-repository";
 import { DomainEvents } from "@/core/events/domain-events";
+import type { PaginationParams } from "@/core/repositories/pagination-params";
 
 export class PrismaAirConditionersRepository implements AirConditionersRepository {
     async create(airConditioner: AirConditioner): Promise<void> {
@@ -26,20 +27,69 @@ export class PrismaAirConditionersRepository implements AirConditionersRepositor
         return PrismaAirConditionerMapper.toDomain(airConditioner)
     }
 
-    async findMany(filters: AirConditionerFilters): Promise<AirConditioner[]> {
+    async findMany(filters?: AirConditionerFilters): Promise<AirConditioner[]> {
         const where: Prisma.AirConditionerWhereInput = {}
 
-        if(filters.roomIds) {
+        if(filters?.roomIds) {
             where.roomId = { in: filters.roomIds }
         }
 
-        if(filters.status) {
+        if(filters?.floorIds) {
+            where.room = {
+                floorId: { in: filters.floorIds }
+            }
+        }
+
+        if(filters?.buildingIds) {
+            where.room = {
+                floor: {
+                    buildingId: { in: filters.buildingIds }
+                }
+            }
+        }
+
+        if(filters?.status) {
             where.status = filters.status
         }
 
         const airConditioners = await prisma.airConditioner.findMany({
             where,
             orderBy: { id: "asc" },
+        })
+
+        return airConditioners.map(PrismaAirConditionerMapper.toDomain)
+    }
+
+    async findManyPaginated(filters?: AirConditionerFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<AirConditioner[]> {
+        const where: Prisma.AirConditionerWhereInput = {}
+
+        if(filters?.roomIds) {
+            where.roomId = { in: filters.roomIds }
+        }
+
+        if(filters?.floorIds) {
+            where.room = {
+                floorId: { in: filters.floorIds }
+            }
+        }
+
+        if(filters?.buildingIds) {
+            where.room = {
+                floor: {
+                    buildingId: { in: filters.buildingIds }
+                }
+            }
+        }
+
+        if(filters?.status) {
+            where.status = filters.status
+        }
+
+        const airConditioners = await prisma.airConditioner.findMany({
+            where,
+            orderBy: { id: "asc" },
+            take: params.perPage,
+            skip: (params.page-1) * params.perPage
         })
 
         return airConditioners.map(PrismaAirConditionerMapper.toDomain)
