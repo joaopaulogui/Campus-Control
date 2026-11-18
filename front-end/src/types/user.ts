@@ -1,5 +1,6 @@
 import type z from "zod";
 import type { createUserSchema, loginSchema, userRoleSchema } from "@/schemas/user.schema";
+import type { Building } from "./building";
 
 export const USER_ROLES = {
     ADMIN: "ADMIN",
@@ -16,15 +17,10 @@ export type LoginResponse = {
     accessToken: string
 }
 
-export type UserBuilding = {
-    id: string
-    name: string
-}
-
 export type User = {
     id: string
     name: string
     email: string
     role: UserRole
-    buildings?: UserBuilding[]
+    buildings?: Building[]
 }
