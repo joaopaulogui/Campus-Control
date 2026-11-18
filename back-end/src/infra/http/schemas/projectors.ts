@@ -6,8 +6,9 @@ export const registerProjectorBodySchema = z.object({
 })
 
 export const listProjectorsQuerySchema = z.object({
-    buildingId: z.uuid(),
+    buildingId: z.uuid().optional(),
     floorId: z.uuid().optional(),
+    roomId: z.uuid().optional(),
     status: z.enum(ProjectorStatus).optional(),
 })
 

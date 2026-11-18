@@ -6,7 +6,7 @@ export const registerFloorBodySchema = z.object({
 })
 
 export const listFloorsQuerySchema = z.object({
-    buildingId: z.uuid(),
+    buildingId: z.uuid().optional(),
     name: z.string().optional(),
     page: z.coerce.number().int().positive().optional(),
     perPage: z.coerce.number().int().nonnegative().optional()

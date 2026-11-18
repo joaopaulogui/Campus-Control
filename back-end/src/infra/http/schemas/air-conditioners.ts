@@ -6,8 +6,9 @@ export const registerAirConditionerBodySchema = z.object({
 })
 
 export const listAirConditionersQuerySchema = z.object({
-    buildingId: z.uuid(),
+    buildingId: z.uuid().optional(),
     floorId: z.uuid().optional(),
+    roomId: z.uuid().optional(),
     status: z.enum(AirConditionerStatus).optional(),
 })
 
