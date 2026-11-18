@@ -5,6 +5,10 @@ export const registerFloorBodySchema = z.object({
     buildingId: z.uuid(),
 })
 
+export const getFloorByIdParamsSchema = z.object({
+    floorId: z.uuid()
+})
+
 export const listFloorsQuerySchema = z.object({
     buildingId: z.uuid().optional(),
     name: z.string().optional(),

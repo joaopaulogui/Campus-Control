@@ -48,6 +48,7 @@ export const roomResponseSchema = z.object({
     type: z.enum(RoomType),
     capacity: z.number(),
     isLocked: z.boolean(),
+    floorId: z.uuid(),
     updatedAt: z.iso.datetime(),
 })
 
