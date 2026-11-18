@@ -1,4 +1,5 @@
 import type { createFloorSchema, getFloorsQueryParamsSchema } from "@/schemas/floor.schema";
+import type { SelectQueryParams } from "./api";
 import z from "zod";
 
 export type Floor = {
@@ -11,3 +12,7 @@ export type GetFloorsQueryParamsSchema = z.infer<typeof getFloorsQueryParamsSche
 export type CreateFloorDTO = z.infer<typeof createFloorSchema>
 
 export type UpdateFloorDTO = CreateFloorDTO
+
+export type FloorSelectQueryParams = SelectQueryParams & {
+  buildingId: string
+}

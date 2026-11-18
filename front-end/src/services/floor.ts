@@ -1,6 +1,6 @@
-import type { CreateFloorDTO, GetFloorsQueryParamsSchema, Floor, UpdateFloorDTO } from "@/types/floor"
+import type { CreateFloorDTO, GetFloorsQueryParamsSchema, Floor, UpdateFloorDTO, FloorSelectQueryParams } from "@/types/floor"
 import { getAxiosInstance } from "@/axios/axios-config"
-import type { SelectQueryParams, SelectResponse } from "@/types/api"
+import type { SelectResponse } from "@/types/api"
 
 const url = `${import.meta.env.VITE_API_URL}floors/`
 
@@ -24,7 +24,7 @@ export const floor = {
     await api.delete(`${url}/${id}`)
   },
 
-  async getSelectList(params: SelectQueryParams): Promise<SelectResponse> {
+  async getSelectList(params: FloorSelectQueryParams): Promise<SelectResponse> {
     const { data } = await api.get(`${url}select`, { params })
     return data
   }

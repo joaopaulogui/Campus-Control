@@ -1,6 +1,6 @@
-import type { CreateRoomDTO, GetRoomsQueryParamsSchema, Room, RoomDetails, UpdateRoomDTO } from "@/types/room"
+import type { CreateRoomDTO, GetRoomsQueryParamsSchema, Room, RoomDetails, RoomSelectQueryParams, UpdateRoomDTO } from "@/types/room"
 import { getAxiosInstance } from "@/axios/axios-config"
-import type { SelectQueryParams, SelectResponse } from "@/types/api"
+import type { SelectResponse } from "@/types/api"
 
 const url = `${import.meta.env.VITE_API_URL}rooms/`
 
@@ -33,7 +33,7 @@ export const room = {
     await api.delete(`${url}/${id}`)
   },
 
-  async getSelectList(params: SelectQueryParams): Promise<SelectResponse> {
+  async getSelectList(params: RoomSelectQueryParams): Promise<SelectResponse> {
     const { data } = await api.get(`${url}select`, { params })
     return data
   }

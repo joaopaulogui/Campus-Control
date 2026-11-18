@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { createUserSchema, loginSchema, userRoleSchema } from "@/schemas/user.schema";
+import type { createUserSchema, loginSchema, updateUserSchema, userRoleSchema } from "@/schemas/user.schema";
 import type { Building } from "./building";
 
 export const USER_ROLES = {
@@ -9,18 +9,20 @@ export const USER_ROLES = {
 
 export type UserRole = z.infer<typeof userRoleSchema>
 
-export type LoginDTO = z.infer<typeof loginSchema>
-
-export type CreateUserDTO = z.infer<typeof createUserSchema>
-
-export type LoginResponse = {
-    accessToken: string
-}
-
 export type User = {
     id: string
     name: string
     email: string
     role: UserRole
     buildings?: Building[]
+}
+
+export type LoginDTO = z.infer<typeof loginSchema>
+
+export type CreateUserDTO = z.infer<typeof createUserSchema>
+
+export type UpdateUserDTO = z.infer<typeof updateUserSchema>
+
+export type LoginResponse = {
+    accessToken: string
 }

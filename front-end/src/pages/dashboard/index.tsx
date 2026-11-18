@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAuth } from "@/hooks/use-auth"
+import { audit } from "@/services/audit"
 import { airConditioner, projector } from "@/services/equipment"
 import { item } from "@/services/item"
 import { loan } from "@/services/loan"
@@ -12,14 +13,15 @@ import { room } from "@/services/room"
 import { formatActivityDate, formatHeaderDate } from "@/utils/date"
 import { summarizeEquipmentStatus } from "@/utils/equipment"
 import { useQuery } from "@tanstack/react-query"
-import { BookOpen, Box, CheckCircle2, Clock, DoorOpen, ProjectorIcon, TriangleAlert, Wind } from "lucide-react"
+import { BookOpen, Box, Clock, DoorOpen, ProjectorIcon, TriangleAlert, Wind } from "lucide-react"
 import { useMemo } from "react"
 
-const fetchRooms = () => room.getList({perPage: 0})
+const fetchRooms = () => room.getList({})
 const fetchAirConditioners = () => airConditioner.getList({})
 const fetchProjectors = () => projector.getList({})
-const fetchItems = () => item.getList({perPage: 0})
-const fetchLoans = () => loan.getList({perPage: 0})
+const fetchItems = () => item.getList({})
+const fetchLoans = () => loan.getList({})
+const fetchRecentActivities = () => audit.getRecentActivities({perPage: 5})
 
 export default function Index() {
 
@@ -38,6 +40,11 @@ export default function Index() {
     const { data: loans = [], isLoading: isLoadingLoans } = useQuery({
         queryKey: ["loans", "all"],
         queryFn: fetchLoans,
+    })
+
+    const { data: recentActivities = [], isLoading: isLoadingRecentActivities } = useQuery({
+        queryKey: ["recent-activities", "all"],
+        queryFn: fetchRecentActivities,
     })
 
     const { data: airConditioners = [], isLoading: isLoadingAC } = useQuery({
@@ -70,21 +77,6 @@ export default function Index() {
         () => loans.filter((loan) => loan.status === "LATE").length,
         [loans]
     )
-
-    // Atividades recentes ordenadas pela data do último evento
-    const recentActivities = useMemo(() => {
-        return [...loans]
-            .sort((a, b) => {
-                const dateA = new Date(
-                    a.status === "RETURNED" && a.returnedAt ? a.returnedAt : a.createdAt
-                ).getTime()
-                const dateB = new Date(
-                    b.status === "RETURNED" && b.returnedAt ? b.returnedAt : b.createdAt
-                ).getTime()
-                return dateB - dateA
-            })
-            .slice(0, 6)
-    }, [loans])
 
     // Métricas de infraestrutura
     const acStats = useMemo(
@@ -166,7 +158,7 @@ export default function Index() {
                     <CardContent className="flex flex-col gap-4 px-6 py-0.5">
                         <SectionDividerHeader title="Atividades Recentes" />
 
-                        {isLoadingLoans ? (
+                        {isLoadingRecentActivities ? (
                             <div className="space-y-4 pt-2">
                                 {Array.from({ length: 5 }).map((_, idx) => (
                                     <div key={idx} className="flex items-center gap-3.5">
@@ -185,48 +177,26 @@ export default function Index() {
                             </div>
                         ) : (
                             <div className="divide-y divide-border/60">
-                                {recentActivities.map((loan) => {
-                                    const isReturned = loan.status === "RETURNED"
-                                    const eventDate =
-                                        isReturned && loan.returnedAt
-                                            ? loan.returnedAt
-                                            : loan.createdAt
-
+                                {recentActivities.map((recentActivity) => {
                                     return (
                                         <div
-                                            key={loan.id}
+                                            key={recentActivity.entityId}
                                             className="flex items-center justify-between gap-4 py-3.5 first:pt-1 last:pb-1"
                                         >
                                             <div className="flex min-w-0 items-center gap-3.5">
-                                                <div
-                                                    className={`flex size-10 shrink-0 items-center justify-center rounded-xl ${isReturned
-                                                        ? "bg-success/10 text-success"
-                                                        : "bg-primary/10 text-primary"
-                                                        }`}
-                                                >
-                                                    {isReturned ? (
-                                                        <CheckCircle2 className="size-4" />
-                                                    ) : (
-                                                        <BookOpen className="size-4" />
-                                                    )}
+                                                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                                    <BookOpen className="size-4" />
                                                 </div>
 
                                                 <div className="min-w-0">
                                                     <p className="truncate text-sm font-medium text-foreground">
-                                                        {isReturned
-                                                            ? "Devolução registrada"
-                                                            : "Empréstimo registrado"}
-                                                    </p>
-                                                    <p className="truncate text-xs text-muted-foreground">
-                                                        {isReturned
-                                                            ? `${loan.itemName} devolvido por ${loan.responsibleName}`
-                                                            : `${loan.itemName} emprestado para ${loan.responsibleName}`}
+                                                        {recentActivity.description}
                                                     </p>
                                                 </div>
                                             </div>
 
                                             <span className="shrink-0 text-xs text-muted-foreground">
-                                                {formatActivityDate(eventDate)}
+                                                {formatActivityDate(recentActivity.createdAt)}
                                             </span>
                                         </div>
                                     )

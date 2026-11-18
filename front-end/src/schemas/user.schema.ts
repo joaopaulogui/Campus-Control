@@ -12,4 +12,7 @@ export const createUserSchema = z.object({
     email: z.email(),
     password: z.string(),
     role: userRoleSchema,
+    buildingIds: z.array(z.string()) 
 })
+
+export const updateUserSchema = createUserSchema

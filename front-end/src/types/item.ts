@@ -1,5 +1,6 @@
 import type z from "zod";
 import type { createItemSchema, getItemsQueryParamsSchema, itemTypeSchema } from "@/schemas/item.schema";
+import type { SelectQueryParams } from "./api";
 
 export type ItemType = z.infer<typeof itemTypeSchema>
 
@@ -15,3 +16,7 @@ export type Item = {
 export type GetItemsQueryParamsSchema = z.infer<typeof getItemsQueryParamsSchema>
 
 export type CreateItemDTO = z.infer<typeof createItemSchema>
+
+export type ItemSelectQueryParams = SelectQueryParams & {
+  type: ItemType
+}
