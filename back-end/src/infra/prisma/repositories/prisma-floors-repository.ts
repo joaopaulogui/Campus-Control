@@ -28,6 +28,25 @@ export class PrismaFloorsRepository implements FloorsRepository {
         return PrismaFloorMapper.toDomain(floor)
     }
 
+    async findByIdWithBuilding(id: string): Promise<FloorWithBuilding | null> {
+        const floor = await prisma.floor.findUnique({ 
+            where: { id },
+            include: {
+                building: {
+                    select: {
+                        name: true,
+                    }
+                }
+            } 
+        })
+    
+        if(!floor) {
+            return null
+        }
+        
+        return PrismaFloorWithBuildingMapper.toFloorWithBuilding(floor)
+    }
+
     async findMany(filters?: FloorFilters): Promise<Floor[]> {
         const where = this.buildWhere(filters)
 

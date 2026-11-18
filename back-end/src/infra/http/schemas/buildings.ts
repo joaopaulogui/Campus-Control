@@ -4,6 +4,10 @@ export const registerBuildingBodySchema = z.object({
     name: z.string(),
 })
 
+export const getBuildingByIdParamsSchema = z.object({
+    buildingId: z.uuid()
+})
+
 export const listBuildingsQuerySchema = z.object({
     name: z.string().optional(),
     page: z.coerce.number().int().optional(),

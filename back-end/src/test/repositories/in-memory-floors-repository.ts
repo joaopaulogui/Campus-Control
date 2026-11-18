@@ -20,6 +20,21 @@ export class InMemoryFloorsRepository implements FloorsRepository {
         return floor
     }
 
+    async findByIdWithBuilding(id: string): Promise<FloorWithBuilding | null> {
+        const floor = this.items.find(item => item.id === id)
+
+        if(!floor) {
+            return null
+        }
+
+        return {
+            id: floor.id,
+            name: floor.name,
+            buildingId: floor.buildingId,
+            buildingName: ""
+        }
+    }
+
     async findMany(filters: FloorFilters): Promise<Floor[]> {
         const floors = this.items.filter(item => {
             if(filters?.id && item.id !== filters.id) {
