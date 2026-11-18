@@ -21,15 +21,20 @@ export const returnItemParamsSchema = z.object({
     loanId: z.uuid()
 })
 
-export const listLoansResponseSchema = z.array(z.object({
+export const loanResponseSchema = z.object({
     id: z.uuid(),
-    itemName: z.string(),
     itemId: z.uuid(),
     responsibleName: z.string(),
     responsibleRegistration: z.string(),
     quantity: z.int(),
     createdAt: z.iso.datetime(),
+    status: z.enum(LoanStatus),
     returnedAt: z.iso.datetime(),
     deadline: z.iso.datetime(),
-    status: z.enum(LoanStatus)
-}))
+})
+
+export const loanWithItemResponseSchema = loanResponseSchema.extend({
+    itemName: z.string()
+})
+
+export const listLoansResponseSchema = z.array(loanWithItemResponseSchema)

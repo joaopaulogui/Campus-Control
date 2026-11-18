@@ -1,5 +1,4 @@
 import { type Request, type Response } from "express";
-import { PrismaItemsRepository } from "../../prisma/repositories/prisma-items-repository";
 import { PrismaLoansRepository } from "../../prisma/repositories/prisma-loans-repository";
 import { ListLoansUseCase } from "@domain/use-cases/list-loans-use-case";
 import { listLoansQuerySchema } from "../schemas/loans";
@@ -7,10 +6,9 @@ import { LoanPresenter } from "../presenters/loan-presenter";
 
 export class ListLoansController {
     async handle(req: Request, res: Response) {
-        const itemsRepository = new PrismaItemsRepository()
         const loansRepository = new PrismaLoansRepository()
 
-        const listLoans = new ListLoansUseCase(itemsRepository, loansRepository)
+        const listLoans = new ListLoansUseCase(loansRepository)
 
         const { itemName, responsibleName, status, page, perPage } = listLoansQuerySchema.parse(req.query) 
 

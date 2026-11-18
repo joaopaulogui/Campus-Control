@@ -27,9 +27,15 @@ export const deleteFloorParamsSchema = z.object({
 export const floorResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
+    buildingId: z.uuid(),
+    updatedAt: z.iso.datetime(),
 })
 
-export const listFloorsResponseSchema = z.array(floorResponseSchema)
+export const floorWithBuildingResponseSchema = floorResponseSchema.extend({
+    buildingName: z.string()
+})
+
+export const listFloorsResponseSchema = z.array(floorWithBuildingResponseSchema)
 
 export const selectFloorsResponseSchema = z.object({
     id: z.uuid(),

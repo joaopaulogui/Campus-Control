@@ -16,6 +16,6 @@ export class ListFloorsController {
 
         const { floors } = await listAllFloors.execute({ userId: req.user!.sub, buildingId, name, page, perPage })
 
-        res.status(200).json(floors.map(FloorPresenter.toHTTP))
+        res.status(200).json(floors.map(FloorPresenter.toHttpWithBuilding))
     }
 }

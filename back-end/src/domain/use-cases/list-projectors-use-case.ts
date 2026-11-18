@@ -2,6 +2,7 @@ import type { Projector, ProjectorStatus } from "../entities/projector"
 import type { ProjectorsRepository } from "../repositories/projectors-repository"
 import type { UsersRepository } from "../repositories/users-repositoy"
 import { UserRole } from "../entities/user"
+import type { ProjectorWithRoom } from "../entities/value-objects/projector-with-room"
 
 interface ListProjectorsUseCaseRequest {
     userId: string
@@ -12,7 +13,7 @@ interface ListProjectorsUseCaseRequest {
 }
 
 interface ListProjectorsUseCaseResponse {
-    projectors: Projector[]
+    projectors: ProjectorWithRoom[]
 }
 
 export class ListProjectorsUseCase {
@@ -44,7 +45,7 @@ export class ListProjectorsUseCase {
             }
         }
 
-        const projectors = await this.projectorsRepository.findMany({ 
+        const projectors = await this.projectorsRepository.findManyWithRoomPaginated({ 
             buildingIds,
             floorIds: floorId ? [floorId] : undefined,
             roomIds: roomId ? [roomId] : undefined, 
