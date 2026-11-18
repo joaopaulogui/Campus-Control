@@ -4,6 +4,7 @@ import { prisma } from "../lib/prisma"
 import { PrismaProjectorMapper } from "../mappers/prisma-projector-mapper"
 import type { ProjectorFilters, ProjectorsRepository } from "@domain/repositories/projectors-repository"
 import { DomainEvents } from "@/core/events/domain-events"
+import type { PaginationParams } from "@/core/repositories/pagination-params"
 
 export class PrismaProjectorsRepository implements ProjectorsRepository {
     async create(projector: Projector): Promise<void> {
@@ -24,14 +25,58 @@ export class PrismaProjectorsRepository implements ProjectorsRepository {
         return PrismaProjectorMapper.toDomain(projector)
     }
 
-    async findMany(filters: ProjectorFilters): Promise<Projector[]> {
+    async findMany(filters?: ProjectorFilters): Promise<Projector[]> {
         let where: ProjectorWhereInput = {}
 
-        if(filters.roomIds) {
+        if(filters?.roomIds) {
             where.roomId = { in: filters.roomIds }
         }
 
-        if(filters.status) {
+        if(filters?.floorIds) {
+            where.room = {
+                floorId: { in: filters.floorIds }
+            }
+        }
+
+        if(filters?.buildingIds) {
+            where.room = {
+                floor: {
+                    buildingId: { in: filters.buildingIds }
+                }
+            }
+        }
+
+        if(filters?.status) {
+            where.status = filters.status
+        }
+
+        const projectors = await prisma.projector.findMany({ where, })
+
+        return projectors.map(PrismaProjectorMapper.toDomain)
+    }
+
+    async findManyPaginated(filters?: ProjectorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Projector[]> {
+        let where: ProjectorWhereInput = {}
+
+        if(filters?.roomIds) {
+            where.roomId = { in: filters.roomIds }
+        }
+
+        if(filters?.floorIds) {
+            where.room = {
+                floorId: { in: filters.floorIds }
+            }
+        }
+
+        if(filters?.buildingIds) {
+            where.room = {
+                floor: {
+                    buildingId: { in: filters.buildingIds }
+                }
+            }
+        }
+
+        if(filters?.status) {
             where.status = filters.status
         }
 

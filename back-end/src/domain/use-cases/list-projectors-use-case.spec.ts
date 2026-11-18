@@ -1,61 +1,39 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryProjectorsRepository } from "@test/repositories/in-memory-projectors-repository";
-import { InMemoryRoomsRepository } from "@test/repositories/in-memory-rooms-repository";
-import { InMemoryFloorsRepository } from "@test/repositories/in-memory-floors-repository";
 import { ListProjectorsUseCase } from "./list-projectors-use-case";
-import { makeRoom } from "@test/factories/make-room";
-import { makeFloor } from "@test/factories/make-floor";
 import { makeProjector } from "@test/factories/make-projector";
-import { makeBuilding } from "@test/factories/make-building";
-import { InMemoryBuildingsRepository } from "@test/repositories/in-memory-buildings-repository";
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository";
+import { makeUser } from "@/test/factories/make-user";
+import { UserRole } from "../entities/user";
 
 let projectorsRepository: InMemoryProjectorsRepository
-let roomsRepository: InMemoryRoomsRepository
-let floorsRepository: InMemoryFloorsRepository
-let buildingsRepository: InMemoryBuildingsRepository
+let usersRepository: InMemoryUsersRepository
 let sut: ListProjectorsUseCase
 
-describe("List floor with rooms and ACs", () => {
+describe("List projectors", () => {
     beforeEach(() => {
         projectorsRepository = new InMemoryProjectorsRepository()
-        roomsRepository = new InMemoryRoomsRepository()
-        floorsRepository = new InMemoryFloorsRepository()
-        buildingsRepository = new InMemoryBuildingsRepository()
-        sut = new ListProjectorsUseCase(
-            projectorsRepository, 
-            roomsRepository, 
-            floorsRepository, 
-            buildingsRepository
-        )
+        usersRepository = new InMemoryUsersRepository()
+        sut = new ListProjectorsUseCase(projectorsRepository, usersRepository)
     })
 
-    test("It should be able to list all floors with rooms and acs", async () => {
-        const building = makeBuilding()
-        buildingsRepository.create(building)
+    test("It should be able to list all projectors", async () => {
+        const user = makeUser({ role: UserRole.ADMIN })
 
-        const floor1 = makeFloor({ buildingId: building.id })
-        floorsRepository.create(floor1)
+        usersRepository.create(user)
 
-        const floor2 = makeFloor({ buildingId: building.id })
-        floorsRepository.create(floor2)
-
-        const room1 = makeRoom({ floorId: floor1.id })
-        roomsRepository.create(room1)
-
-        const room2 = makeRoom({ floorId: floor1.id })
-        roomsRepository.create(room2)
-
-        const room3 = makeRoom({ floorId: floor2.id })
-        roomsRepository.create(room3)
-
-        const projector1 = makeProjector({ roomId: room1.id })
+        const projector1 = makeProjector()
         projectorsRepository.create(projector1)
 
-        const projector2 = makeProjector({ roomId: room3.id })
+        const projector2 = makeProjector()
         projectorsRepository.create(projector2)
 
-        const { projectors } = await sut.execute({ buildingId: building.id })
+        const { projectors } = await sut.execute({ userId: user.id })
 
         expect(projectors).toHaveLength(2)
+        expect(projectors).toEqual(expect.arrayContaining([
+            expect.objectContaining({ id: projector1.id }),
+            expect.objectContaining({ id: projector2.id }),
+        ]))
     })
 })

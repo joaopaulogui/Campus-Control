@@ -24,7 +24,7 @@ export class InMemoryFloorsRepository implements FloorsRepository {
             if(filters?.id && item.id !== filters.id) {
                 return false
             }
-            if(filters?.buildingId && item.buildingId !== filters.buildingId) {
+            if(filters?.buildingIds && !filters.buildingIds.includes(item.buildingId)) {
                 return false
             }
             if(filters?.name && !item.name.includes(filters.name)) {
@@ -41,7 +41,7 @@ export class InMemoryFloorsRepository implements FloorsRepository {
             if(filters?.id && item.id !== filters.id) {
                 return false
             }
-            if(filters?.buildingId && item.buildingId !== filters.buildingId) {
+            if(filters?.buildingIds && !filters.buildingIds.includes(item.buildingId)) {
                 return false
             }
             if(filters?.name && !item.name.includes(filters.name)) {

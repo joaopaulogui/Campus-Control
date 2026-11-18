@@ -32,6 +32,12 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
     async findMany(filters?: BuildingFilters): Promise<Building[]> {
         const where: Prisma.BuildingWhereInput = {}
 
+        if(filters?.userId) {
+            where.userWorksIns = {
+                some: { userId: filters.userId }
+            }
+        }
+
         if(filters?.ids) {
             where.id = { in: filters.ids }
         }
@@ -56,6 +62,12 @@ export class PrismaBuildingsRepository implements BuildingsRepository {
     async findManyPaginated(filters?: BuildingFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Building[]> {
 
         const where: Prisma.BuildingWhereInput = {}
+
+        if(filters?.userId) {
+            where.userWorksIns = {
+                some: { userId: filters.userId }
+            }
+        }
 
         if(filters?.ids) {
             where.id = { in: filters.ids }

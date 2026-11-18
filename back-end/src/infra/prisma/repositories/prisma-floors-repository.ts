@@ -32,8 +32,8 @@ export class PrismaFloorsRepository implements FloorsRepository {
             where.id = filters.id
         }
 
-        if(filters?.buildingId) {
-            where.buildingId = filters.buildingId
+        if(filters?.buildingIds) {
+            where.buildingId = { in: filters.buildingIds }
         }
 
         if(filters?.name) {
@@ -60,8 +60,8 @@ export class PrismaFloorsRepository implements FloorsRepository {
             where.id = filters.id
         }
 
-        if(filters?.buildingId) {
-            where.buildingId = filters.buildingId
+        if(filters?.buildingIds) {
+            where.buildingId = { in: filters.buildingIds }
         }
 
         if(filters?.name) {

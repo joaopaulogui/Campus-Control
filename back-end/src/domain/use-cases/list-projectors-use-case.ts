@@ -1,12 +1,13 @@
 import type { Projector, ProjectorStatus } from "../entities/projector"
 import type { ProjectorsRepository } from "../repositories/projectors-repository"
-import type { BuildingsRepository } from "../repositories/buildings-repository"
-import type { FloorsRepository } from "../repositories/floors-repository"
-import type { RoomsRepository } from "../repositories/rooms-repository"
+import type { UsersRepository } from "../repositories/users-repositoy"
+import { UserRole } from "../entities/user"
 
 interface ListProjectorsUseCaseRequest {
-    buildingId: string
+    userId: string
+    buildingId?: string | undefined
     floorId?: string | undefined
+    roomId?: string | undefined
     status?: ProjectorStatus | undefined
 }
 
@@ -17,27 +18,38 @@ interface ListProjectorsUseCaseResponse {
 export class ListProjectorsUseCase {
     constructor(
         private projectorsRepository: ProjectorsRepository,
-        private roomsRepository: RoomsRepository,
-        private floorsRepository: FloorsRepository,
-        private buildingsRepository: BuildingsRepository,
+        private usersRepository: UsersRepository,
     ) {}
 
-    async execute({ buildingId, floorId, status }: ListProjectorsUseCaseRequest): Promise<ListProjectorsUseCaseResponse> {
-        const building = await this.buildingsRepository.findById(buildingId)
+    async execute({ userId, buildingId, floorId, roomId, status }: ListProjectorsUseCaseRequest): Promise<ListProjectorsUseCaseResponse> {
+        const user = await this.usersRepository.findById(userId)
 
-        if(!building) {
+        if(!user) {
             throw new Error()
         }
+        
+        let buildingIds: string[] | undefined
+                
+        if(user.role === UserRole.ADMIN) {
+            buildingIds = buildingId ? [buildingId] : undefined
+        } else {    
+            if(buildingId) {
+                if(!user.buildingIds.includes(buildingId)) {
+                    buildingIds = []
+                }
+                    
+                buildingIds = [buildingId]    
+            } else {
+                buildingIds = user.buildingIds
+            }
+        }
 
-        const floors = await this.floorsRepository.findMany({ buildingId, id: floorId })
-
-        const floorIds = floors.map(floor => floor.id)
-
-        const rooms = await this.roomsRepository.findMany({ floorIds, })
-
-        const roomIds = rooms.map((room) => room.id)
-
-        const projectors = await this.projectorsRepository.findMany({ roomIds, status, })
+        const projectors = await this.projectorsRepository.findMany({ 
+            buildingIds,
+            floorIds: floorId ? [floorId] : undefined,
+            roomIds: roomId ? [roomId] : undefined, 
+            status, 
+        })
 
         return { projectors, }
     }

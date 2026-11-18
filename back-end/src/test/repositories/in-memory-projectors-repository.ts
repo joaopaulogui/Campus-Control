@@ -1,3 +1,4 @@
+import type { PaginationParams } from "@/core/repositories/pagination-params";
 import type { Projector } from "@domain/entities/projector";
 import type { ProjectorFilters, ProjectorsRepository } from "@domain/repositories/projectors-repository";
 
@@ -28,6 +29,20 @@ export class InMemoryProjectorsRepository implements ProjectorsRepository {
             }
             return true
         })
+
+        return projectors
+    }
+
+    async findManyPaginated(filters?: ProjectorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Projector[]> {
+        const projectors = this.items.filter(item => {
+            if(filters?.roomIds && !filters.roomIds.includes(item.roomId)) {
+                return false
+            }
+            if(filters?.status && filters.status !== item.status) {
+                return false
+            }
+            return true
+        }).slice((params.page-1) * params.perPage, params.page * params.perPage)
 
         return projectors
     }

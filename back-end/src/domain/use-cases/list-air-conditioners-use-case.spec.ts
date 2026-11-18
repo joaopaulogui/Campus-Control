@@ -1,61 +1,39 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { InMemoryAirConditionersRepository } from "@test/repositories/in-memory-air-conditioners-repository";
-import { InMemoryRoomsRepository } from "@test/repositories/in-memory-rooms-repository";
-import { InMemoryFloorsRepository } from "@test/repositories/in-memory-floors-repository";
 import { ListAirConditionersUseCase } from "./list-air-conditioners-use-case";
-import { makeRoom } from "@test/factories/make-room";
-import { makeFloor } from "@test/factories/make-floor";
 import { makeAirConditioner } from "@test/factories/make-air-conditioner";
-import { makeBuilding } from "@test/factories/make-building";
-import { InMemoryBuildingsRepository } from "@test/repositories/in-memory-buildings-repository";
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository";
+import { makeUser } from "@/test/factories/make-user";
+import { UserRole } from "../entities/user";
 
 let airConditionersRepository: InMemoryAirConditionersRepository
-let roomsRepository: InMemoryRoomsRepository
-let floorsRepository: InMemoryFloorsRepository
-let buildingsRepository: InMemoryBuildingsRepository
+let usersRepository: InMemoryUsersRepository
 let sut: ListAirConditionersUseCase
 
-describe("List floor with rooms and ACs", () => {
+describe("List air conditioners", () => {
     beforeEach(() => {
         airConditionersRepository = new InMemoryAirConditionersRepository()
-        roomsRepository = new InMemoryRoomsRepository()
-        floorsRepository = new InMemoryFloorsRepository()
-        buildingsRepository = new InMemoryBuildingsRepository()
-        sut = new ListAirConditionersUseCase(
-            airConditionersRepository, 
-            roomsRepository, 
-            floorsRepository, 
-            buildingsRepository
-        )
+        usersRepository = new InMemoryUsersRepository()
+        sut = new ListAirConditionersUseCase(airConditionersRepository, usersRepository)
     })
 
-    test("It should be able to list all floors with rooms and acs", async () => {
-        const building = makeBuilding()
-        buildingsRepository.create(building)
+    test("It should be able to list all air conditioners", async () => {
+        const user = makeUser({ role: UserRole.ADMIN })
 
-        const floor1 = makeFloor({ buildingId: building.id })
-        floorsRepository.create(floor1)
+        usersRepository.create(user)
 
-        const floor2 = makeFloor({ buildingId: building.id })
-        floorsRepository.create(floor2)
-
-        const room1 = makeRoom({ floorId: floor1.id })
-        roomsRepository.create(room1)
-
-        const room2 = makeRoom({ floorId: floor1.id })
-        roomsRepository.create(room2)
-
-        const room3 = makeRoom({ floorId: floor2.id })
-        roomsRepository.create(room3)
-
-        const airConditioner1 = makeAirConditioner({ roomId: room1.id })
+        const airConditioner1 = makeAirConditioner()
         airConditionersRepository.create(airConditioner1)
 
-        const airConditioner2 = makeAirConditioner({ roomId: room3.id })
+        const airConditioner2 = makeAirConditioner()
         airConditionersRepository.create(airConditioner2)
 
-        const { airConditioners } = await sut.execute({ buildingId: building.id })
+        const { airConditioners } = await sut.execute({ userId: user.id })
 
         expect(airConditioners).toHaveLength(2)
+        expect(airConditioners).toEqual(expect.arrayContaining([
+            expect.objectContaining({ id: airConditioner1.id }),
+            expect.objectContaining({ id: airConditioner2.id }),
+        ]))
     })
 })

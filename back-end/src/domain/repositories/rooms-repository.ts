@@ -2,6 +2,7 @@ import { Room, RoomType } from "../entities/room.js";
 import type { PaginationParams } from "@core/repositories/pagination-params.js";
 
 export interface RoomFilters {
+    buildingIds?: string[] | undefined
     floorIds?: string[] | undefined
     name?: string | undefined
     type?: RoomType | undefined

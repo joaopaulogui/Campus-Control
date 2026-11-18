@@ -31,8 +31,14 @@ export class PrismaRoomsRepository implements RoomsRepository {
         return PrismaRoomMapper.toDomain(room)
     }
 
-    async findMany(filters: RoomFilters): Promise<Room[]> {
+    async findMany(filters?: RoomFilters): Promise<Room[]> {
         const where: Prisma.RoomWhereInput = {}
+
+        if(filters?.buildingIds) {
+            where.floor = {
+                buildingId: { in: filters.buildingIds }
+            }
+        }
 
         if(filters?.floorIds) {
             where.floorId = { in: filters.floorIds }
@@ -55,8 +61,14 @@ export class PrismaRoomsRepository implements RoomsRepository {
         return rooms.map(PrismaRoomMapper.toDomain)
     }
 
-    async findManyPaginated(filters: RoomFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Room[]> {
+    async findManyPaginated(filters?: RoomFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Room[]> {
         const where: Prisma.RoomWhereInput = {}
+
+        if(filters?.buildingIds) {
+            where.floor = {
+                buildingId: { in: filters.buildingIds }
+            }
+        }
 
         if(filters?.floorIds) {
             where.floorId = { in: filters.floorIds }

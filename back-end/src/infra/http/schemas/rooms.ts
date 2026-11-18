@@ -15,7 +15,7 @@ export const getRoomDetailsParamsSchema = z.object({
 })
 
 export const listRoomsQuerySchema = z.object({
-    buildingId: z.uuid(),
+    buildingId: z.uuid().optional(),
     floorId: z.uuid().optional(),
     name: z.string().optional(),
     type: z.enum(RoomType).optional(),
