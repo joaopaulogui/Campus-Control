@@ -45,12 +45,11 @@ export const deleteRoomParamsSchema = z.object({
 export const roomResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
-    type: z.string(),
+    type: z.enum(RoomType),
     capacity: z.number(),
     isLocked: z.boolean(),
+    updatedAt: z.iso.datetime(),
 })
-
-export const listRoomsResponseSchema = z.array(roomResponseSchema)
 
 export const roomDetailsResponseSchema = roomResponseSchema.extend({
     airConditioners: z.array(z.object({
@@ -64,6 +63,14 @@ export const roomDetailsResponseSchema = roomResponseSchema.extend({
         status: z.enum(ProjectorStatus),
     }))
 })
+
+export const roomContextResponseSchema = roomDetailsResponseSchema.extend({
+    floorName: z.string(),
+    buildingId: z.uuid(),
+    buildingName: z.uuid(),
+})
+
+export const listRoomsResponseSchema = z.array(roomContextResponseSchema)
 
 export const selectRoomsResponseSchema = z.object({
     id: z.uuid(),

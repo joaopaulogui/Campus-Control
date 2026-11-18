@@ -1,7 +1,6 @@
-import type { Item } from "../item"
-import type { Loan } from "../loan"
+import type { LoanProps } from "../loan"
 
-export type LoanWithItem = {
-    loan: Loan
-    item: Item
-}
+export type LoanWithItem = Readonly<LoanProps & {
+    id: string,
+    itemName: string,
+}>

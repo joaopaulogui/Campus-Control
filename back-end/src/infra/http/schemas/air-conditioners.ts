@@ -33,7 +33,12 @@ export const airConditionerResponseSchema = z.object({
     status: z.enum(AirConditionerStatus),
     temperature: z.number(),
     isOn: z.boolean(),
-    roomId: z.uuid()
+    roomId: z.uuid(),
+    updatedAt: z.iso.datetime(),
 })
 
-export const listAirConditionersResponseSchema = z.array(airConditionerResponseSchema)
+export const airConditionerWithRoomResponseSchema = airConditionerResponseSchema.extend({
+    roomName: z.string()
+})
+
+export const listAirConditionersResponseSchema = z.array(airConditionerWithRoomResponseSchema)

@@ -1,5 +1,6 @@
-import type { Room, RoomType } from "../entities/room.js";
+import type { RoomType } from "../entities/room.js";
 import { UserRole } from "../entities/user.js";
+import type { RoomContext } from "../entities/value-objects/room-context.js";
 import type { RoomsRepository } from "../repositories/rooms-repository.js";
 import type { UsersRepository } from "../repositories/users-repositoy.js";
 
@@ -16,7 +17,7 @@ interface ListRoomsUseCaseRequest {
 
 
 interface ListRoomsUseCaseResponse {
-    rooms: Room[]
+    rooms: RoomContext[]
 }
 
 export class ListRoomsUseCase {
@@ -48,7 +49,7 @@ export class ListRoomsUseCase {
             }
         }
 
-        const rooms = await this.roomsRepository.findManyPaginated({ 
+        const rooms = await this.roomsRepository.findManyWithContextPaginated({ 
             buildingIds,
             floorIds: floorId ? [floorId] : undefined, 
             name, 

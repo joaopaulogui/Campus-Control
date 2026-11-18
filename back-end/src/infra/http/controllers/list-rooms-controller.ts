@@ -25,6 +25,6 @@ export class ListRoomsController {
             perPage 
         })
 
-        res.status(200).json(result.rooms.map(RoomsPresenter.toHTTP))
+        res.status(200).json(result.rooms.map(RoomsPresenter.toHttpContext))
     }
 }

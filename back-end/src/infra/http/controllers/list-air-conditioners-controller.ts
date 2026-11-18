@@ -25,6 +25,6 @@ export class ListAirConditionersController {
             status 
         })
 
-        res.status(200).json(airConditioners.map(AirConditionerPresenter.toHTTP))
+        res.status(200).json(airConditioners.map(AirConditionerPresenter.toHttpWithRoom))
     }
 }
