@@ -1,9 +1,11 @@
 import type { Room, RoomType } from "../entities/room.js";
-import type { FloorsRepository } from "../repositories/floors-repository.js";
+import { UserRole } from "../entities/user.js";
 import type { RoomsRepository } from "../repositories/rooms-repository.js";
+import type { UsersRepository } from "../repositories/users-repositoy.js";
 
-interface ListRoomsUseCaseRequest { 
-    buildingId: string, 
+interface ListRoomsUseCaseRequest {
+    userId: string
+    buildingId?: string | undefined
     floorId?: string | undefined 
     name?: string | undefined
     type?: RoomType | undefined
@@ -19,31 +21,40 @@ interface ListRoomsUseCaseResponse {
 
 export class ListRoomsUseCase {
     constructor(
-        private floorsRepository: FloorsRepository,
         private roomsRepository: RoomsRepository,
+        private usersRepository: UsersRepository,
     ) {}
 
-    async execute({ buildingId, floorId, name, type, isLocked, page, perPage }: ListRoomsUseCaseRequest): Promise<ListRoomsUseCaseResponse> {
-        if(!page) { page = 1 }
-        if(!perPage) { perPage = 30 }
-        
-        let floorIds: string[]
-        
-        if(floorId) {
-            const floor = await this.floorsRepository.findById(floorId)
+    async execute({ userId, buildingId, floorId, name, type, isLocked, page = 1, perPage = 30 }: ListRoomsUseCaseRequest): Promise<ListRoomsUseCaseResponse> {      
+        const user = await this.usersRepository.findById(userId)
 
-            if(!floor || floor.buildingId !== buildingId) {
-                throw new Error()
+        if(!user) {
+            throw new Error()
+        }
+        
+        let buildingIds: string[] | undefined
+        
+        if(user.role === UserRole.ADMIN) {
+            buildingIds = buildingId ? [buildingId] : undefined
+        } else {    
+            if(buildingId) {
+                if(!user.buildingIds.includes(buildingId)) {
+                    buildingIds = []    
+                }
+                    
+                buildingIds = [buildingId]    
+            } else {
+                buildingIds = user.buildingIds
             }
-
-            floorIds = [floorId]
-        } else {
-            const floors = await this.floorsRepository.findMany({ buildingId, })
-
-            floorIds = floors.map(floor => floor.id)
         }
 
-        const rooms = await this.roomsRepository.findManyPaginated({ floorIds, name, type, isLocked }, { page, perPage })
+        const rooms = await this.roomsRepository.findManyPaginated({ 
+            buildingIds,
+            floorIds: floorId ? [floorId] : undefined, 
+            name, 
+            type, 
+            isLocked 
+        }, { page, perPage })
 
         return { rooms, }
     }

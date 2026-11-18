@@ -3,6 +3,7 @@ import type { PaginationParams } from "@core/repositories/pagination-params";
 
 export interface BuildingFilters {
     ids?: string[] | undefined,
+    userId?: string | undefined,
     name?: string | undefined,
 }
 

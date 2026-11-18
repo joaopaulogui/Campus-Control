@@ -3,7 +3,7 @@ import type { PaginationParams } from "@core/repositories/pagination-params.js"
 
 export interface FloorFilters {
     id?: string | undefined
-    buildingId?: string | undefined
+    buildingIds?: string[] | undefined
     name?: string | undefined
 }
 
