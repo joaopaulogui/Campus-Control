@@ -1,5 +1,4 @@
 import type { AirConditioner } from "@domain/entities/air-conditioner";
-import type { FloorWithRoomsAndAirConditioners } from "@domain/entities/value-objects/floor-with-rooms-and-air-conditioners";
 
 export class AirConditionerPresenter {
     static toHTTP(airConditioner: AirConditioner) {
@@ -12,20 +11,4 @@ export class AirConditionerPresenter {
         }
     }
     
-    static toHTTPGrouped(groupedAirConditioners: FloorWithRoomsAndAirConditioners) {
-        const { floor, rooms } = groupedAirConditioners
-        
-        return {
-            floorName: floor.name,
-            rooms: rooms.map((roomWithAC) => ({
-                name: roomWithAC.room.name,
-                airConditioners: roomWithAC.airConditioners.map((airConditioner) => ({
-                    id: airConditioner.id,
-                    status: airConditioner.status,
-                    temperature: airConditioner.temperature,
-                    isOn: airConditioner.isOn
-                }))
-            }))
-        }
-    }    
 }
