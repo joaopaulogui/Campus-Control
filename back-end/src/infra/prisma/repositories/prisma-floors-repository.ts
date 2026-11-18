@@ -5,6 +5,9 @@ import { prisma } from "../lib/prisma";
 import type { Prisma } from "@generated/prisma/client";
 import type { PaginationParams } from "@core/repositories/pagination-params";
 import { DomainEvents } from "@/core/events/domain-events";
+import { floorWithBuildingInclude } from "../queries/floor-with-building-query";
+import { PrismaFloorWithBuildingMapper } from "../mappers/read-models/prisma-floor-with-building-mapper";
+import type { FloorWithBuilding } from "@/domain/entities/value-objects/floor-with-building";
 
 export class PrismaFloorsRepository implements FloorsRepository {
     async create(floor: Floor): Promise<void> {
@@ -25,23 +28,8 @@ export class PrismaFloorsRepository implements FloorsRepository {
         return PrismaFloorMapper.toDomain(floor)
     }
 
-    async findMany(filters: FloorFilters): Promise<Floor[]> {
-        const where: Prisma.FloorWhereInput = {}
-
-        if(filters?.id) {
-            where.id = filters.id
-        }
-
-        if(filters?.buildingIds) {
-            where.buildingId = { in: filters.buildingIds }
-        }
-
-        if(filters?.name) {
-            where.name = {
-                contains: filters.name,
-                mode: "insensitive"
-            }
-        }
+    async findMany(filters?: FloorFilters): Promise<Floor[]> {
+        const where = this.buildWhere(filters)
 
         const floors = await prisma.floor.findMany({
             where,
@@ -53,23 +41,8 @@ export class PrismaFloorsRepository implements FloorsRepository {
         return floors.map(PrismaFloorMapper.toDomain)
     }
 
-    async findManyPaginated(filters: FloorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Floor[]> {
-        const where: Prisma.FloorWhereInput = {}
-
-        if(filters?.id) {
-            where.id = filters.id
-        }
-
-        if(filters?.buildingIds) {
-            where.buildingId = { in: filters.buildingIds }
-        }
-
-        if(filters?.name) {
-            where.name = {
-                contains: filters.name,
-                mode: "insensitive"
-            }
-        }
+    async findManyPaginated(filters?: FloorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Floor[]> {
+        const where = this.buildWhere(filters)
 
         const floors = await prisma.floor.findMany({
             where,
@@ -81,6 +54,36 @@ export class PrismaFloorsRepository implements FloorsRepository {
         })
 
         return floors.map(PrismaFloorMapper.toDomain)
+    }
+
+    async findManyWithBuilding(filters?: FloorFilters): Promise<FloorWithBuilding[]> {
+        const where = this.buildWhere(filters)
+
+        const floors = await prisma.floor.findMany({
+            where,
+            include: floorWithBuildingInclude,
+            orderBy: {
+                name: "asc"
+            },
+        })
+
+        return floors.map(PrismaFloorWithBuildingMapper.toFloorWithBuilding)
+    }
+
+    async findManyWithBuildingPaginated(filters?: FloorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<FloorWithBuilding[]> {
+        const where = this.buildWhere(filters)
+
+        const floors = await prisma.floor.findMany({
+            where,
+            include: floorWithBuildingInclude,
+            orderBy: {
+                name: "asc"
+            },
+            take: params.perPage,
+            skip: (params.page-1) * params.perPage
+        })
+
+        return floors.map(PrismaFloorWithBuildingMapper.toFloorWithBuilding)
     }
 
     async save(floor: Floor): Promise<void> {
@@ -100,5 +103,26 @@ export class PrismaFloorsRepository implements FloorsRepository {
         })
 
         DomainEvents.dispatchEventsForAggregate(floor.id)
+    }
+
+    private buildWhere(filters?: FloorFilters): Prisma.FloorWhereInput {
+        const where: Prisma.FloorWhereInput = {}
+
+        if(filters?.id) {
+            where.id = filters.id
+        }
+
+        if(filters?.buildingIds) {
+            where.buildingId = { in: filters.buildingIds }
+        }
+
+        if(filters?.name) {
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive"
+            }
+        }
+
+        return where
     }
 }

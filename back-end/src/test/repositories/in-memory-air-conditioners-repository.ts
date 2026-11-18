@@ -1,4 +1,5 @@
 import type { PaginationParams } from "@/core/repositories/pagination-params";
+import type { AirConditionerWithRoom } from "@/domain/entities/value-objects/air-conditioner-with-room";
 import type { AirConditioner } from "@domain/entities/air-conditioner";
 import type { AirConditionerFilters, AirConditionersRepository } from "@domain/repositories/air-conditioners-repository";
 
@@ -20,7 +21,7 @@ export class InMemoryAirConditionersRepository implements AirConditionersReposit
     }
 
     async findMany(filter: AirConditionerFilters): Promise<AirConditioner[]> {
-        const airConditioner = this.items.filter(item => {
+        const airConditioners = this.items.filter(item => {
             if(filter.roomIds && !filter.roomIds.includes(item.roomId)) {
                 return false
             }
@@ -30,11 +31,11 @@ export class InMemoryAirConditionersRepository implements AirConditionersReposit
             return true
         })
 
-        return airConditioner
+        return airConditioners
     }
 
     async findManyPaginated(filter?: AirConditionerFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<AirConditioner[]> {
-        const airConditioner = this.items.filter(item => {
+        const airConditioners = this.items.filter(item => {
             if(filter?.roomIds && !filter.roomIds.includes(item.roomId)) {
                 return false
             }
@@ -44,7 +45,52 @@ export class InMemoryAirConditionersRepository implements AirConditionersReposit
             return true
         }).slice((params.page-1) * params.perPage, params.page * params.perPage)
 
-        return airConditioner
+        return airConditioners
+    }
+
+    async findManyWithRoom(filter: AirConditionerFilters): Promise<AirConditionerWithRoom[]> {
+        const airConditioners = this.items.filter(item => {
+            if(filter.roomIds && !filter.roomIds.includes(item.roomId)) {
+                return false
+            }
+            if(filter.status && item.status !== filter.status) {
+                return false
+            }
+            return true
+        })
+
+
+        return airConditioners.map(airConditioner => ({
+            id: airConditioner.id,
+            status: airConditioner.status,
+            isOn: airConditioner.isOn,
+            temperature: airConditioner.temperature,
+            roomId: airConditioner.roomId,
+            roomName: "",
+            updatedAt: airConditioner.updatedAt ?? null
+        }))
+    }
+
+    async findManyWithRoomPaginated(filter?: AirConditionerFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<AirConditionerWithRoom[]> {
+        const airConditioners = this.items.filter(item => {
+            if(filter?.roomIds && !filter.roomIds.includes(item.roomId)) {
+                return false
+            }
+            if(filter?.status && item.status !== filter.status) {
+                return false
+            }
+            return true
+        }).slice((params.page-1) * params.perPage, params.page * params.perPage)
+
+        return airConditioners.map(airConditioner => ({
+            id: airConditioner.id,
+            status: airConditioner.status,
+            isOn: airConditioner.isOn,
+            temperature: airConditioner.temperature,
+            roomId: airConditioner.roomId,
+            roomName: "",
+            updatedAt: airConditioner.updatedAt ?? null
+        }))
     }
 
     async save(airConditioner: AirConditioner): Promise<void> {

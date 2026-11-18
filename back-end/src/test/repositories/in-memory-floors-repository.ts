@@ -1,6 +1,7 @@
 import type { Floor } from "@domain/entities/floor";
 import type { PaginationParams } from "@core/repositories/pagination-params";
 import type { FloorFilters, FloorsRepository } from "@domain/repositories/floors-repository";
+import type { FloorWithBuilding } from "@/domain/entities/value-objects/floor-with-building";
 
 export class InMemoryFloorsRepository implements FloorsRepository {
     public items: Floor[] = []
@@ -51,6 +52,52 @@ export class InMemoryFloorsRepository implements FloorsRepository {
         }).slice((params.page-1) * params.perPage, params.page * params.perPage)
 
         return floors
+    }
+
+    async findManyWithBuilding(filters: FloorFilters): Promise<FloorWithBuilding[]> {
+        const floors = this.items.filter(item => {
+            if(filters?.id && item.id !== filters.id) {
+                return false
+            }
+            if(filters?.buildingIds && !filters.buildingIds.includes(item.buildingId)) {
+                return false
+            }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
+            return true
+        })
+
+        return floors.map(floor => ({
+            id: floor.id,
+            name: floor.name,
+            buildingId: floor.buildingId,
+            buildingName: "",
+            updatedAt: floor.updatedAt ?? null
+        }))
+    }
+
+    async findManyWithBuildingPaginated(filters: FloorFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<FloorWithBuilding[]> {
+        const floors = this.items.filter(item => {
+            if(filters?.id && item.id !== filters.id) {
+                return false
+            }
+            if(filters?.buildingIds && !filters.buildingIds.includes(item.buildingId)) {
+                return false
+            }
+            if(filters?.name && !item.name.includes(filters.name)) {
+                return false
+            }
+            return true
+        }).slice((params.page-1) * params.perPage, params.page * params.perPage)
+
+        return floors.map(floor => ({
+            id: floor.id,
+            name: floor.name,
+            buildingId: floor.buildingId,
+            buildingName: "",
+            updatedAt: floor.updatedAt ?? null
+        }))
     }
 
     async save(floor: Floor): Promise<void> {
