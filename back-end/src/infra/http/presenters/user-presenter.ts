@@ -27,4 +27,11 @@ export class UserPresenter {
             }))
         }
     }
+
+    static toSelect(user: User) {
+        return {
+            id: user.id,
+            name: user.name,
+        }
+    }
 }

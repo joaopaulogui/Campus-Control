@@ -6,6 +6,7 @@ import { VerifyJwt } from "../middlewares/verify-jwt"
 import { GetUserProfileController } from "../controllers/get-user-profile-controller"
 import { UpdateUserController } from "../controllers/update-user-controller"
 import { GetUserByIdController } from "../controllers/get-user-by-id-controller"
+import { SelectUsersController } from "../controllers/select-users-controller"
 
 const router = express.Router()
 
@@ -14,12 +15,15 @@ const authenticateUserController = new AuthenticateUserController()
 const getUserByIdController = new GetUserByIdController()
 const getUserProfileController = new GetUserProfileController()
 const updateUserController = new UpdateUserController()
+const selectUsersController = new SelectUsersController()
 
 router.post('/', VerifyJwt, VerifyUserRole, registerUserController.handle)
 
 router.post('/login', authenticateUserController.handle)
 
 router.get('/me', VerifyJwt, getUserProfileController.handle)
+
+router.get('/select', VerifyJwt, VerifyUserRole, selectUsersController.handle)
 
 router.get('/:userId', VerifyJwt, VerifyUserRole, getUserByIdController.handle)
 

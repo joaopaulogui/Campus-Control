@@ -7,6 +7,8 @@ import {
     getUserByIdResponseSchema,
     getUserProfileResponseSchema,
     registerUserBodySchema,
+    selectUsersQuerySchema,
+    selectUsersResponseSchema,
     updateUserBodySchema,
     updateUserParamsSchema,
 } from "../infra/http/schemas/users"
@@ -172,6 +174,21 @@ export const openApiDocument = {
                 },
                 responses: {
                     204: { description: "User updated" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/users/select": {
+            get: {
+                tags: ["Users"],
+                summary: "Select users",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(selectUsersQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "User list", 
+                        ...jsonContent(selectUsersResponseSchema)
+                    },
                     401: unauthorizedResponse
                 }
             }

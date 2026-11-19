@@ -22,6 +22,12 @@ export const getUserByIdParamsSchema = z.object({
     userId: z.uuid()
 })
 
+export const selectUsersQuerySchema = z.object({
+    name: z.string().optional(),
+    email: z.email().optional(),
+    role: z.enum(UserRole).optional()
+})
+
 export const updateUserParamsSchema = z.object({
     userId: z.uuid()
 })
@@ -52,3 +58,8 @@ export const getUserProfileResponseSchema = z.object({
         name: z.string()
     }))
 })
+
+export const selectUsersResponseSchema = z.array(z.object({
+    id: z.uuid(),
+    name: z.string()
+}))
