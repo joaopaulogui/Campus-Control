@@ -55,7 +55,7 @@ import {
     updateAirConditionerStatusBodySchema,
 } from "../infra/http/schemas/air-conditioners"
 import { deleteItemParamsSchema, getItemByIdParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
-import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
+import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema, selectLoansResponseSchema } from "../infra/http/schemas/loans"
 import { deleteProjectorParamsSchema, listProjectorsQuerySchema, listProjectorsResponseSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 import { json } from "zod"
 import { listAuditsQuerySchema, listAuditsResponseSchema, listRecentActivitiesQuerySchema } from "@/infra/http/schemas/audits"
@@ -665,6 +665,21 @@ export const openApiDocument = {
                 }
             }
         }, 
+        "/api/loans/select": {
+            get: {
+                tags: ["Loans"],
+                summary: "Select Loans",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listLoansQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "Loan list",
+                        ...jsonContent(selectLoansResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            }
+        },
         "/api/loans/{loanId}/return": {
             patch: {
                 tags: ["Loans"],

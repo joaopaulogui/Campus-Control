@@ -30,4 +30,11 @@ export class LoanPresenter {
             status: loanWithItem.status
         }
     }
+
+    static toSelect(loan: LoanWithItem) {
+        return {
+            id: loan.id,
+            label: `${loan.responsibleName} - ${loan.itemName}`
+        }
+    }
 }

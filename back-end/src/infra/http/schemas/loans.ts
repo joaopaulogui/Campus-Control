@@ -38,3 +38,8 @@ export const loanWithItemResponseSchema = loanResponseSchema.extend({
 })
 
 export const listLoansResponseSchema = z.array(loanWithItemResponseSchema)
+
+export const selectLoansResponseSchema = z.array(z.object({
+    id: z.uuid(),
+    label: z.string(),
+}))
