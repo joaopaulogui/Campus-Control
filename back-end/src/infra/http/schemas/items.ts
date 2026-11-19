@@ -33,7 +33,7 @@ export const itemResponseSchema = z.object({
 
 export const listItemsResponseSchema = z.array(itemResponseSchema)
 
-export const selectItemsResponseSchema = z.object({
+export const selectItemsResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string(),
-})
+}))

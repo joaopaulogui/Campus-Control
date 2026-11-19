@@ -31,9 +31,9 @@ export const buildingResponseSchema = z.object({
     name: z.string(),
 })
 
-export const selectBuildingResponseSchema = z.object({
+export const selectBuildingResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string(),
-})
+}))
 
 export const listBuildingsResponseSchema = z.array(buildingResponseSchema)

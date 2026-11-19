@@ -73,7 +73,7 @@ export const roomContextResponseSchema = roomDetailsResponseSchema.extend({
 
 export const listRoomsResponseSchema = z.array(roomContextResponseSchema)
 
-export const selectRoomsResponseSchema = z.object({
+export const selectRoomsResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string(),
-})
+}))
