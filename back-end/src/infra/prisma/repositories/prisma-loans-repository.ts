@@ -5,6 +5,9 @@ import { PrismaLoanMapper } from "../mappers/prisma-loan-mapper";
 import type { LoanFilters, LoansRepository } from "@domain/repositories/loans-repository";
 import { DomainEvents } from "@/core/events/domain-events";
 import type { PaginationParams } from "@/core/repositories/pagination-params";
+import type { LoanWithItem } from "@/domain/entities/value-objects/loan-with-item";
+import { loanWithItemInclude } from "../queries/loan-wth-item-query";
+import { PrismaLoanWithItemMapper } from "../mappers/read-models/prisma-loan-with-item-mapper";
 
 export class PrismaLoansRepository implements LoansRepository {
     async create(loan: Loan): Promise<void> {
@@ -26,22 +29,7 @@ export class PrismaLoansRepository implements LoansRepository {
     }
 
     async findMany(filters?: LoanFilters): Promise<Loan[]> {
-        const where: LoanWhereInput = {}
-
-        if(filters?.responsibleName) {
-            where.responsibleName = {
-                contains: filters.responsibleName,
-                mode: "insensitive"
-            }
-        }
-
-        if(filters?.itemIds) {
-            where.itemId = { in: filters.itemIds }
-        }
-
-        if(filters?.status) {
-            where.status = filters.status
-        }
+        const where = this.buildWhere(filters)
 
         const loans = await prisma.loan.findMany({ 
             where, 
@@ -54,22 +42,7 @@ export class PrismaLoansRepository implements LoansRepository {
     }
 
     async findManyPaginated(filters?: LoanFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<Loan[]> {
-        const where: LoanWhereInput = {}
-
-        if(filters?.responsibleName) {
-            where.responsibleName = {
-                contains: filters.responsibleName,
-                mode: "insensitive"
-            }
-        }
-
-        if(filters?.itemIds) {
-            where.itemId = { in: filters.itemIds }
-        }
-
-        if(filters?.status) {
-            where.status = filters.status
-        }
+        const where = this.buildWhere(filters)
 
         const loans = await prisma.loan.findMany({ 
             where, 
@@ -81,6 +54,36 @@ export class PrismaLoansRepository implements LoansRepository {
         })
 
         return loans.map(PrismaLoanMapper.toDomain)
+    }
+
+    async findManyWithItem(filters?: LoanFilters): Promise<LoanWithItem[]> {
+        const where = this.buildWhere(filters)
+
+        const loans = await prisma.loan.findMany({ 
+            where, 
+            include: loanWithItemInclude,
+            orderBy: {
+                createdAt: "asc"
+            },
+        })
+
+        return loans.map(PrismaLoanWithItemMapper.toLoanWithItem)
+    }
+
+    async findManyWithItemPaginated(filters?: LoanFilters, params: PaginationParams = { page: 1, perPage: 30 }): Promise<LoanWithItem[]> {
+        const where = this.buildWhere(filters)
+
+        const loans = await prisma.loan.findMany({ 
+            where, 
+            include: loanWithItemInclude,
+            orderBy: {
+                createdAt: "asc"
+            },
+            take: params.perPage,
+            skip: (params.page - 1) * params.perPage
+        })
+
+        return loans.map(PrismaLoanWithItemMapper.toLoanWithItem)
     }
 
     async save(loan: Loan): Promise<void> {
@@ -100,5 +103,35 @@ export class PrismaLoansRepository implements LoansRepository {
         })
 
         DomainEvents.dispatchEventsForAggregate(loan.id)
+    }
+
+    private buildWhere(filters?: LoanFilters): LoanWhereInput {
+        const where: LoanWhereInput = {}
+
+        if(filters?.responsibleName) {
+            where.responsibleName = {
+                contains: filters.responsibleName,
+                mode: "insensitive"
+            }
+        }
+
+        if(filters?.itemIds) {
+            where.itemId = { in: filters.itemIds }
+        }
+
+        if(filters?.itemName) {
+            where.item = {
+                name: {
+                    contains: filters.itemName,
+                    mode: "insensitive"
+                }
+            }
+        }
+
+        if(filters?.status) {
+            where.status = filters.status
+        }
+
+        return where
     }
 }

@@ -7,6 +7,7 @@ export function makeUser(overload: Partial<UserProps> = {}, id?: string): User {
         email: faker.internet.email(),
         password: faker.internet.password(),
         role: faker.helpers.enumValue(UserRole),
+        buildingIds: [],
         createdAt: new Date(),
         ...overload,
     }, id)

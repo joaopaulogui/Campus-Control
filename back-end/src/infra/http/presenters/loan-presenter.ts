@@ -18,16 +18,23 @@ export class LoanPresenter {
 
     static toHTTPWithItem(loanWithItem: LoanWithItem) {
         return {
-            id: loanWithItem.loan.id,
-            itemName: loanWithItem.item.name,
-            itemId: loanWithItem.item.id,
-            responsibleName: loanWithItem.loan.responsibleName,
-            responsibleRegistration: loanWithItem.loan.responsibleRegistration,
-            quantity: loanWithItem.loan.quantity,
-            createdAt: loanWithItem.loan.createdAt,
-            returnedAt: loanWithItem.loan.returnedAt,
-            deadline: loanWithItem.loan.deadline,
-            status: loanWithItem.loan.status
+            id: loanWithItem.id,
+            responsibleName: loanWithItem.responsibleName,
+            responsibleRegistration: loanWithItem.responsibleRegistration,
+            itemId: loanWithItem.id,
+            itemName: loanWithItem.itemName,
+            quantity: loanWithItem.quantity,
+            createdAt: loanWithItem.createdAt,
+            returnedAt: loanWithItem.returnedAt,
+            deadline: loanWithItem.deadline,
+            status: loanWithItem.status
+        }
+    }
+
+    static toSelect(loan: LoanWithItem) {
+        return {
+            id: loan.id,
+            label: `${loan.responsibleName} - ${loan.itemName}`
         }
     }
 }

@@ -1,7 +1,7 @@
 import { UserRole } from "../entities/user"; 
-import type { Floor } from "../entities/floor";
 import type { FloorsRepository } from "../repositories/floors-repository";
 import type { UsersRepository } from "../repositories/users-repositoy";
+import type { FloorWithBuilding } from "../entities/value-objects/floor-with-building";
 
 interface ListFloorsUseCaseRequest {
     userId: string
@@ -12,7 +12,7 @@ interface ListFloorsUseCaseRequest {
 }
 
 interface ListFloorsUseCaseResponse {
-    floors: Floor[]
+    floors: FloorWithBuilding[]
 }
 
 export class ListFloorsUseCase {
@@ -44,7 +44,7 @@ export class ListFloorsUseCase {
             }
         }
 
-        const floors = await this.floorsRepository.findManyPaginated({ 
+        const floors = await this.floorsRepository.findManyWithBuildingPaginated({ 
             buildingIds, 
             name 
         }, { page, perPage })

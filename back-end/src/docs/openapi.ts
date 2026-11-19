@@ -3,6 +3,8 @@ import { healthResponseSchema, unauthorizedResponseSchema } from "@infra/http/sc
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
+    getUserByIdParamsSchema,
+    getUserByIdResponseSchema,
     getUserProfileResponseSchema,
     registerUserBodySchema,
     updateUserBodySchema,
@@ -16,6 +18,8 @@ import {
     updateBuildingBodySchema,
     listBuildingsQuerySchema,
     selectBuildingResponseSchema,
+    getBuildingByIdParamsSchema,
+    buildingResponseSchema,
 } from "../infra/http/schemas/buildings"
 import {
     registerFloorBodySchema,
@@ -25,6 +29,9 @@ import {
     updateFloorParamsSchema,
     updateFloorBodySchema,
     selectFloorsResponseSchema,
+    getFloorByIdParamsSchema,
+    floorResponseSchema,
+    floorWithBuildingResponseSchema,
 } from "../infra/http/schemas/floors"
 import {
     registerRoomBodySchema,
@@ -47,8 +54,8 @@ import {
     updateAirConditionerStatusParamsSchema,
     updateAirConditionerStatusBodySchema,
 } from "../infra/http/schemas/air-conditioners"
-import { deleteItemParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
-import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema } from "../infra/http/schemas/loans"
+import { deleteItemParamsSchema, getItemByIdParamsSchema, itemResponseSchema, listItemsQuerySchema, listItemsResponseSchema, RegisterItemBodySchema, selectItemsResponseSchema } from "../infra/http/schemas/items"
+import { listLoansQuerySchema, listLoansResponseSchema, LoanItemBodySchema, returnItemParamsSchema, selectLoansResponseSchema } from "../infra/http/schemas/loans"
 import { deleteProjectorParamsSchema, listProjectorsQuerySchema, listProjectorsResponseSchema, registerProjectorBodySchema, updateProjectorStatusBodySchema, updateProjectorStatusParamsSchema } from "../infra/http/schemas/projectors"
 import { json } from "zod"
 import { listAuditsQuerySchema, listAuditsResponseSchema, listRecentActivitiesQuerySchema } from "@/infra/http/schemas/audits"
@@ -141,6 +148,19 @@ export const openApiDocument = {
             }
         },
         "/api/users/{userId}": {
+            get: {
+                tags: ["Users"],
+                summary: "Get user by id",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(getUserByIdParamsSchema, "path"),
+                responses: {
+                    200: { 
+                        description: "User", 
+                        ...jsonContent(getUserByIdResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
             patch: {
                 tags: ["Users"],
                 summary: "Update user",
@@ -186,6 +206,19 @@ export const openApiDocument = {
             },
         },
         "/api/buildings/{buildingId}": {
+            get: {
+                tags: ["Buildings"],
+                summary: "Get building by id",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(getBuildingByIdParamsSchema, "path"),
+                responses: {
+                    200: { 
+                        description: "Building",
+                        ...jsonContent(buildingResponseSchema)
+                    },
+                    401: unauthorizedResponse,
+                }
+            },
             patch: {
                 tags: ["Buildings"],
                 summary: "Update building",
@@ -231,7 +264,7 @@ export const openApiDocument = {
         "/api/floors": {
             get: {
                 tags: ["Floors"],
-                summary: "List floors by building",
+                summary: "List floors",
                 security: bearerAuth,
                 parameters: toOpenApiParameters(listFloorsQuerySchema, "query"),
                 responses: {
@@ -258,6 +291,19 @@ export const openApiDocument = {
             },
         },
         "/api/floors/{floorId}": {
+            get: {
+                tags: ["Floors"],
+                summary: "Get floor by id",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(getFloorByIdParamsSchema, "path"),
+                responses: {
+                    200: { 
+                        description: "Building",
+                        ...jsonContent(floorWithBuildingResponseSchema)
+                    },
+                    401: unauthorizedResponse,
+                }
+            },
             patch: {
                 tags: ["Floors"],
                 summary: "Update floor",
@@ -552,6 +598,19 @@ export const openApiDocument = {
             }
         },
         "/api/items/{itemId}": {
+            get: {
+                tags: ["Items"],
+                summary: "Get item by id",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(getItemByIdParamsSchema, "path"),
+                responses: {
+                    200: { 
+                        description: "Item",
+                        ...jsonContent(itemResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
             delete: {
                 tags: ["Items"],
                 summary: "Delete item",
@@ -606,6 +665,21 @@ export const openApiDocument = {
                 }
             }
         }, 
+        "/api/loans/select": {
+            get: {
+                tags: ["Loans"],
+                summary: "Select Loans",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(listLoansQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "Loan list",
+                        ...jsonContent(selectLoansResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            }
+        },
         "/api/loans/{loanId}/return": {
             patch: {
                 tags: ["Loans"],

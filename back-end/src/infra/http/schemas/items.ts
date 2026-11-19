@@ -7,6 +7,10 @@ export const RegisterItemBodySchema = z.object({
     totalQuantity: z.int()
 })
 
+export const getItemByIdParamsSchema = z.object({
+    itemId: z.uuid()
+})
+
 export const listItemsQuerySchema = z.object({
     name: z.string().optional(),
     type: z.enum(ItemType).optional(),
@@ -29,7 +33,7 @@ export const itemResponseSchema = z.object({
 
 export const listItemsResponseSchema = z.array(itemResponseSchema)
 
-export const selectItemsResponseSchema = z.object({
+export const selectItemsResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string(),
-})
+}))

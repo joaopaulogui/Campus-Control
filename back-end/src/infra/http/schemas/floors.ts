@@ -5,6 +5,10 @@ export const registerFloorBodySchema = z.object({
     buildingId: z.uuid(),
 })
 
+export const getFloorByIdParamsSchema = z.object({
+    floorId: z.uuid()
+})
+
 export const listFloorsQuerySchema = z.object({
     buildingId: z.uuid().optional(),
     name: z.string().optional(),
@@ -27,11 +31,17 @@ export const deleteFloorParamsSchema = z.object({
 export const floorResponseSchema = z.object({
     id: z.uuid(),
     name: z.string(),
+    buildingId: z.uuid(),
+    updatedAt: z.iso.datetime(),
 })
 
-export const listFloorsResponseSchema = z.array(floorResponseSchema)
+export const floorWithBuildingResponseSchema = floorResponseSchema.extend({
+    buildingName: z.string()
+})
 
-export const selectFloorsResponseSchema = z.object({
+export const listFloorsResponseSchema = z.array(floorWithBuildingResponseSchema)
+
+export const selectFloorsResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string(),
-})
+}))

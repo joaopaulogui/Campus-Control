@@ -27,7 +27,12 @@ export const deleteProjectorParamsSchema = z.object({
 export const projectorResponseSchema = z.object({
     id: z.uuid(),
     status: z.enum(ProjectorStatus),
-    roomId: z.uuid()
+    roomId: z.uuid(),
+    updatedAt: z.iso.datetime()
 })
 
-export const listProjectorsResponseSchema = z.array(projectorResponseSchema)
+export const projectorWithRoomResponseSchema = projectorResponseSchema.extend({
+    roomName: z.string()
+})
+
+export const listProjectorsResponseSchema = z.array(projectorWithRoomResponseSchema)

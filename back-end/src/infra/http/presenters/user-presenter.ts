@@ -11,6 +11,13 @@ export class UserPresenter {
         }  
     }
 
+    static toHttpWithBuildingIds(user: User) {
+        return {
+            ...this.toHttp(user),
+            buildingIds: user.buildingIds
+        }
+    }
+
     static toHttpWithBuildings(user: User, buildings: Building[]) {
         return {
             ...this.toHttp(user),

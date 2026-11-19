@@ -1,5 +1,6 @@
-import type { AirConditioner, AirConditionerStatus } from "../entities/air-conditioner.js"
+import type { AirConditionerStatus } from "../entities/air-conditioner.js"
 import { UserRole } from "../entities/user.js"
+import type { AirConditionerWithRoom } from "../entities/value-objects/air-conditioner-with-room.js"
 import type { AirConditionersRepository } from "../repositories/air-conditioners-repository.js"
 import type { UsersRepository } from "../repositories/users-repositoy.js"
 
@@ -12,7 +13,7 @@ interface ListAirConditionersUseCaseRequest {
 }
 
 interface ListAirConditionersUseCaseResponse {
-    airConditioners: AirConditioner[]
+    airConditioners: AirConditionerWithRoom[]
 }
 
 export class ListAirConditionersUseCase {
@@ -44,7 +45,7 @@ export class ListAirConditionersUseCase {
             }
         }
 
-        const airConditioners = await this.airConditionersRepository.findMany({ 
+        const airConditioners = await this.airConditionersRepository.findManyWithRoomPaginated({ 
             buildingIds,
             floorIds: floorId ? [floorId] : undefined,
             roomIds: roomId ? [roomId] : undefined, 

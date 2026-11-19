@@ -22,6 +22,6 @@ export class ListProjectorsController {
             status 
         })
 
-        res.status(200).json(projectors.map(ProjectorPresenter.toHTTP))
+        res.status(200).json(projectors.map(ProjectorPresenter.toHttpWithRoom))
     }
 }
