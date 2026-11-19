@@ -1,9 +1,16 @@
-import { User } from "../entities/user.js";
+import { User, UserRole } from "../entities/user.js";
+
+export interface UserFilters {
+    name?: string | undefined,
+    email?: string | undefined,
+    role?: UserRole | undefined
+}
 
 export interface UsersRepository {
     create(user: User): Promise<void>
     findById(id: string): Promise<User | null>
     findByEmail(email: string): Promise<User | null>
+    findMany(filters?: UserFilters): Promise<User[]>
     save(user: User): Promise<void>
     delete(user: User): Promise<void>
 }
