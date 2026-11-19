@@ -41,7 +41,7 @@ export const floorWithBuildingResponseSchema = floorResponseSchema.extend({
 
 export const listFloorsResponseSchema = z.array(floorWithBuildingResponseSchema)
 
-export const selectFloorsResponseSchema = z.object({
+export const selectFloorsResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string(),
-})
+}))
