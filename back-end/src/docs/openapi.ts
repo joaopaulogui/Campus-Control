@@ -3,6 +3,7 @@ import { healthResponseSchema, unauthorizedResponseSchema } from "@infra/http/sc
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
+    deleteUserParamsSchema,
     getUserByIdParamsSchema,
     getUserByIdResponseSchema,
     getUserProfileResponseSchema,
@@ -174,6 +175,16 @@ export const openApiDocument = {
                 },
                 responses: {
                     204: { description: "User updated" },
+                    401: unauthorizedResponse
+                }
+            },
+            delete: {
+                tags: ["Users"],
+                summary: "Delete user",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteUserParamsSchema, "path"),
+                responses: {
+                    204: { description: "User deleted" },
                     401: unauthorizedResponse
                 }
             }
