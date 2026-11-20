@@ -1,5 +1,4 @@
 import type { EventHandler } from "@core/events/event-handler";
-import type { UsersRepository } from "../repositories/users-repositoy";
 import type { CreateAuditUseCase } from "../use-cases/create-audit-use-case";
 import { DomainEvents } from "@/core/events/domain-events";
 import { ProjectorRegisteredEvent } from "../events/projector-registered-event";
@@ -8,7 +7,6 @@ import type { RoomsRepository } from "../repositories/rooms-repository";
 
 export class OnProjectorRegistered implements EventHandler {
     constructor(
-        private usersRepository: UsersRepository,
         private roomsRepository: RoomsRepository,
         private createAuditUseCase: CreateAuditUseCase
     ) { this.setupSubscriptions() }
@@ -18,11 +16,9 @@ export class OnProjectorRegistered implements EventHandler {
     }
 
     private async createNewProjectorRegistrationAudit({ projector, userId }: ProjectorRegisteredEvent) {
-        const user = await this.usersRepository.findById(userId)
-
         const room = await this.roomsRepository.findById(projector.roomId)
 
-        if(user && room) {
+        if(room) {
             await this.createAuditUseCase.execute({
                 userId,
                 eventEntity: EntityType.PROJECTOR,
