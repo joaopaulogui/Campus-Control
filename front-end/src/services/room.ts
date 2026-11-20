@@ -12,28 +12,28 @@ export const room = {
     return data
   },
 
-  async getPerId(id: number): Promise<RoomDetails> {
-    const { data } = await api.get(`${url}/${id}`)
+  async getPerId(id: string): Promise<RoomDetails> {
+    const { data } = await api.get(`${url}${id}`)
     return data
   },
 
-  async toogleLock(id: number): Promise<void> {
-    await api.patch(`${url}/${id}/lock`)
+  async toogleLock(id: string): Promise<void> {
+    await api.patch(`${url}${id}/lock`)
   },
 
   async create(payload: CreateRoomDTO): Promise<void> {
-    await api.post(url, { payload })
+    await api.post(url, payload)
   },
 
-  async update(id: number, payload: UpdateRoomDTO): Promise<void> {
-    await api.patch(`${url}/${id}`, { payload })
+  async update(id: string, payload: UpdateRoomDTO): Promise<void> {
+    await api.patch(`${url}${id}`, payload)
   },
 
-  async delete(id: number): Promise<void> {
-    await api.delete(`${url}/${id}`)
+  async delete(id: string): Promise<void> {
+    await api.delete(`${url}${id}`)
   },
 
-  async getSelectList(params: RoomSelectQueryParams): Promise<SelectResponse> {
+  async getSelectList(params: RoomSelectQueryParams): Promise<SelectResponse[]> {
     const { data } = await api.get(`${url}select`, { params })
     return data
   }

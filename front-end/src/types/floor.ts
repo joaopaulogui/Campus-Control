@@ -5,14 +5,16 @@ import z from "zod";
 export type Floor = {
   id: string
   name: string
+  buildingId?: string
+  buildingName?: string
 }
 
 export type GetFloorsQueryParamsSchema = z.infer<typeof getFloorsQueryParamsSchema>
 
 export type CreateFloorDTO = z.infer<typeof createFloorSchema>
 
-export type UpdateFloorDTO = CreateFloorDTO
+export type UpdateFloorDTO = Partial<CreateFloorDTO>
 
 export type FloorSelectQueryParams = SelectQueryParams & {
-  buildingId: string
+  buildingId?: string
 }

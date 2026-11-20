@@ -194,16 +194,9 @@ export function DataTable<TData extends RowData, TValue = unknown>({
     <div>
       {isLoading ? (
         <div className="w-full space-y-2 rounded-md border p-2">
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
+          {Array.from({ length: (pageCount ?? 10) + 1 }, (_, index) => (
+            <Skeleton key={index} className="h-8 w-full" />
+          ))}
         </div>
       ) : (
         <>

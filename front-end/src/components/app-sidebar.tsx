@@ -5,7 +5,6 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
@@ -52,19 +51,15 @@ export function AppSidebar() {
 
               return (
                 <SidebarMenuSubItem key={item.to}>
-                  <SidebarMenuSubButton
-                    className={cn(
-                      "mx-2 rounded-lg p-5 transition-colors",
-                      active
-                        ? "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground"
-                        : "text-navy-muted hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                    )}
-                  >
-                    <Link to={item.to} className="flex flex-row items-center gap-3">
-                      <Icon className="h-4 w-4" />
-                      <span className="text-sm font-medium">{item.label}</span>
-                    </Link>
-                  </SidebarMenuSubButton>
+                  <Link to={item.to} className={cn(
+                    "mx-2 rounded-lg p-5 transition-colors flex flex-row items-center gap-3",
+                    active
+                      ? "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground"
+                      : "text-navy-muted hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  )}>
+                    <Icon className="h-4 w-4" />
+                    <span className="text-sm font-medium">{item.label}</span>
+                  </Link>
                 </SidebarMenuSubItem>
               )
             })}

@@ -18,18 +18,18 @@ export const user = {
     },
 
     async create(payload: CreateUserDTO): Promise<void> {
-        await api.post(url, { payload })
+        await api.post(url, payload)
     },
 
-    async update(id: number, payload: UpdateUserDTO): Promise<void> {
-        await api.patch(`${url}/${id}`, { payload })
+    async update(id: string, payload: UpdateUserDTO): Promise<void> {
+        await api.patch(`${url}${id}`, payload)
     },
 
-    async delete(id: number): Promise<void> {
-        await api.delete(`${url}/${id}`)
+    async delete(id: string): Promise<void> {
+        await api.delete(`${url}${id}`)
     },
 
-    async getSelectList(params: SelectQueryParams): Promise<SelectResponse> {
+    async getSelectList(params: SelectQueryParams): Promise<SelectResponse[]> {
         const { data } = await api.get(`${url}select`, { params })
         return data
     }

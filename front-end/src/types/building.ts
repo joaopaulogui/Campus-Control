@@ -10,4 +10,4 @@ export type GetBuildingsQueryParamsSchema = z.infer<typeof getBuildingsQueryPara
 
 export type CreateBuildingDTO = z.infer<typeof createBuildingSchema>
 
-export type UpdateBuildingDTO = CreateBuildingDTO
+export type UpdateBuildingDTO = Partial<CreateBuildingDTO>

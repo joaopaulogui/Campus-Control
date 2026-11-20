@@ -13,18 +13,18 @@ export const floor = {
   },
 
   async create(payload: CreateFloorDTO): Promise<void> {
-    await api.post(url, { payload })
+    await api.post(url, payload)
   },
 
-  async update(id: number, payload: UpdateFloorDTO): Promise<void> {
-    await api.patch(`${url}/${id}`, { payload })
+  async update(id: string, payload: UpdateFloorDTO): Promise<void> {
+    await api.patch(`${url}${id}`, payload)
   },
 
-  async delete(id: number): Promise<void> {
-    await api.delete(`${url}/${id}`)
+  async delete(id: string): Promise<void> {
+    await api.delete(`${url}${id}`)
   },
 
-  async getSelectList(params: FloorSelectQueryParams): Promise<SelectResponse> {
+  async getSelectList(params: FloorSelectQueryParams): Promise<SelectResponse[]> {
     const { data } = await api.get(`${url}select`, { params })
     return data
   }

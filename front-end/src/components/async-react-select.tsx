@@ -1,9 +1,9 @@
-import type { GroupBase, StylesConfig } from 'node_modules/react-select/dist/declarations/src';
+import type { GroupBase, StylesConfig } from 'react-select';
 import AsyncSelect, { type AsyncProps } from 'react-select/async';
 import { useTheme } from './theme-provider';
 import React from 'react';
 
-export const shadcnLight = {
+const shadcnLight = {
   background: "rgb(255 255 255)",
   foreground: "rgb(33 33 33)",
 
@@ -21,7 +21,7 @@ export const shadcnLight = {
   ring: "rgb(180 180 180)",
 }
 
-export const shadcnDark = {
+const shadcnDark = {
   background: "rgb(20 20 20)",
   foreground: "rgb(250 250 250)",
 
@@ -39,7 +39,7 @@ export const shadcnDark = {
   ring: "rgb(127 127 127)",
 }
 
-export function getPalette(theme: "light" | "dark") {
+function getPalette(theme: "light" | "dark") {
   return theme === "dark" ? shadcnDark : shadcnLight
 }
 
@@ -52,7 +52,12 @@ function resolveTheme(theme: "light" | "dark" | "system"): "light" | "dark" {
   return theme
 }
 
-export const makeShadcnSelectStyles = (palette: typeof shadcnLight): StylesConfig<any, boolean> => ({
+export type SelectOption<T = string | number | boolean | undefined> = {
+  label?: string | undefined,
+  value?: T
+}
+
+const makeShadcnSelectStyles = (palette: typeof shadcnLight): StylesConfig<SelectOption, boolean> => ({
   control: (b, s) => ({
     ...b,
     backgroundColor: palette.background,
@@ -91,11 +96,6 @@ export const makeShadcnSelectStyles = (palette: typeof shadcnLight): StylesConfi
   indicatorSeparator: () => ({ display: "none" }),
 })
 
-export type SelectOption = {
-  label: string,
-  value: number | string
-}
-
 type MyAsyncSelectProps<
   TOption = SelectOption,
   IsMulti extends boolean = false,
@@ -127,21 +127,22 @@ export function AsyncReactSelect({ options = [], asyncFunction, ...rest }: MyAsy
     inputValue: string,
     callback: (options: (SelectOption | GroupBase<SelectOption>)[]) => void
   ) => {
+    if (!asyncFunction) {
+      callback(filterOptions(inputValue));
+      return;
+    }
     setTimeout(() => {
-      if (asyncFunction)
-        asyncFunction(inputValue).then(
-          (options) => callback(options)
-        );
-      else
-        callback(filterOptions(inputValue));
-    }, 1000);
+      asyncFunction(inputValue).then(
+        (data) => callback(data)
+      );
+    }, 300);
   };
 
   return (
     <AsyncSelect
       cacheOptions={false}
       loadOptions={loadOptions}
-      defaultOptions
+      defaultOptions={options.length > 0 ? options : true}
       noOptionsMessage={() => "Nenhuma opção encontrada"}
       styles={styles}
       {...rest} />

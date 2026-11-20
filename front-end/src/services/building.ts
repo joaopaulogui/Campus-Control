@@ -13,18 +13,18 @@ export const building = {
   },
 
   async create(payload: CreateBuildingDTO): Promise<void> {
-    await api.post(url, { payload })
+    await api.post(url, payload)
   },
 
-  async update(id: number, payload: UpdateBuildingDTO): Promise<void> {
-    await api.patch(`${url}/${id}`, { payload })
+  async update(id: string, payload: UpdateBuildingDTO): Promise<void> {
+    await api.patch(`${url}${id}`, payload)
   },
 
-  async delete(id: number): Promise<void> {
-    await api.delete(`${url}/${id}`)
+  async delete(id: string): Promise<void> {
+    await api.delete(`${url}${id}`)
   },
 
-  async getSelectList(params: SelectQueryParams): Promise<SelectResponse> {
+  async getSelectList(params: SelectQueryParams): Promise<SelectResponse[]> {
     const { data } = await api.get(`${url}select`, { params })
     return data
   }

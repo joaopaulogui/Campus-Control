@@ -13,11 +13,11 @@ export const loan = {
   },
 
   async create(payload: CreateLoanDTO): Promise<void> {
-    await api.post(url, { payload })
+    await api.post(url, payload)
   },
 
-  async return(id: number): Promise<void> {
-    await api.patch(`${url}/${id}/return`)
+  async return(id: string): Promise<void> {
+    await api.patch(`${url}${id}/return`)
   },
 
   async getSelectList(params: SelectQueryParams): Promise<SelectResponse> {

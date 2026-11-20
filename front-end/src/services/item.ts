@@ -13,14 +13,14 @@ export const item = {
   },
 
   async create(payload: CreateItemDTO): Promise<void> {
-    await api.post(url, { payload })
+    await api.post(url, payload)
   },
 
-  async delete(id: number): Promise<void> {
-    await api.delete(`${url}/${id}`)
+  async delete(id: string): Promise<void> {
+    await api.delete(`${url}${id}`)
   },
 
-  async getSelectList(params: ItemSelectQueryParams): Promise<SelectResponse> {
+  async getSelectList(params: ItemSelectQueryParams): Promise<SelectResponse[]> {
     const { data } = await api.get(`${url}select`, { params })
     return data
   }
