@@ -67,6 +67,8 @@ export class PrismaUsersRepository implements UsersRepository {
             where.role = filters.role
         }
 
+        where.deletedAt = null
+
         const users = await prisma.user.findMany({
             where,
             orderBy: {
