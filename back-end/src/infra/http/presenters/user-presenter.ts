@@ -7,7 +7,9 @@ export class UserPresenter {
             id: user.id,
             name: user.name,
             email: user.email,
-            role: user.role
+            role: user.role,
+            updatedAt: user.updatedAt,
+            deletedAt: user.updatedAt
         }  
     }
 

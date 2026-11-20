@@ -32,6 +32,10 @@ export const updateUserParamsSchema = z.object({
     userId: z.uuid()
 })
 
+export const deleteUserParamsSchema = z.object({
+    userId: z.uuid()
+})
+
 export const updateUserBodySchema = z.object({
     name: z.string().optional(),
     email: z.email().optional(),
@@ -45,7 +49,9 @@ export const getUserByIdResponseSchema = z.object({
     name: z.string(),
     email: z.email(),
     role: z.enum(UserRole),
-    buildingIds: z.array(z.uuid())
+    updatedAt: z.iso.datetime(),
+    deletedAt: z.iso.datetime(),
+    buildingIds: z.array(z.uuid()),
 })
 
 export const getUserProfileResponseSchema = z.object({
@@ -53,6 +59,8 @@ export const getUserProfileResponseSchema = z.object({
     name: z.string(),
     email: z.email(),
     role: z.enum(UserRole),
+    updatedAt: z.iso.datetime(),
+    deletedAt: z.iso.datetime(),
     buildings: z.array(z.object({
         id: z.uuid(),
         name: z.string()
