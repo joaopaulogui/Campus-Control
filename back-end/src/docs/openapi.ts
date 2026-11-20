@@ -3,10 +3,13 @@ import { healthResponseSchema, unauthorizedResponseSchema } from "@infra/http/sc
 import {
     authenticateUserBodySchema,
     authenticateUserResponseSchema,
+    deleteUserParamsSchema,
     getUserByIdParamsSchema,
     getUserByIdResponseSchema,
     getUserProfileResponseSchema,
     registerUserBodySchema,
+    selectUsersQuerySchema,
+    selectUsersResponseSchema,
     updateUserBodySchema,
     updateUserParamsSchema,
 } from "../infra/http/schemas/users"
@@ -44,6 +47,7 @@ import {
     getRoomDetailsParamsSchema,
     roomDetailsResponseSchema,
     selectRoomsResponseSchema,
+    roomContextResponseSchema,
 } from "../infra/http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
@@ -172,6 +176,31 @@ export const openApiDocument = {
                 },
                 responses: {
                     204: { description: "User updated" },
+                    401: unauthorizedResponse
+                }
+            },
+            delete: {
+                tags: ["Users"],
+                summary: "Delete user",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(deleteUserParamsSchema, "path"),
+                responses: {
+                    204: { description: "User deleted" },
+                    401: unauthorizedResponse
+                }
+            }
+        },
+        "/api/users/select": {
+            get: {
+                tags: ["Users"],
+                summary: "Select users",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(selectUsersQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "User list", 
+                        ...jsonContent(selectUsersResponseSchema)
+                    },
                     401: unauthorizedResponse
                 }
             }
@@ -394,7 +423,7 @@ export const openApiDocument = {
                 responses: {
                     200: {
                         description: "Room details",
-                        ...jsonContent(roomDetailsResponseSchema)
+                        ...jsonContent(roomContextResponseSchema)
                     },
                     401: unauthorizedResponse
                 }

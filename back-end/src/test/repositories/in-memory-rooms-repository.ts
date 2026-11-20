@@ -20,6 +20,29 @@ export class InMemoryRoomsRepository implements RoomsRepository {
         return room
     }
 
+    async findByIdWithContext(id: string): Promise<RoomContext | null> {
+        const room = this.items.find(item => item.id === id)
+
+        if(!room) {
+            return null
+        }
+
+        return {
+            id: room.id,
+            name: room.name,
+            type: room.type,
+            capacity: room.capacity,
+            isLocked: room.isLocked,
+            updatedAt: room.updatedAt ?? null,
+            floorId: room.floorId,
+            floorName: "",
+            buildingId: "",
+            buildingName: "",
+            airConditioners: [],
+            projectors: []
+        }
+    }
+
     async findMany(filters: RoomFilters): Promise<Room[]> {
         const rooms = this.items.filter(item => {
             if(filters?.floorIds && !filters.floorIds.includes(item.floorId)) {

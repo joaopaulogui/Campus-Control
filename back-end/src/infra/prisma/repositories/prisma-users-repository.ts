@@ -1,8 +1,9 @@
 import type { User } from "@domain/entities/user";
 import { prisma } from "../lib/prisma";
 import { PrismaUserMapper } from "../mappers/prisma-user-mapper";
-import type { UsersRepository } from "@domain/repositories/users-repositoy";
+import type { UserFilters, UsersRepository } from "@domain/repositories/users-repositoy";
 import { DomainEvents } from "@/core/events/domain-events";
+import type { UserWhereInput } from "@/generated/prisma/models";
 
 export class PrismaUsersRepository implements UsersRepository {
     async create(user: User): Promise<void> {
@@ -43,6 +44,39 @@ export class PrismaUsersRepository implements UsersRepository {
         }
 
         return PrismaUserMapper.toDomain(user)
+    }
+
+    async findMany(filters?: UserFilters): Promise<User[]> {
+        const where: UserWhereInput = {}
+        
+        if(filters?.name) {
+            where.name = {
+                contains: filters.name,
+                mode: "insensitive",
+            }
+        }
+        
+        if(filters?.email) {
+            where.email = {
+                contains: filters.email,
+                mode: "insensitive",
+            }
+        }
+
+        if(filters?.role) {
+            where.role = filters.role
+        }
+
+        where.deletedAt = null
+
+        const users = await prisma.user.findMany({
+            where,
+            orderBy: {
+                name: "asc"
+            }
+        })
+
+        return users.map(user => PrismaUserMapper.toDomain(user))
     }
 
     async save(user: User): Promise<void> {

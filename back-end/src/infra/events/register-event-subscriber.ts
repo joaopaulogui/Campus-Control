@@ -14,6 +14,8 @@ import { OnItemRegistered } from "@/domain/subscribers/on-item-registered";
 import { PrismaItemsRepository } from "../prisma/repositories/prisma-items-repository";
 import { OnItemLoaned } from "@/domain/subscribers/on-item-loaned";
 import { OnItemReturned } from "@/domain/subscribers/on-item-returned";
+import { OnUserDeleted } from "@/domain/subscribers/on-user-deleted";
+import { OnUserReactivated } from "@/domain/subscribers/on-user-reactivated";
 
 export function registerEventSubscribers() {
     const auditsRepository = new PrismaAuditsRepository()
@@ -31,6 +33,8 @@ export function registerEventSubscribers() {
     new OnAirConditionerRegistered(usersRepository, roomsRepository, createAuditUseCase)
     new OnProjectorRegistered(usersRepository, roomsRepository, createAuditUseCase)
     new OnUserRegistered(usersRepository, createAuditUseCase)
+    new OnUserReactivated(usersRepository, createAuditUseCase)
+    new OnUserDeleted(usersRepository, createAuditUseCase)
     new OnItemRegistered(usersRepository, createAuditUseCase)
     new OnItemLoaned(usersRepository, itemsRepository, createAuditUseCase)
     new OnItemReturned(usersRepository, itemsRepository, createAuditUseCase)
