@@ -13,12 +13,11 @@ export class PrismaUserMapper {
             buildingIds,
             createdAt: raw.createdAt,
             updatedAt: raw.updatedAt,
+            deletedAt: raw.deletedAt
         }, raw.id)
     }
 
-    static toPrisma(user: User): Prisma.UserUncheckedCreateInput {
-        const mappedRole = PrismaUserRole[user.role as keyof typeof PrismaUserRole]
-        
+    static toPrisma(user: User): Prisma.UserUncheckedCreateInput { 
         return {
             ...this.baseFields(user),
             buildingEmployees: {
@@ -43,7 +42,8 @@ export class PrismaUserMapper {
             password: user.password,
             role: mappedRole,
             createdAt: user.createdAt,
-            updatedAt: user.updatedAt ?? null
+            updatedAt: user.updatedAt ?? null,
+            deletedAt: user.deletedAt ?? null
         }
     }
 }

@@ -86,4 +86,9 @@ export class User extends AggregateRoot<UserProps> {
         this.props.deletedAt = new Date()
         this.touch()
     }
+
+    reactivate() {
+        this.props.deletedAt = null
+        this.touch()
+    }
 }

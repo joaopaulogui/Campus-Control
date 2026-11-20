@@ -2,6 +2,7 @@ import { User, type UserRole } from "../entities/user"
 import type { UsersRepository } from "../repositories/users-repositoy"
 import type { HashGenerator } from "../cryptography/hash-generator"
 import { UserRegisteredEvent } from "../events/user-registered-event"
+import { UserReactivatedEvent } from "../events/user-reactivated-event"
 
 interface RegisterUserUseCaseRequest {
     adminId: string
@@ -24,7 +25,26 @@ export class RegisterUserUseCase {
         const userWithSameEmail = await this.usersRepository.findByEmail(email)
 
         if(userWithSameEmail) {
-            throw new Error()
+            if(!userWithSameEmail.deletedAt) {
+                throw new Error()
+            } else {
+                const hashedPassword = await this.hashGenerator.hash(password)
+
+                console.log(await this.hashGenerator.hash(""))
+
+                userWithSameEmail.addDomainEvent(new UserReactivatedEvent(userWithSameEmail, adminId))
+
+                userWithSameEmail.name = name
+                userWithSameEmail.email = email
+                userWithSameEmail.password = hashedPassword
+                userWithSameEmail.role = role
+                userWithSameEmail.buildingIds = buildingIds ?? []
+                userWithSameEmail.reactivate()
+
+                await this.usersRepository.save(userWithSameEmail)
+
+                return {}
+            }
         }
  
         const hashedPassword = await this.hashGenerator.hash(password)

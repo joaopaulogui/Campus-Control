@@ -1,5 +1,5 @@
 import type { User } from "@domain/entities/user";
-import type { UsersRepository } from "@domain/repositories/users-repositoy";
+import type { UserFilters, UsersRepository } from "@domain/repositories/users-repositoy";
 
 export class InMemoryUsersRepository implements UsersRepository {
     public items: User[] = []
@@ -14,6 +14,23 @@ export class InMemoryUsersRepository implements UsersRepository {
         if(!user) {
             return null
         }
+
+        return user
+    }
+
+    async findMany(filters?: UserFilters): Promise<User[]> {
+        const user = this.items.filter(user => {
+            if(filters?.name && !user.name.includes(filters.name)) {
+                return false
+            }
+            if(filters?.email && !user.email.includes(filters.email)) {
+                return false
+            }
+            if(filters?.role && user.role !== filters.role) {
+                return false
+            }
+            return true
+        })
 
         return user
     }
