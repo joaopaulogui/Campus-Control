@@ -25,6 +25,10 @@ export class AuthenticateUserUseCase {
             throw new Error()
         }
 
+        if(user.deletedAt) {
+            throw new Error()
+        }
+
         const isPasswordValid = await this.hashComparer.compare(password, user.password)
 
         if(!isPasswordValid) {
