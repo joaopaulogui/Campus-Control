@@ -11,7 +11,7 @@ export class DeleteBuildingController {
 
         const { buildingId } = deleteBuildingParamsSchema.parse(req.params)
 
-        await deleteBuilding.execute({ buildingId })
+        await deleteBuilding.execute({ userId: req.user!.sub, buildingId })
 
         res.status(204).send()
     }

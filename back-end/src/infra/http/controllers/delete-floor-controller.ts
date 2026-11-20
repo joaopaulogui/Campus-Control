@@ -11,7 +11,7 @@ export class DeleteFloorController {
 
         const { floorId } = deleteFloorParamsSchema.parse(req.params)
 
-        await deleteFloor.execute({ floorId })
+        await deleteFloor.execute({ userId: req.user!.sub, floorId })
 
         res.status(204).send()
     }

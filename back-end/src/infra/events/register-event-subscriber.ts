@@ -16,6 +16,16 @@ import { OnItemLoaned } from "@/domain/subscribers/on-item-loaned";
 import { OnItemReturned } from "@/domain/subscribers/on-item-returned";
 import { OnUserDeleted } from "@/domain/subscribers/on-user-deleted";
 import { OnUserReactivated } from "@/domain/subscribers/on-user-reactivated";
+import { OnAirConditionerUpdated } from "@/domain/subscribers/on-air-conditioner-updated";
+import { OnAirConditionerDeleted } from "@/domain/subscribers/on-air-conditioner-deleted";
+import { OnBuildingUpdated } from "@/domain/subscribers/on-building-updated";
+import { OnBuildingDeleted } from "@/domain/subscribers/on-building-deleted";
+import { OnFloorUpdated } from "@/domain/subscribers/on-floor-updated";
+import { OnFloorDeleted } from "@/domain/subscribers/on-floor-deleted";
+import { OnRoomUpdated } from "@/domain/subscribers/on-room-updated";
+import { OnRoomDeleted } from "@/domain/subscribers/on-room-deleted";
+import { OnProjectorDeleted } from "@/domain/subscribers/on-projector-deleted";
+import { OnProjectorUpdated } from "@/domain/subscribers/on-projector-updated";
 
 export function registerEventSubscribers() {
     const auditsRepository = new PrismaAuditsRepository()
@@ -27,15 +37,32 @@ export function registerEventSubscribers() {
 
     const createAuditUseCase = new CreateAuditUseCase(auditsRepository)
 
-    new OnBuildingRegistered(usersRepository, createAuditUseCase)
-    new OnFloorRegistered(usersRepository, buildingsRepository, createAuditUseCase)
-    new OnRoomRegistered(usersRepository, floorsRepository, buildingsRepository, createAuditUseCase)
-    new OnAirConditionerRegistered(usersRepository, roomsRepository, createAuditUseCase)
-    new OnProjectorRegistered(usersRepository, roomsRepository, createAuditUseCase)
+    
+    new OnBuildingRegistered(createAuditUseCase)
+    new OnBuildingUpdated(createAuditUseCase)
+    new OnBuildingDeleted(createAuditUseCase)
+
+    new OnFloorRegistered(buildingsRepository, createAuditUseCase)
+    new OnFloorUpdated(buildingsRepository, createAuditUseCase)
+    new OnFloorDeleted(buildingsRepository, createAuditUseCase)
+
+    new OnRoomRegistered(floorsRepository, buildingsRepository, createAuditUseCase)
+    new OnRoomUpdated(floorsRepository, buildingsRepository, createAuditUseCase)
+    new OnRoomDeleted(floorsRepository, buildingsRepository, createAuditUseCase)
+
+    new OnAirConditionerRegistered(roomsRepository, createAuditUseCase)
+    new OnAirConditionerUpdated(roomsRepository, createAuditUseCase)
+    new OnAirConditionerDeleted(roomsRepository, createAuditUseCase)
+
+    new OnProjectorRegistered(roomsRepository, createAuditUseCase)
+    new OnProjectorUpdated(roomsRepository, createAuditUseCase)
+    new OnProjectorDeleted(roomsRepository, createAuditUseCase)
+
     new OnUserRegistered(usersRepository, createAuditUseCase)
     new OnUserReactivated(usersRepository, createAuditUseCase)
     new OnUserDeleted(usersRepository, createAuditUseCase)
-    new OnItemRegistered(usersRepository, createAuditUseCase)
-    new OnItemLoaned(usersRepository, itemsRepository, createAuditUseCase)
-    new OnItemReturned(usersRepository, itemsRepository, createAuditUseCase)
+
+    new OnItemRegistered(createAuditUseCase)
+    new OnItemLoaned(itemsRepository, createAuditUseCase)
+    new OnItemReturned(itemsRepository, createAuditUseCase)
 }

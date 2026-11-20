@@ -11,7 +11,7 @@ export class DeleteProjectorController {
 
         const { projectorId } = deleteProjectorParamsSchema.parse(req.params)
 
-        await deleteProjector.execute({ projectorId })
+        await deleteProjector.execute({ userId: req.user!.sub, projectorId })
 
         res.status(204).send()
     }

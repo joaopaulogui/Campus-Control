@@ -12,7 +12,7 @@ export class UpdateRoomController {
         const { roomId } = updateRoomParamsSchema.parse(req.params)
         const { name, type, capacity } = updateRoomBodySchema.parse(req.body)
 
-        await updateRoom.execute({ roomId, name, type, capacity })
+        await updateRoom.execute({ userId: req.user!.sub, roomId, name, type, capacity })
 
         res.status(204).send()
     }

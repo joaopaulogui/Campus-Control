@@ -12,7 +12,7 @@ export class UpdateFloorController {
         const { floorId } = updateFloorParamsSchema.parse(req.params)
         const { name } = updateFloorBodySchema.parse(req.body)
 
-        await updateFloor.execute({ floorId, name })
+        await updateFloor.execute({ userId: req.user!.sub, floorId, name })
 
         res.status(204).send()
     }
