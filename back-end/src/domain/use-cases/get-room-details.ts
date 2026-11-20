@@ -1,42 +1,42 @@
-import type { AirConditioner } from "../entities/air-conditioner"
-import type { Projector } from "../entities/projector"
-import type { Room } from "../entities/room"
-import type { AirConditionersRepository } from "../repositories/air-conditioners-repository"
-import type { ProjectorsRepository } from "../repositories/projectors-repository"
+import { UserRole } from "../entities/user"
+import type { RoomContext } from "../entities/value-objects/room-context"
 import type { RoomsRepository } from "../repositories/rooms-repository"
+import type { UsersRepository } from "../repositories/users-repositoy"
 
 interface GetRoomDetailsUseCaseRequest {
+    userId: string
     roomId: string
 }
 
 interface GetRoomDetailsUseCaseResponse {
-    room: Room
-    airConditioners: AirConditioner[]
-    projectors: Projector[]
+    room: RoomContext
 }
 
 export class GetRoomDetailsUseCase {
     constructor(
         private roomsRepository: RoomsRepository,
-        private airConditionersRepository: AirConditionersRepository,
-        private projectorsRepository: ProjectorsRepository,
+        private usersRepository: UsersRepository,
     ) {}
 
-    async execute({ roomId }: GetRoomDetailsUseCaseRequest): Promise<GetRoomDetailsUseCaseResponse> {
-        const room = await this.roomsRepository.findById(roomId)
+    async execute({ userId, roomId }: GetRoomDetailsUseCaseRequest): Promise<GetRoomDetailsUseCaseResponse> {
+        const user = await this.usersRepository.findById(userId)
+        
+        if(!user) {
+            throw new Error()
+        }
+
+        const room = await this.roomsRepository.findByIdWithContext(roomId)
         
         if(!room) {
             throw new Error()
         }
-
-        const airConditioners = await this.airConditionersRepository.findMany({ roomIds: [roomId] })
-
-        const projectors = await this.projectorsRepository.findMany({ roomIds: [roomId] })
+        
+        if(user.role !== UserRole.ADMIN && !user.buildingIds.includes(room.buildingId)) {
+            throw new Error()
+        }
 
         return {
             room,
-            airConditioners,
-            projectors,
          }
     }
 }

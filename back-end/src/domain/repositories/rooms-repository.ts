@@ -13,6 +13,7 @@ export interface RoomFilters {
 export interface RoomsRepository {
     create(room: Room): Promise<void>
     findById(id: string): Promise<Room | null>
+    findByIdWithContext(id: string): Promise<RoomContext | null>
     findMany(filters?: RoomFilters): Promise<Room[]>
     findManyPaginated(filters?: RoomFilters, params?: PaginationParams): Promise<Room[]>
     findManyWithContext(filters?: RoomFilters): Promise<RoomContext[]>

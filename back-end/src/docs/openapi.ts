@@ -47,6 +47,7 @@ import {
     getRoomDetailsParamsSchema,
     roomDetailsResponseSchema,
     selectRoomsResponseSchema,
+    roomContextResponseSchema,
 } from "../infra/http/schemas/rooms"
 import {
     registerAirConditionerBodySchema,
@@ -422,7 +423,7 @@ export const openApiDocument = {
                 responses: {
                     200: {
                         description: "Room details",
-                        ...jsonContent(roomDetailsResponseSchema)
+                        ...jsonContent(roomContextResponseSchema)
                     },
                     401: unauthorizedResponse
                 }

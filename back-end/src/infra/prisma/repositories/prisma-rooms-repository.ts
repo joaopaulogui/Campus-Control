@@ -8,6 +8,7 @@ import { DomainEvents } from "@/core/events/domain-events";
 import { roomContextInclude } from "../queries/room-context-query";
 import { PrismaRoomContextMapper } from "../mappers/read-models/prisma-room-context-mapper";
 import type { RoomContext } from "@/domain/entities/value-objects/room-context";
+import { includes } from "zod";
 
 export class PrismaRoomsRepository implements RoomsRepository {
     async create(room: Room): Promise<void> {
@@ -32,6 +33,21 @@ export class PrismaRoomsRepository implements RoomsRepository {
         }
 
         return PrismaRoomMapper.toDomain(room)
+    }
+
+    async findByIdWithContext(id: string): Promise<RoomContext | null> {
+        const room = await prisma.room.findUnique({
+            where: {
+                id,
+            },
+            include: roomContextInclude,
+        })
+
+        if(!room) {
+            return null
+        }
+
+        return PrismaRoomContextMapper.toContext(room)
     }
 
     async findMany(filters?: RoomFilters): Promise<Room[]> {
