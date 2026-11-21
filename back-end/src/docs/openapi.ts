@@ -7,6 +7,7 @@ import {
     getUserByIdParamsSchema,
     getUserByIdResponseSchema,
     getUserProfileResponseSchema,
+    listUsersResponseSchema,
     registerUserBodySchema,
     selectUsersQuerySchema,
     selectUsersResponseSchema,
@@ -122,6 +123,19 @@ export const openApiDocument = {
             },
         },
         "/api/users": {
+            get: {
+                tags: ["Users"],
+                summary: "List users",
+                security: bearerAuth,
+                parameters: toOpenApiParameters(selectUsersQuerySchema, "query"),
+                responses: {
+                    200: { 
+                        description: "User list", 
+                        ...jsonContent(listUsersResponseSchema)
+                    },
+                    401: unauthorizedResponse
+                }
+            },
             post: {
                 tags: ["Users"],
                 summary: "Register user",
