@@ -12,6 +12,11 @@ export const building = {
     return data
   },
 
+  async getPerId(id: string): Promise<Building> {
+    const { data } = await api.get(`${url}${id}`)
+    return data
+  },
+
   async create(payload: CreateBuildingDTO): Promise<void> {
     await api.post(url, payload)
   },

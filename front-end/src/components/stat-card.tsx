@@ -1,3 +1,4 @@
+import IconContainer from "./icon-container";
 import { Card, CardContent } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
@@ -14,11 +15,10 @@ export default function StatCard({ title, value, subtitle, icon, iconContainerCl
   return (
     <Card className="rounded-2xl border-border/80 shadow-xs">
       <CardContent className="flex items-center gap-4 p-5">
-        <div
-          className={`flex size-12 shrink-0 items-center justify-center rounded-xl ${iconContainerClassName}`}
-        >
-          {icon}
-        </div>
+        <IconContainer
+          icon={icon}
+          colors={iconContainerClassName}
+        />
         <div className="min-w-0">
           <p className="truncate text-xs font-medium text-muted-foreground">
             {title}

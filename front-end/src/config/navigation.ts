@@ -10,6 +10,24 @@ export const NAV_ITEMS: NavItem[] = [
     allowedRoles: ["ADMIN", "MEMBER"],
   },
   {
+    label: "Usuários",
+    to: "/usuarios",
+    icon: DoorClosed,
+    allowedRoles: ["ADMIN", "MEMBER"],
+  },
+  {
+    label: "Blocos",
+    to: "/blocos",
+    icon: DoorClosed,
+    allowedRoles: ["ADMIN"],
+  },
+  {
+    label: "Andares",
+    to: "/andares",
+    icon: DoorClosed,
+    allowedRoles: ["ADMIN"],
+  },
+  {
     label: "Salas",
     to: "/salas",
     icon: DoorClosed,
@@ -19,7 +37,7 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Itens",
     to: "/itens",
     icon: Wind,
-    allowedRoles: ["ADMIN", "MEMBER"],
+    allowedRoles: ["ADMIN"],
   },
   {
     label: "Empréstimos",

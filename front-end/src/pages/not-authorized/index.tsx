@@ -9,7 +9,7 @@ export default function NotAuthorized() {
 
             <Button>
                 <Link
-                    to="/"
+                    to="/dashboard"
                 >
                     Voltar para o início
                 </Link>

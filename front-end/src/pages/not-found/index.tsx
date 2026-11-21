@@ -9,7 +9,7 @@ export default function NotFound() {
 
             <Button>
                 <Link
-                    to="/"
+                    to="/dashboard"
                 >
                     Voltar para o início
                 </Link>
