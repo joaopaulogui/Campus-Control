@@ -12,7 +12,7 @@ export class UpdateAirConditionerStatusController {
         const { airConditionerId } = updateAirConditionerStatusParamsSchema.parse(req.params)
         const { status } = updateAirConditionerStatusBodySchema.parse(req.body)
 
-        await updateAirConditioner.execute({ airConditionerId, status })
+        await updateAirConditioner.execute({ userId: req.user!.sub, airConditionerId, status })
 
         res.status(204).send()
     }

@@ -1,5 +1,4 @@
 import type { EventHandler } from "@core/events/event-handler";
-import type { UsersRepository } from "../repositories/users-repositoy";
 import type { CreateAuditUseCase } from "../use-cases/create-audit-use-case";
 import { DomainEvents } from "@/core/events/domain-events";
 import { FloorRegisteredEvent } from "../events/floor-registered-event";
@@ -8,7 +7,6 @@ import type { BuildingsRepository } from "../repositories/buildings-repository";
 
 export class OnFloorRegistered implements EventHandler {
     constructor(
-        private usersRepository: UsersRepository,
         private buildingsRepository: BuildingsRepository,
         private createAuditUseCase: CreateAuditUseCase
     ) { this.setupSubscriptions() }
@@ -18,11 +16,9 @@ export class OnFloorRegistered implements EventHandler {
     }
 
     private async createNewFloorRegistrationAudit({ floor, userId }: FloorRegisteredEvent) {
-        const user = await this.usersRepository.findById(userId)
-
         const building = await this.buildingsRepository.findById(floor.buildingId)
 
-        if(user && building) {
+        if(building) {
             await this.createAuditUseCase.execute({
                 userId,
                 eventEntity: EntityType.FLOOR,

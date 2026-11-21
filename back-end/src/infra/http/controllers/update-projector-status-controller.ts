@@ -12,7 +12,7 @@ export class UpdateProjectorStatusController {
         const { projectorId } = updateProjectorStatusParamsSchema.parse(req.params)
         const { status } = updateProjectorStatusBodySchema.parse(req.body)
 
-        await updateProjector.execute({ projectorId, status })
+        await updateProjector.execute({ userId: req.user!.sub, projectorId, status })
 
         res.status(204).send()
     }

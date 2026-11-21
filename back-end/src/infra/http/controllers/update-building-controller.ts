@@ -12,7 +12,7 @@ export class UpdateBuildingController {
         const { buildingId } = updateBuildingParamsSchema.parse(req.params)
         const { name } = updateBuildingBodySchema.parse(req.body)
 
-        await updateBuilding.execute({ buildingId, name })
+        await updateBuilding.execute({ userId: req.user!.sub, buildingId, name })
 
         res.status(204).send()
     }

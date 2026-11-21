@@ -11,7 +11,7 @@ export class DeleteAirConditionerController {
 
         const { airConditionerId } = deleteAirConditionerParamsSchema.parse(req.params)
 
-        await deleteAirConditioner.execute({ airConditionerId })
+        await deleteAirConditioner.execute({ userId: req.user!.sub, airConditionerId })
 
         res.status(204).send()
     }

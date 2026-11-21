@@ -23,7 +23,7 @@ export const auditResponseSchema = z.object({
     entityId: z.string(),
     description: z.string(),
     createdAt: z.iso.datetime(),
-    metadata: z.json()
+    metadata: z.object()
 })
 
 export const listAuditsResponseSchema = z.array(auditResponseSchema)
