@@ -8,6 +8,7 @@ import { UpdateUserController } from "../controllers/update-user-controller"
 import { GetUserByIdController } from "../controllers/get-user-by-id-controller"
 import { SelectUsersController } from "../controllers/select-users-controller"
 import { DeleteUserController } from "../controllers/delete-user-controller"
+import { ListUsersController } from "../controllers/list-users-controller"
 
 const router = express.Router()
 
@@ -15,9 +16,12 @@ const registerUserController = new RegisterUserController()
 const authenticateUserController = new AuthenticateUserController()
 const getUserByIdController = new GetUserByIdController()
 const getUserProfileController = new GetUserProfileController()
+const listUsersController = new ListUsersController()
 const selectUsersController = new SelectUsersController()
 const updateUserController = new UpdateUserController()
 const deleteUserController = new DeleteUserController()
+
+router.get('/', VerifyJwt, VerifyUserRole, listUsersController.handle)
 
 router.post('/', VerifyJwt, VerifyUserRole, registerUserController.handle)
 

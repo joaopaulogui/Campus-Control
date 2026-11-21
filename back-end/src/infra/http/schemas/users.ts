@@ -67,6 +67,8 @@ export const getUserProfileResponseSchema = z.object({
     }))
 })
 
+export const listUsersResponseSchema = z.array(getUserByIdResponseSchema)
+
 export const selectUsersResponseSchema = z.array(z.object({
     id: z.uuid(),
     name: z.string()
