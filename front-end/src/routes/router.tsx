@@ -4,6 +4,8 @@ import { USER_ROLES } from "@/types/user"
 import LayoutPage from "@/components/layout-page"
 import Login from "@/pages/login"
 import Dashboard from "@/pages/dashboard"
+import Buildings from "@/pages/buildings"
+import Floors from "@/pages/floors"
 import Rooms from "@/pages/rooms"
 import Items from "@/pages/items"
 import Loans from "@/pages/loans"
@@ -26,6 +28,14 @@ export const router = createBrowserRouter([
                     {
                         path: "dashboard",
                         element: <Dashboard />
+                    },
+                    {
+                        path: "blocos",
+                        element: <Buildings />
+                    },
+                    {
+                        path: "andares",
+                        element: <Floors />
                     },
                     {
                         path: "salas",

@@ -367,7 +367,7 @@ export default function RoomsPage() {
         header: "ANDAR",
         cell: ({ row }) => (
           <span className="text-sm text-foreground/80">
-            {row.original.floorName ?? "Térreo"}
+            {row.original.floorName}
           </span>
         ),
       },
