@@ -12,6 +12,11 @@ export const floor = {
     return data
   },
 
+  async getPerId(id: string): Promise<Floor> {
+    const { data } = await api.get(`${url}${id}`)
+    return data
+  },
+
   async create(payload: CreateFloorDTO): Promise<void> {
     await api.post(url, payload)
   },
