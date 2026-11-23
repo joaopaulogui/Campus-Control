@@ -14,6 +14,8 @@ import type { RoomFormData, RoomFormInput } from "@/types/room"
 import { RoomStatusSelect, roomStatusSelectOptions } from "@/components/select/room-status-select"
 import { RoomTypeSelect, roomTypeSelectOptions } from "@/components/select/room-type-select"
 
+import { invalidateRoomRelatedQueries } from "@/config/query-keys"
+
 type Props = {
   roomId?: string
   back?: () => void
@@ -168,7 +170,7 @@ export default function RoomForm({ roomId, back }: Props) {
   }
 
   function handleSuccess() {
-    queryClient.invalidateQueries({ queryKey: ["rooms"] })
+    invalidateRoomRelatedQueries(queryClient)
     if (back) back()
   }
 

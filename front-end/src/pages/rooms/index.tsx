@@ -37,6 +37,10 @@ import { RoomTypeSelect } from "@/components/select/room-type-select"
 import { RoomStatusSelect } from "@/components/select/room-status-select"
 import { Switch } from "@/components/ui/switch"
 import type { AirConditioner, Projector } from "@/types/equipment"
+import {
+  invalidateEquipmentRelatedQueries,
+  invalidateRoomRelatedQueries,
+} from "@/config/query-keys"
 
 export default function RoomsPage() {
   const queryClient = useQueryClient()
@@ -105,7 +109,7 @@ export default function RoomsPage() {
       })
       setOpenAlertDeleteRoom(false)
       setRoomToDelete(null)
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateRoomRelatedQueries(queryClient)
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -133,7 +137,7 @@ export default function RoomsPage() {
       })
       setOpenAlertDeleteAc(false)
       setAcToDelete(null)
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateEquipmentRelatedQueries(queryClient, "ac")
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -161,7 +165,7 @@ export default function RoomsPage() {
       })
       setOpenAlertDeleteProj(false)
       setProjToDelete(null)
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateEquipmentRelatedQueries(queryClient, "projector")
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -187,7 +191,7 @@ export default function RoomsPage() {
         isLoading: false,
         autoClose: 2000,
       })
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateEquipmentRelatedQueries(queryClient, "ac")
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -213,7 +217,7 @@ export default function RoomsPage() {
         isLoading: false,
         autoClose: 2000,
       })
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateEquipmentRelatedQueries(queryClient, "projector")
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -239,7 +243,7 @@ export default function RoomsPage() {
         isLoading: false,
         autoClose: 1500,
       })
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateRoomRelatedQueries(queryClient)
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -256,7 +260,7 @@ export default function RoomsPage() {
   const mutationToggleAc = useMutation({
     mutationFn: (id: string) => airConditioner.toogle(id),
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ["rooms"] })
+      invalidateEquipmentRelatedQueries(queryClient, "ac")
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -574,7 +578,7 @@ export default function RoomsPage() {
                             checked={ac.isOn}
                             disabled={mutationToggleAc.isPending}
                             aria-label={`Ligar ou desligar ar-condicionado ${ac.id}`}
-                            onCheckedChange={(_checked) =>
+                            onCheckedChange={() =>
                               mutationToggleAc.mutate(ac.id)
                             }
                           />
