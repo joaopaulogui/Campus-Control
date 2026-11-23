@@ -1,5 +1,5 @@
 import type z from "zod";
-import type { createLoanSchema, getLoansQueryParamsSchema, loanTypeSchema } from "@/schemas/loan.schema";
+import type { createLoanSchema, getLoansQueryParamsSchema, loanFormSchema, loanTypeSchema } from "@/schemas/loan.schema";
 
 export type LoanType = z.infer<typeof loanTypeSchema>
 
@@ -11,7 +11,7 @@ export type Loan = {
     responsibleRegistration: string,
     quantity: number,
     createdAt: string,
-    returnedAt: string,
+    returnedAt: string | null,
     deadline: string,
     status: LoanType
 }
@@ -19,3 +19,6 @@ export type Loan = {
 export type GetLoansQueryParamsSchema = z.infer<typeof getLoansQueryParamsSchema>
 
 export type CreateLoanDTO = z.infer<typeof createLoanSchema>
+
+export type LoanFormInput = z.input<typeof loanFormSchema>
+export type LoanFormData = z.output<typeof loanFormSchema>
