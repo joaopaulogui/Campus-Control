@@ -1,8 +1,12 @@
 import type { Prisma } from "@generated/prisma/client";
 
 export const roomContextInclude = {
-    airConditioners: true,
-    projectors: true,
+    airConditioners: {
+        orderBy: { id: "asc" }
+    },
+    projectors: {
+        orderBy: { id: "asc" }
+    },
     floor: {
         select: { 
             name: true, 
