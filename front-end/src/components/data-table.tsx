@@ -147,6 +147,7 @@ export function DataTable<TData extends RowData, TValue = unknown>({
     features: dataTableFeatures,
     data,
     columns: columns as ColumnDef<DataTableFeatures, TData, unknown>[],
+    autoResetExpanded: false,
     manualPagination: isServerPaginated,
     pageCount: pageCount ?? -1,
     state: {
@@ -211,9 +212,9 @@ export function DataTable<TData extends RowData, TValue = unknown>({
                           {header.isPlaceholder
                             ? null
                             : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                         </TableHead>
                       )
                     })}
