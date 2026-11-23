@@ -25,6 +25,7 @@ import {
   Trash2,
 } from "lucide-react"
 import IconContainer from "@/components/icon-container"
+import { invalidateBuildingRelatedQueries } from "@/config/query-keys"
 
 export default function BuildingsPage() {
   const queryClient = useQueryClient()
@@ -76,7 +77,7 @@ export default function BuildingsPage() {
       })
       setOpenAlertDeleteBuilding(false)
       setBuildingToDelete(null)
-      queryClient.invalidateQueries({ queryKey: ["buildings"] })
+      invalidateBuildingRelatedQueries(queryClient)
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }

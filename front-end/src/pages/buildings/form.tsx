@@ -10,6 +10,8 @@ import { building } from "@/services/building"
 import { buildingFormSchema } from "@/schemas/building.schema"
 import type { BuildingFormData, BuildingFormInput } from "@/types/building"
 
+import { invalidateBuildingRelatedQueries } from "@/config/query-keys"
+
 type Props = {
   buildingId?: string
   back?: () => void
@@ -122,7 +124,7 @@ export default function BuildingForm({ buildingId, back }: Props) {
   }
 
   function handleSuccess() {
-    queryClient.invalidateQueries({ queryKey: ["buildings"] })
+    invalidateBuildingRelatedQueries(queryClient)
     if (back) back()
   }
 
