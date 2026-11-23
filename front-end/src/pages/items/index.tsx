@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react"
+import { useState, useMemo } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { DataTable, type DataTableColumnDef } from "@/components/data-table"
 import { CanAccess } from "@/components/can-access"
@@ -17,16 +17,22 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "react-toastify"
 import {
-  Package,
+  Boxes,
+  Clock,
   MoreHorizontal,
+  Package,
+  PackageCheck,
   Plus,
   Search,
   Trash2,
 } from "lucide-react"
 import IconContainer from "@/components/icon-container"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
 import { ItemTypeSelect } from "@/components/select/item-type-select"
 import type { SelectOption } from "@/components/async-react-select"
+import { cn } from "cn"
+import { invalidateItemRelatedQueries } from "@/config/query-keys"
 
 export default function ItemsPage() {
   const queryClient = useQueryClient()
@@ -34,7 +40,6 @@ export default function ItemsPage() {
   // Filtros e pesquisa
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedItemStatus, setSelectedItemStatus] = useState<SelectOption<ItemType> | null>(null)
-
 
   // Paginação
   const [page, setPage] = useState(1)
@@ -46,6 +51,13 @@ export default function ItemsPage() {
   const [openAlertDeleteItem, setOpenAlertDeleteItem] = useState(false)
   const [itemToDelete, setItemToDelete] = useState<Item | null>(null)
 
+  // Todos os itens para os cards de KPIs
+  const { data: allItems = [] } = useQuery({
+    queryKey: ["items", "all"],
+    queryFn: () => item.getList({ perPage: 200 }),
+  })
+
+  // Listagem paginada e filtrada
   const { data: items = [], isLoading } = useQuery({
     queryKey: [
       "items",
@@ -63,9 +75,36 @@ export default function ItemsPage() {
       }),
   })
 
-  useEffect(() => {
+  function handleSearchChange(value: string) {
+    setSearchTerm(value)
     setPage(1)
-  }, [searchTerm])
+  }
+
+  function handleStatusChange(option: SelectOption<ItemType> | null) {
+    setSelectedItemStatus(option)
+    setPage(1)
+  }
+
+  // KPIs
+  const totalItemsCount = allItems.length
+  const totalUnitsCount = useMemo(
+    () => allItems.reduce((acc, it) => acc + (it.totalQuantity || 0), 0),
+    [allItems]
+  )
+  const availableUnitsCount = useMemo(
+    () => allItems.reduce((acc, it) => acc + (it.availableQuantity || 0), 0),
+    [allItems]
+  )
+  const inUseUnitsCount = useMemo(
+    () =>
+      allItems.reduce(
+        (acc, it) =>
+          acc +
+          (it.onHoldQuantity ?? Math.max(0, it.totalQuantity - it.availableQuantity)),
+        0
+      ),
+    [allItems]
+  )
 
   // Mutação de exclusão de item
   const mutationDeleteItem = useMutation({
@@ -82,7 +121,7 @@ export default function ItemsPage() {
       })
       setOpenAlertDeleteItem(false)
       setItemToDelete(null)
-      queryClient.invalidateQueries({ queryKey: ["items"] })
+      invalidateItemRelatedQueries(queryClient)
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -99,13 +138,6 @@ export default function ItemsPage() {
     setItemToEdit(null)
     setOpenModalForm(true)
   }
-
-  /*
-  function handleOpenEdit(targetItem: Item) {
-    setItemToEdit(targetItem)
-    setOpenModalForm(true)
-  }
-  */
 
   function handleDeleteItem(targetItem: Item) {
     setItemToDelete(targetItem)
@@ -156,10 +188,10 @@ export default function ItemsPage() {
       },
       {
         id: "availableQuantity",
-        header: "QUANTIDADE DISPONÍVEL",
+        header: "QUANTIDADE EMPRÉSTADA",
         cell: ({ row }) => {
           const total = row.original.totalQuantity
-          const onHold = row.original.onHoldQuantity
+          const onHold = total - row.original.availableQuantity
           const onPct = total > 0 ? (onHold / total) * 100 : 0
           return (
             <div className="flex flex-col gap-2">
@@ -167,10 +199,10 @@ export default function ItemsPage() {
                 <p className="font-semibold text-foreground">{onHold}</p>
                 <p className="text-xs text-muted-foreground">/ {total}</p>
               </div>
-              <div className="h-1.5 w-32 overflow-hidden rounded-full bg-white border border-gray-300">
+              <div className="h-1.5 w-32 overflow-hidden rounded-full bg-muted border border-border/60">
                 <div
                   style={{ width: `${onPct}%` }}
-                  className="h-full rounded-full bg-green-600 transition-all"
+                  className="h-full rounded-full bg-emerald-500 transition-all"
                 />
               </div>
             </div>
@@ -181,12 +213,20 @@ export default function ItemsPage() {
         id: "status",
         header: "STATUS",
         cell: ({ row }) => {
-          const available = row.original.availableQuantity
-          const status = available === 0
+          const isAvailable = row.original.availableQuantity > 0
 
           return (
-            <Badge variant={status ? "success" : "destructive"}>
-              {status ? "Disponível" : "Indisponível"}
+            <Badge
+              variant={isAvailable ? "success" : "destructive"}
+              className="gap-1.5 font-normal"
+            >
+              <span
+                className={cn(
+                  "size-1.5 rounded-full",
+                  isAvailable ? "bg-emerald-500" : "bg-red-500"
+                )}
+              />
+              {isAvailable ? "Disponível" : "Indisponível"}
             </Badge>
           )
         },
@@ -205,10 +245,6 @@ export default function ItemsPage() {
                     <MoreHorizontal className="size-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-36">
-                    {/*<DropdownMenuItem onClick={() => handleOpenEdit(targetItem)}>
-                    <Pencil className="size-4" />
-                    Editar
-                  </DropdownMenuItem>*/}
                     <DropdownMenuItem
                       variant="destructive"
                       onClick={() => handleDeleteItem(targetItem)}
@@ -246,7 +282,6 @@ export default function ItemsPage() {
       >
         <ItemForm
           key={itemToEdit?.id ?? "new-item"}
-          //itemId={itemToEdit?.id}
           back={() => setOpenModalForm(false)}
         />
       </ModalForm>
@@ -258,7 +293,7 @@ export default function ItemsPage() {
             Itens
           </h1>
           <p className="text-sm text-muted-foreground">
-            Gerencie os itens do campus
+            Catálogo de equipamentos para empréstimo
           </p>
         </div>
 
@@ -273,22 +308,85 @@ export default function ItemsPage() {
         </CanAccess>
       </div>
 
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Card className="rounded-2xl border-border/80 shadow-xs">
+          <CardContent className="flex items-center gap-4 p-5">
+            <div className="flex size-11 items-center justify-center rounded-xl border border-blue-200/80 bg-blue-50 text-blue-600 dark:border-blue-900/50 dark:bg-blue-950/50 dark:text-blue-400">
+              <Package className="size-5" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold tracking-tight text-foreground">
+                {totalItemsCount}
+              </p>
+              <p className="text-xs text-muted-foreground">Total de itens</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border-border/80 shadow-xs">
+          <CardContent className="flex items-center gap-4 p-5">
+            <div className="flex size-11 items-center justify-center rounded-xl border border-border/80 bg-muted/60 text-muted-foreground">
+              <Boxes className="size-5" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold tracking-tight text-foreground">
+                {totalUnitsCount}
+              </p>
+              <p className="text-xs text-muted-foreground">Unidades totais</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border-border/80 shadow-xs">
+          <CardContent className="flex items-center gap-4 p-5">
+            <div className="flex size-11 items-center justify-center rounded-xl border border-emerald-200/80 bg-emerald-50 text-emerald-600 dark:border-emerald-900/50 dark:bg-emerald-950/50 dark:text-emerald-400">
+              <PackageCheck className="size-5" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold tracking-tight text-foreground">
+                {availableUnitsCount}
+              </p>
+              <p className="text-xs text-muted-foreground">Disponíveis</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border-border/80 shadow-xs">
+          <CardContent className="flex items-center gap-4 p-5">
+            <div className="flex size-11 items-center justify-center rounded-xl border border-amber-200/80 bg-amber-50 text-amber-600 dark:border-amber-900/50 dark:bg-amber-950/50 dark:text-amber-400">
+              <Clock className="size-5" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold tracking-tight text-foreground">
+                {inUseUnitsCount}
+              </p>
+              <p className="text-xs text-muted-foreground">Em uso</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Barra de Filtros e Pesquisa */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="w-full sm:w-52">
+            <ItemTypeSelect
+              value={selectedItemStatus}
+              onChange={(option) => handleStatusChange(option as SelectOption<ItemType> | null)}
+            />
+          </div>
+        </div>
+
         <div className="relative">
           <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={searchTerm}
-            onChange={(e) => { setSearchTerm(e.target.value) }}
+            onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Pesquisar item..."
             className="pl-9 bg-input/50 border-transparent rounded-3xl h-9"
           />
         </div>
-
-        <ItemTypeSelect
-          value={selectedItemStatus}
-          onChange={(option) => setSelectedItemStatus(option as SelectOption<ItemType> | null)}
-        />
       </div>
 
       {/* Tabela de Itens */}

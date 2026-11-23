@@ -10,6 +10,8 @@ import { itemFormSchema } from "@/schemas/item.schema"
 import type { ItemFormData, ItemFormInput } from "@/types/item"
 import { ItemTypeSelect, itemTypeSelectOptions } from "@/components/select/item-type-select"
 
+import { invalidateItemRelatedQueries } from "@/config/query-keys"
+
 type Props = {
   //itemId?: string
   back?: () => void
@@ -131,7 +133,7 @@ export default function ItemForm({ back }: Props) {
   }
 
   function handleSuccess() {
-    queryClient.invalidateQueries({ queryKey: ["items"] })
+    invalidateItemRelatedQueries(queryClient)
     if (back) back()
   }
 

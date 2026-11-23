@@ -21,5 +21,5 @@ export type ItemFormData = z.output<typeof itemFormSchema>
 export type CreateItemDTO = z.infer<typeof createItemSchema>
 
 export type ItemSelectQueryParams = SelectQueryParams & {
-  type: ItemType
+  type?: ItemType
 }
