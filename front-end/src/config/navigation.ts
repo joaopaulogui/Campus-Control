@@ -1,4 +1,4 @@
-import { DoorClosed, House, Package, Wind } from "lucide-react"
+import { DoorClosed, History, House, Package, Users, Wind } from "lucide-react"
 import type { NavItem } from "@/types/navigation"
 import type { UserRole } from "@/types/user"
 
@@ -12,8 +12,8 @@ export const NAV_ITEMS: NavItem[] = [
   {
     label: "Usuários",
     to: "/usuarios",
-    icon: DoorClosed,
-    allowedRoles: ["ADMIN", "MEMBER"],
+    icon: Users,
+    allowedRoles: ["ADMIN"],
   },
   {
     label: "Blocos",
@@ -37,7 +37,7 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Itens",
     to: "/itens",
     icon: Wind,
-    allowedRoles: ["ADMIN"],
+    allowedRoles: ["ADMIN", "MEMBER"],
   },
   {
     label: "Empréstimos",
@@ -45,7 +45,14 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Package,
     allowedRoles: ["ADMIN", "MEMBER"],
   },
+  {
+    label: "Auditoria",
+    to: "/auditoria",
+    icon: History,
+    allowedRoles: ["ADMIN"],
+  },
 ]
+
 
 export function getAuthorizedNavItems(role?: string): NavItem[] {
   if (!role) return []

@@ -4,9 +4,12 @@ import { Separator } from "@/components/ui/separator"
 import { cn } from "cn"
 import { getAuthorizedNavItems } from "@/config/navigation"
 import ProfileDropdown from "./profile-dropdown"
+import { useAuth } from "@/hooks/use-auth"
 
 export function HeaderBar() {
-  const authorizedItems = getAuthorizedNavItems("ADMIN")
+  const { user } = useAuth()
+  const authorizedItems = getAuthorizedNavItems(user?.role)
+
 
   return (
     <header className="w-full px-4 pt-4">

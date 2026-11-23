@@ -13,10 +13,13 @@ import { Link, useLocation } from "react-router-dom"
 import { cn } from "cn"
 import { getAuthorizedNavItems } from "@/config/navigation"
 import ProfileDropdown from "./profile-dropdown"
+import { useAuth } from "@/hooks/use-auth"
 
 export function AppSidebar() {
   const { pathname } = useLocation()
-  const authorizedItems = getAuthorizedNavItems("ADMIN")
+  const { user } = useAuth()
+  const authorizedItems = getAuthorizedNavItems(user?.role)
+
 
   /*
   function isActive(url: string) {

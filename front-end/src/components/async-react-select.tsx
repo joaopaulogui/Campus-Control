@@ -107,7 +107,10 @@ type MyAsyncSelectProps<
   asyncFunction?: (inputValue: string) => Promise<SelectOption[]>
 }
 
-export function AsyncReactSelect({ options = [], asyncFunction, ...rest }: MyAsyncSelectProps) {
+export function AsyncReactSelect<
+  IsMulti extends boolean = false
+>({ options = [], asyncFunction, ...rest }: MyAsyncSelectProps<SelectOption, IsMulti, GroupBase<SelectOption>>) {
+
 
   const { theme } = useTheme()
   const palette = getPalette(resolveTheme(theme))
@@ -141,10 +144,11 @@ export function AsyncReactSelect({ options = [], asyncFunction, ...rest }: MyAsy
   return (
     <AsyncSelect
       cacheOptions={false}
-      loadOptions={loadOptions}
+      loadOptions={loadOptions as unknown as AsyncProps<SelectOption, IsMulti, GroupBase<SelectOption>>["loadOptions"]}
       defaultOptions={options.length > 0 ? options : true}
       noOptionsMessage={() => "Nenhuma opção encontrada"}
-      styles={styles}
+      styles={styles as unknown as StylesConfig<SelectOption, IsMulti, GroupBase<SelectOption>>}
       {...rest} />
+
   );
 }
