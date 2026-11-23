@@ -1,4 +1,4 @@
-import type { CreateUserDTO, LoginDTO, LoginResponse, UpdateUserDTO, User } from "@/types/user"
+import type { CreateUserDTO, GetUsersQueryParamsSchema, LoginDTO, LoginResponse, UpdateUserDTO, User, UserWithBuildingIds } from "@/types/user"
 import { getAxiosInstance } from "@/axios/axios-config"
 import type { SelectQueryParams, SelectResponse } from "@/types/api"
 
@@ -14,6 +14,16 @@ export const user = {
 
     async getMe(): Promise<User> {
         const { data } = await api.get<User>(`${url}me`)
+        return data
+    },
+
+    async getList(params?: GetUsersQueryParamsSchema): Promise<User[]> {
+        const { data } = await api.get<User[]>(url, { params })
+        return data
+    },
+
+    async getById(id: string): Promise<UserWithBuildingIds> {
+        const { data } = await api.get<UserWithBuildingIds>(`${url}${id}`)
         return data
     },
 
