@@ -35,6 +35,7 @@ npm install
 cp .env.example .env
 npm run db:up
 npx prisma migrate dev
+npm run seed
 npm run dev
 ```
 
