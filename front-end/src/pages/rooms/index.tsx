@@ -50,7 +50,7 @@ export default function RoomsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedFloor, setSelectedFloor] = useState<SelectOption | null>(null)
   const [selectedRoomType, setSelectedRoomType] = useState<SelectOption<RoomType> | null>(null)
-  const [selectedRoomStatus, setSelectedRoomStatus] = useState<SelectOption | null>(null)
+  const [selectedRoomStatus, setSelectedRoomStatus] = useState<SelectOption<boolean> | null>(null)
 
   // Paginação
   const [page, setPage] = useState(1)
@@ -67,8 +67,6 @@ export default function RoomsPage() {
   const [projToDelete, setProjToDelete] = useState<Projector | null>(null)
 
   // Query de listagem das salas
-  const isLocked = selectedRoomStatus?.value === "OPEN" ? false : selectedRoomStatus?.value === "LOCKED" ? true : undefined
-
   const { data: rooms = [], isLoading } = useQuery({
     queryKey: [
       "rooms",
@@ -77,7 +75,7 @@ export default function RoomsPage() {
       searchTerm,
       selectedFloor?.value,
       selectedRoomType?.value,
-      isLocked,
+      selectedRoomStatus?.value,
     ],
     queryFn: () =>
       room.getList({
@@ -86,7 +84,7 @@ export default function RoomsPage() {
         name: searchTerm.trim() || undefined,
         floorId: selectedFloor?.value ? String(selectedFloor.value) : undefined,
         type: selectedRoomType?.value ? selectedRoomType?.value : undefined,
-        isLocked: isLocked,
+        isLocked: selectedRoomStatus?.value ? selectedRoomStatus?.value : undefined,
       }),
   })
 
@@ -530,7 +528,7 @@ export default function RoomsPage() {
 
         <RoomStatusSelect
           value={selectedRoomStatus}
-          onChange={setSelectedRoomStatus}
+          onChange={(option) => setSelectedRoomStatus(option as SelectOption<boolean> | null)}
         />
       </div>
 
