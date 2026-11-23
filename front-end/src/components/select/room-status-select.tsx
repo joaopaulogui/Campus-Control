@@ -2,8 +2,8 @@ import type { ActionMeta, PropsValue, SingleValue } from "react-select"
 import { AsyncReactSelect, type SelectOption } from "../async-react-select"
 
 export const roomStatusSelectOptions = [
-  { label: "Aberta", value: true },
-  { label: "Fechada", value: false }
+  { label: "Aberta", value: false },
+  { label: "Fechada", value: true }
 ]
 
 type Props = {

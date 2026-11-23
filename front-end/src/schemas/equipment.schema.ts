@@ -3,8 +3,8 @@ import z from "zod"
 export const equipmentStatusSchema = z.enum(["WORKING", "WARNING", "BROKEN"])
 
 export const getEquipmentsQueryParamsSchema = z.object({
-    name: z.string().optional(),
     buildingId: z.string().optional(),
+    roomId: z.string().optional(),
     floorId: z.string().optional(),
     status: equipmentStatusSchema.optional()
 })

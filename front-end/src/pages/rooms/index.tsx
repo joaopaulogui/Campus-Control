@@ -27,20 +27,17 @@ import {
   MoreHorizontal,
   Pencil,
   Plus,
-  ProjectorIcon,
   Search,
-  Trash,
   Trash2,
-  Wind,
 } from "lucide-react"
 import { RoomTypeSelect } from "@/components/select/room-type-select"
 import { RoomStatusSelect } from "@/components/select/room-status-select"
-import { Switch } from "@/components/ui/switch"
 import type { AirConditioner, Projector } from "@/types/equipment"
 import {
   invalidateEquipmentRelatedQueries,
   invalidateRoomRelatedQueries,
 } from "@/config/query-keys"
+import RoomExpandedRow from "./room-expanded-row"
 
 export default function RoomsPage() {
   const queryClient = useQueryClient()
@@ -50,7 +47,7 @@ export default function RoomsPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedFloor, setSelectedFloor] = useState<SelectOption | null>(null)
   const [selectedRoomType, setSelectedRoomType] = useState<SelectOption<RoomType> | null>(null)
-  const [selectedRoomStatus, setSelectedRoomStatus] = useState<SelectOption | null>(null)
+  const [selectedRoomStatus, setSelectedRoomStatus] = useState<SelectOption<boolean> | null>(null)
 
   // Paginação
   const [page, setPage] = useState(1)
@@ -67,8 +64,6 @@ export default function RoomsPage() {
   const [projToDelete, setProjToDelete] = useState<Projector | null>(null)
 
   // Query de listagem das salas
-  const isLocked = selectedRoomStatus?.value === "OPEN" ? false : selectedRoomStatus?.value === "LOCKED" ? true : undefined
-
   const { data: rooms = [], isLoading } = useQuery({
     queryKey: [
       "rooms",
@@ -77,7 +72,7 @@ export default function RoomsPage() {
       searchTerm,
       selectedFloor?.value,
       selectedRoomType?.value,
-      isLocked,
+      selectedRoomStatus?.value,
     ],
     queryFn: () =>
       room.getList({
@@ -86,7 +81,7 @@ export default function RoomsPage() {
         name: searchTerm.trim() || undefined,
         floorId: selectedFloor?.value ? String(selectedFloor.value) : undefined,
         type: selectedRoomType?.value ? selectedRoomType?.value : undefined,
-        isLocked: isLocked,
+        isLocked: selectedRoomStatus?.value ? selectedRoomStatus?.value : undefined,
       }),
   })
 
@@ -530,7 +525,7 @@ export default function RoomsPage() {
 
         <RoomStatusSelect
           value={selectedRoomStatus}
-          onChange={setSelectedRoomStatus}
+          onChange={(option) => setSelectedRoomStatus(option as SelectOption<boolean> | null)}
         />
       </div>
 
@@ -542,125 +537,17 @@ export default function RoomsPage() {
         page={page}
         perPage={perPage}
         onPageChange={setPage}
-        expandableRow={({ row }) => {
-          const room = row.original
-          const airConditioners = room.airConditioners ?? []
-          const projectors = room.projectors ?? []
-
-          return (
-            <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 bg-muted/20">
-
-              {/* Card AR-CONDICIONADO */}
-              <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xs">
-                <div className="flex items-center justify-between border-b border-border/40 pb-3 mb-4">
-                  <div className="flex justify-center items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                    <Wind className="size-4 text-primary" />
-                    Ar-condicionados
-                  </div>
-
-                  <CanAccess allowedRoles={["ADMIN"]}>
-                    <Button
-                      variant="secondary"
-                      size="icon-sm"
-                      onClick={() => mutationAddAc.mutate(room.id)}
-                    >
-                      <Plus />
-                    </Button>
-                  </CanAccess>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  {airConditioners.length > 0 ? (
-                    airConditioners.map((ac, idx) => (
-                      <div key={ac.id} className="flex md:fle-col items-center justify-between gap-2">
-                        <div className="flex gap-3">
-                          <Switch
-                            checked={ac.isOn}
-                            disabled={mutationToggleAc.isPending}
-                            aria-label={`Ligar ou desligar ar-condicionado ${ac.id}`}
-                            onCheckedChange={() =>
-                              mutationToggleAc.mutate(ac.id)
-                            }
-                          />
-
-                          <p className="text-muted-foreground font-semibold">AC-{idx + 1}</p>
-
-                          <Badge variant={ac.status === "WORKING" ? "success" : ac.status === "WARNING" ? "warning" : "destructive"}>
-                            {ac.status === "WORKING" ? "Funcionando" : ac.status === "WARNING" ? "Com defeito" : "Quebrado"}
-                          </Badge>
-                        </div>
-
-                        <CanAccess allowedRoles={["ADMIN"]}>
-                          <Button
-                            variant="destructive"
-                            size="icon-sm"
-                            onClick={() => handleDeleteAc(ac)}
-                          >
-                            <Trash />
-                          </Button>
-                        </CanAccess>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="py-4 text-center text-xs text-muted-foreground">
-                      Nenhum ar-condicionado vinculado a esta sala.
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Card PROJETOR */}
-              <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xs">
-                <div className="flex items-center justify-between border-b border-border/40 pb-3 mb-4">
-                  <div className="justify-center flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                    <ProjectorIcon className="size-4 text-primary" />
-                    Projetores
-                  </div>
-
-                  <CanAccess allowedRoles={["ADMIN"]}>
-                    <Button
-                      variant="secondary"
-                      size="icon-sm"
-                      onClick={() => mutationAddProj.mutate(room.id)}
-                    >
-                      <Plus />
-                    </Button>
-                  </CanAccess>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  {projectors.length > 0 ? (
-                    projectors.map((proj, idx) => (
-                      <div key={proj.id} className="flex md:fle-col items-center justify-between gap-2">
-                        <div className="flex gap-3">
-                          <p className="text-muted-foreground font-semibold">AC-{idx + 1}</p>
-
-                          <Badge variant={proj.status === "WORKING" ? "success" : proj.status === "WARNING" ? "warning" : "destructive"}>
-                            {proj.status === "WORKING" ? "Funcionando" : proj.status === "WARNING" ? "Com defeito" : "Quebrado"}
-                          </Badge>
-                        </div>
-
-                        <CanAccess allowedRoles={["ADMIN"]}>
-                          <Button
-                            variant="destructive"
-                            size="icon-sm"
-                            onClick={() => handleDeleteProj(proj)}
-                          >
-                            <Trash />
-                          </Button>
-                        </CanAccess>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="py-4 text-center text-xs text-muted-foreground">
-                      Nenhum projetor vinculado a esta sala.
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          )
-        }}
+        expandableRow={({ row }) =>
+          <RoomExpandedRow
+            room={row.original}
+            onAddAc={(roomId) => mutationAddAc.mutate(roomId)}
+            onDeleteAc={handleDeleteAc}
+            onToggleAc={(acId) => mutationToggleAc.mutate(acId)}
+            isTogglingAc={mutationToggleAc.isPending}
+            onAddProj={(roomId) => mutationAddProj.mutate(roomId)}
+            onDeleteProj={handleDeleteProj}
+          />
+        }
       />
     </div>
   )
