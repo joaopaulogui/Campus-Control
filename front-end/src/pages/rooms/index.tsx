@@ -362,6 +362,15 @@ export default function RoomsPage() {
         },
       },
       {
+        id: "building",
+        header: "BLOCO",
+        cell: ({ row }) => (
+          <span className="text-sm text-foreground/80">
+            {row.original.buildingName}
+          </span>
+        ),
+      },
+      {
         id: "floor",
         header: "ANDAR",
         cell: ({ row }) => (
