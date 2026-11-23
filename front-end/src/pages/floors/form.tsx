@@ -11,6 +11,8 @@ import { floorFormSchema } from "@/schemas/floor.schema"
 import type { FloorFormData, FloorFormInput } from "@/types/floor"
 import { BuildingSelect } from "@/components/select/building-select"
 
+import { invalidateFloorRelatedQueries } from "@/config/query-keys"
+
 type Props = {
   floorId?: string
   back?: () => void
@@ -133,7 +135,7 @@ export default function FloorForm({ floorId, back }: Props) {
   }
 
   function handleSuccess() {
-    queryClient.invalidateQueries({ queryKey: ["floors"] })
+    invalidateFloorRelatedQueries(queryClient)
     if (back) back()
   }
 

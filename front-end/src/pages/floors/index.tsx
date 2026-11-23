@@ -27,6 +27,7 @@ import {
 import IconContainer from "@/components/icon-container"
 import type { SelectOption } from "@/components/async-react-select"
 import { BuildingSelect } from "@/components/select/building-select"
+import { invalidateFloorRelatedQueries } from "@/config/query-keys"
 
 export default function FloorsPage() {
   const queryClient = useQueryClient()
@@ -81,7 +82,7 @@ export default function FloorsPage() {
       })
       setOpenAlertDeleteFloor(false)
       setFloorToDelete(null)
-      queryClient.invalidateQueries({ queryKey: ["floors"] })
+      invalidateFloorRelatedQueries(queryClient)
     },
     onError(error: unknown) {
       const err = error as { response?: { data?: { message?: string } } }
@@ -225,7 +226,15 @@ export default function FloorsPage() {
       </div>
 
       {/* Barra de Filtros e Pesquisa */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 items-center gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="w-full sm:w-52">
+            <BuildingSelect
+              value={selectedBuilding}
+              onChange={setSelectedBuilding}
+            />
+          </div>
+        </div>
         <div className="relative">
           <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -235,11 +244,6 @@ export default function FloorsPage() {
             className="pl-9 bg-input/50 border-transparent rounded-3xl h-9"
           />
         </div>
-
-        <BuildingSelect
-          value={selectedBuilding}
-          onChange={setSelectedBuilding}
-        />
       </div>
 
       {/* Tabela de Andares */}
