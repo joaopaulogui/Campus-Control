@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema as schema } from "@/schemas/user.schema"
 import { toast } from "react-toastify"
 import { Input } from "@/components/ui/input"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import type { LoginDTO } from "@/types/user"
 import { useMutation } from "@tanstack/react-query"
@@ -17,13 +17,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function Index() {
   const navigate = useNavigate()
-  const location = useLocation()
   const { setToken } = useAuth()
   const [showPassword, setShowPassword] = React.useState(false)
-
-  const from = location.state?.from
-    ? `${location.state.from.pathname}${location.state.from.search ?? ""}`
-    : "/dashboard"
 
   const { register, handleSubmit } = useForm({
     resolver: zodResolver(schema),
@@ -46,7 +41,7 @@ export default function Index() {
         autoClose: 2000,
       })
       setToken(data.accessToken)
-      navigate(from, { replace: true })
+      navigate("/dashboard", { replace: true })
     },
     onError() {
       toast.update("login", {
