@@ -4,13 +4,14 @@ import type { eventEntityTypeSchema, getAuditsQueryParamsSchema } from "@/schema
 export type EventEntity = z.infer<typeof eventEntityTypeSchema>
 
 export type Audit = {
-    userId: string
+    id?: string
+    userId?: string | null
     eventType: string
     eventEntity: EventEntity
     entityId: string
     description: string
     createdAt: string
-    metadata: string
+    metadata: Record<string, unknown> | unknown
 }
 
 export type GetAuditsQueryParamsSchema = z.infer<typeof getAuditsQueryParamsSchema>

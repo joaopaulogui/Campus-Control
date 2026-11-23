@@ -13,7 +13,7 @@ export const audit = {
   },
 
   async getRecentActivities(params: PaginationQueryParams): Promise<Audit[]> {
-    const { data } = await api.get(url, { params })
+    const { data } = await api.get(`${url}recent-activities`, { params })
     return data
   }
 }
