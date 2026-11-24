@@ -22,8 +22,10 @@ export class ListItemsUseCase {
 
         const items = await this.itemsRepository.findManyPaginated({ name, type }, { page, perPage })
         
+        const filteredItems = items.filter(item => item.totalQuantity !== 0 || item.onHoldQuantity !== 0 || item.availableQuantity !== 0)
+
         return {
-            items,
+            items: filteredItems,
         }
     }
 }
