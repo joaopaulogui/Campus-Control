@@ -21,7 +21,7 @@ export class UpdateProjectorStatusUseCase {
         }
 
         if(status) {
-            if(status !== projector.status) {
+            if(status === projector.status) {
                 return {}
             }
 

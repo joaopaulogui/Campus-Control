@@ -32,7 +32,7 @@ import {
 } from "lucide-react"
 import { RoomTypeSelect } from "@/components/select/room-type-select"
 import { RoomStatusSelect } from "@/components/select/room-status-select"
-import type { AirConditioner, Projector } from "@/types/equipment"
+import type { AirConditioner, EquipmentStatus, Projector } from "@/types/equipment"
 import {
   invalidateEquipmentRelatedQueries,
   invalidateRoomRelatedQueries,
@@ -81,7 +81,7 @@ export default function RoomsPage() {
         name: searchTerm.trim() || undefined,
         floorId: selectedFloor?.value ? String(selectedFloor.value) : undefined,
         type: selectedRoomType?.value ? selectedRoomType?.value : undefined,
-        isLocked: selectedRoomStatus?.value ? selectedRoomStatus?.value : undefined,
+        isLocked: selectedRoomStatus?.value ?? undefined,
       }),
   })
 
@@ -89,6 +89,35 @@ export default function RoomsPage() {
     setPage(1)
   }, [searchTerm, selectedFloor, selectedRoomStatus, selectedRoomType])
 
+    // Mutações de troca de status
+  const mutStatusAc = useMutation({
+    mutationFn: ({ id, status }: { id: string; status: EquipmentStatus }) =>
+      airConditioner.updateStatus(id, { status }),
+    onSuccess() {
+      toast.success("Status do ar-condicionado atualizado")
+      invalidateRoomRelatedQueries(queryClient)
+      invalidateEquipmentRelatedQueries(queryClient, "ac")
+    },
+    onError(error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } }
+      toast.error(err.response?.data?.message ?? "Erro ao atualizar status")
+    },
+  })
+
+  const mutStatusProj = useMutation({
+    mutationFn: ({ id, status }: { id: string; status: EquipmentStatus }) =>
+      projector.updateStatus(id, { status }),
+    onSuccess() {
+      toast.success("Status do projetor atualizado")
+      invalidateRoomRelatedQueries(queryClient)
+      invalidateEquipmentRelatedQueries(queryClient, "projector")
+    },
+    onError(error: unknown) {
+      const err = error as { response?: { data?: { message?: string } } }
+      toast.error(err.response?.data?.message ?? "Erro ao atualizar status")
+    },
+  })
+  
   // Mutação de exclusão de sala
   const mutationDeleteRoom = useMutation({
     mutationFn: (id: string) => room.delete(id),
@@ -555,6 +584,9 @@ export default function RoomsPage() {
             isTogglingAc={mutationToggleAc.isPending}
             onAddProj={(roomId) => mutationAddProj.mutate(roomId)}
             onDeleteProj={handleDeleteProj}
+            onMudarStatusAc={(id, status) => mutStatusAc.mutate({ id, status })}
+            onMudarStatusProj={(id, status) => mutStatusProj.mutate({ id, status })}
+            mudandoStatus={mutStatusAc.isPending || mutStatusProj.isPending}
           />
         }
       />

@@ -1,10 +1,51 @@
 import { CanAccess } from "@/components/can-access"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import type { AirConditioner, Projector } from "@/types/equipment"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import type { AirConditioner, EquipmentStatus, Projector } from "@/types/equipment"
 import type { Room } from "@/types/room"
 import { Plus, ProjectorIcon, Trash, Wind } from "lucide-react"
+
+const opcoes: { valor: EquipmentStatus; rotulo: string; cor: string }[] = [
+  { valor: "WORKING", rotulo: "Funcionando", cor: "text-green-600" },
+  { valor: "WARNING", rotulo: "Com defeito", cor: "text-yellow-600" },
+  { valor: "BROKEN", rotulo: "Quebrado", cor: "text-red-600" },
+]
+
+interface SeletorStatusProps {
+  valor: EquipmentStatus
+  onMudar: (status: EquipmentStatus) => void
+  desab: boolean
+}
+
+function SeletorStatus({ valor, onMudar, desab }: SeletorStatusProps) {
+  const atual = opcoes.find((o) => o.valor === valor)
+
+  return (
+    <Select
+      value={valor}
+      disabled={desab}
+      onValueChange={(v) => onMudar(v as EquipmentStatus)}
+    >
+      <SelectTrigger size="sm" className={`w-36 font-semibold ${atual?.cor ?? ""}`}>
+        <SelectValue>{atual?.rotulo}</SelectValue>
+      </SelectTrigger>
+      <SelectContent>
+        {opcoes.map((o) => (
+          <SelectItem key={o.valor} value={o.valor} className={o.cor}>
+            {o.rotulo}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
 
 interface RoomExpandedRowProps {
   room: Room
@@ -14,6 +55,9 @@ interface RoomExpandedRowProps {
   isTogglingAc: boolean
   onAddProj: (roomId: string) => void
   onDeleteProj: (proj: Projector) => void
+  onMudarStatusAc: (id: string, status: EquipmentStatus) => void
+  onMudarStatusProj: (id: string, status: EquipmentStatus) => void
+  mudandoStatus: boolean
 }
 
 export default function RoomExpandedRow({
@@ -24,6 +68,9 @@ export default function RoomExpandedRow({
   isTogglingAc,
   onAddProj,
   onDeleteProj,
+  onMudarStatusAc,
+  onMudarStatusProj,
+  mudandoStatus,
 }: RoomExpandedRowProps) {
   const airConditioners = room.airConditioners ?? []
   const projectors = room.projectors ?? []
@@ -65,21 +112,11 @@ export default function RoomExpandedRow({
                     AC-{ac.id.slice(0, 4).toUpperCase()}
                   </p>
 
-                  <Badge
-                    variant={
-                      ac.status === "WORKING"
-                        ? "success"
-                        : ac.status === "WARNING"
-                          ? "warning"
-                          : "destructive"
-                    }
-                  >
-                    {ac.status === "WORKING"
-                      ? "Funcionando"
-                      : ac.status === "WARNING"
-                        ? "Com defeito"
-                        : "Quebrado"}
-                  </Badge>
+                  <SeletorStatus
+                    valor={ac.status}
+                    desab={mudandoStatus}
+                    onMudar={(s) => onMudarStatusAc(ac.id, s)}
+                  />
                 </div>
 
                 <CanAccess allowedRoles={["ADMIN"]}>
@@ -129,21 +166,11 @@ export default function RoomExpandedRow({
                     PROJ-{proj.id.slice(0, 4).toUpperCase()}
                   </p>
 
-                  <Badge
-                    variant={
-                      proj.status === "WORKING"
-                        ? "success"
-                        : proj.status === "WARNING"
-                          ? "warning"
-                          : "destructive"
-                    }
-                  >
-                    {proj.status === "WORKING"
-                      ? "Funcionando"
-                      : proj.status === "WARNING"
-                        ? "Com defeito"
-                        : "Quebrado"}
-                  </Badge>
+                  <SeletorStatus
+                    valor={proj.status}
+                    desab={mudandoStatus}
+                    onMudar={(s) => onMudarStatusProj(proj.id, s)}
+                  />
                 </div>
 
                 <CanAccess allowedRoles={["ADMIN"]}>
